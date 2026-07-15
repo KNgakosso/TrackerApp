@@ -1,0 +1,7 @@
+{% extends "tracking/base.html" %}
+{% block title %}
+    Service indisponible | TrackAPP
+{% endblock title %}
+{% block content %}
+    {% include "tracking/components/_empty_state.html" with icon="⚠️" title="Service temporairement indisponible" message="Le service externe utilisé par TrackAPP ne répond pas actuellement. Veuillez réessayer dans quelques instants." %}
+{% endblock content %}

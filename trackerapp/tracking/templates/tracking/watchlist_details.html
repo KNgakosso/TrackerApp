@@ -1,0 +1,35 @@
+{% extends "tracking/base.html" %}
+{% block title %}
+    {{ watchlist.name }} | TrackAPP
+{% endblock title %}
+{% block content %}
+    <a href="{% url 'tracking:watchlists' %}"
+       class="btn btn-outline-secondary mb-3">← Retour aux watchlists</a>
+    <div class="d-flex justify-content-between align-items-center flex-wrap gap-3 mb-3">
+        <div>
+            <h1 class="mb-1">{{ watchlist.name }}</h1>
+            <p class="text-muted mb-2">
+                {{ watchlist.medias|length }}
+                {% if watchlist.medias|length <= 1 %}
+                    média
+                {% else %}
+                    médias
+                {% endif %}
+            </p>
+            <p class="text-secondary mb-0">Retrouvez ici tous les médias enregistrés dans cette watchlist.</p>
+        </div>
+        <a href="{% url 'tracking:watchlist_delete' watchlist.name %}"
+           class="btn btn-outline-danger">Supprimer la watchlist</a>
+    </div>
+    <hr class="border-secondary mb-4">
+    {% if watchlist.medias %}
+        <div class="row g-4">
+            {% for media in watchlist.medias %}
+                <div class="col-6 col-md-4 col-lg-3 col-xl-2">{% include "tracking/components/_media_card.html" %}</div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <div class="alert alert-secondary">Cette watchlist est vide.</div>
+    {% endif %}
+{% endblock content %}
+```

@@ -1,0 +1,25 @@
+{% load static %}
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>TrackAPP</title>
+  </head>
+  <body>
+    <h2>{{ anime_details.title }}</h2>
+      <a  href="{% url 'tracking:finish' anime_details.mal_id %}">FINI</a>
+    <img src="{{ anime_details.images.jpg.image_url }}" alt="" />
+    <h2>Liste des épisodes</h2>
+    <ul></ul>
+    {% for episode in episode_list %}
+        <li> <p>{{ episode.mal_id }} - 
+                {{ episode.title }}
+        </p></li>
+    {% endfor %}
+    </ul>
+    
+  </body>
+
+</html>

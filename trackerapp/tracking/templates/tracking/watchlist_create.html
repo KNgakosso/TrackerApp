@@ -1,0 +1,26 @@
+{% extends "tracking/base.html" %}
+{% block title %}
+    Créer une watchlist | TrackAPP
+{% endblock title %}
+{% block content %}
+    <a href="{% url 'tracking:watchlists' %}"
+       class="btn btn-outline-secondary mb-4">← Retour aux watchlists</a>
+    <div class="row justify-content-center">
+        <div class="col-lg-6">
+            <div class="card">
+                <div class="card-body">
+                    <h1 class="card-title mb-3">Nouvelle watchlist</h1>
+                    <p class="text-secondary mb-4">
+                        Donnez un nom à votre nouvelle watchlist.
+                        Vous pourrez ensuite y ajouter vos animes et mangas.
+                    </p>
+                    <form method="post">
+                        {% csrf_token %}
+                        {{ watchlist_form }}
+                        <button type="submit" class="btn btn-primary mt-3">Créer la watchlist</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock content %}

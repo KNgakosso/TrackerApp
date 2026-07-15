@@ -1,0 +1,12 @@
+<div class="mb-3">
+    {% if field.label %}
+        <label class="form-label">{{ field.label }}</label>
+    {% endif %}
+    {{ field }}
+    {% if field.errors %}
+        <div class="text-danger small mt-1">{{ field.errors }}</div>
+    {% endif %}
+    {% if field.help_text %}
+        <div class="text-muted small">{{ field.help_text }}</div>
+    {% endif %}
+</div>

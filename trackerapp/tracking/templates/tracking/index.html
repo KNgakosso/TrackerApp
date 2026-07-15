@@ -1,0 +1,38 @@
+{% extends "tracking/base.html" %}
+{% block title %}
+  Accueil | TrackAPP
+{% endblock title %}
+{% block content %}
+  <h1 class="mb-4">TrackAPP</h1>
+  <div class="card mb-5">
+    <div class="card-body">
+      <h2 class="card-title">Rechercher un anime ou un manga</h2>
+      {% include "tracking/components/forms/_search_form.html" with form=search_form mode="advanced" %}
+    </div>
+  </div>
+  <h2 class="mb-4">Mes médias en cours</h2>
+  {% if medias %}
+    <div class="row">
+      {% for media in medias %}
+        <div class="col-md-6 col-lg-4 mb-4">{% include "tracking/components/_media_card.html" %}</div>
+      {% endfor %}
+    </div>
+  {% else %}
+    <div class="alert alert-secondary">Aucun média en cours.</div>
+  {% endif %}
+  <hr class="my-5" />
+  <h2 class="mb-4">Mes watchlists</h2>
+  {% if watchlists %}
+    <div class="list-group">
+      {% for watchlist in watchlists %}
+        <a href="{% url 'tracking:watchlist_details' watchlist.name %}"
+           class="list-group-item list-group-item-action">
+          {{ watchlist.name }}
+          <span class="badge bg-secondary float-end">{{ watchlist.medias|length }}</span>
+        </a>
+      {% endfor %}
+    </div>
+  {% else %}
+    <div class="alert alert-secondary">Aucune watchlist créée.</div>
+  {% endif %}
+{% endblock content %}

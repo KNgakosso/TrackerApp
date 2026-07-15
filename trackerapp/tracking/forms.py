@@ -1,0 +1,84 @@
+from django import forms
+
+from .models.media_models import DemographicModel, GenreModel, ThemeModel
+from .models.watchlist_model import WatchlistModel
+
+
+class WatchlistForm(forms.ModelForm):
+    class Meta:
+        model = WatchlistModel
+        fields = ["name"]
+
+
+class ScoreForm(forms.Form):
+    score = forms.IntegerField(min_value=0, max_value=10)
+
+
+class SectionNumberForm(forms.Form):
+    section_number = forms.TypedChoiceField(coerce=int)
+
+    def __init__(self, *args, max_value=0, **kwargs):
+        super().__init__(*args, **kwargs)
+
+        self.fields["section_number"].choices = [
+            (i, str(i)) for i in range(max_value + 1)
+        ]
+
+
+class WatchlistSelectionForm(forms.Form):
+    name = forms.ModelChoiceField(
+        queryset=WatchlistModel.objects.all(), empty_label="-- Choisir une liste --"
+    )
+
+
+class SearchForm(forms.Form):
+    q = forms.CharField(label="Titre", required=False)
+
+    ratings = [
+        (None, "--"),
+        ("G", "Tout âge"),
+        ("PG", "Enfant"),
+        ("PG-13", "Adolescence"),
+        ("R", "17+"),
+        ("R", "Nudité partielle"),
+        ("Rx", "Hentai"),
+    ]
+    rating = forms.ChoiceField(label="Classification", choices=ratings, required=False)
+    min_score = forms.FloatField(
+        label="Score min", min_value=0, max_value=10, required=False
+    )
+    max_score = forms.FloatField(
+        label="Score max", min_value=0, max_value=10, required=False
+    )
+    sfw = forms.BooleanField(initial=True, label="SFW", required=False)
+    genres = forms.ModelMultipleChoiceField(
+        queryset=GenreModel.objects.all(),
+        widget=forms.CheckboxSelectMultiple,
+        required=False,
+    )
+    themes = forms.ModelMultipleChoiceField(
+        queryset=ThemeModel.objects.all(),
+        widget=forms.CheckboxSelectMultiple,
+        required=False,
+    )
+    demographics = forms.ModelMultipleChoiceField(
+        queryset=DemographicModel.objects.all(),
+        widget=forms.CheckboxSelectMultiple,
+        required=False,
+    )
+    type = forms.MultipleChoiceField(
+        choices=[("manga", "manga"), ("anime", "anime")],
+        required=True,
+        widget=forms.CheckboxSelectMultiple(),
+        initial=["anime", "manga"],
+    )
+
+    def clean_min_score(self):
+        min_score = self.cleaned_data.get("min_score")
+        max_score = self.cleaned_data.get("max_score")
+        if min_score is not None and max_score is not None:
+            if min_score > self.max_score:
+                raise forms.ValidationError(
+                    "Le score minimal ne peut pas être plus grand que le score maximal."
+                )
+        return min_score

@@ -1,0 +1,22 @@
+{% load static %}
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>TrackAPP</title>
+  </head>
+  <body>
+    <a href="{% url 'tracking:index' %}">HOME</a>
+
+    <h2>{{ watchlist.name }}</h2>
+    <a href="{% url 'tracking:watchlist_delete' watchlist.name %}">
+      Supprimer la liste
+    </a>
+    {% for media in watchlist.medias %}
+    <p>{{ media.title }}</p>
+    <img src="{{ media.images.jpg.medium_image_url }}" alt="" />
+    {% endfor %}
+  </body>
+</html>

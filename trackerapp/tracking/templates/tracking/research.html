@@ -1,0 +1,28 @@
+{% extends "tracking/base.html" %}
+{% block title %}
+    Recherche | TrackAPP
+{% endblock title %}
+{% block content %}
+    {% include "tracking/components/_page_header.html" with title="Rechercher un anime ou un manga" subtitle="Utilisez les filtres pour affiner vos résultats." %}
+    <div class="card mb-5">
+        <div class="card-body">
+            {% include "tracking/components/forms/_search_form.html" with form=search_form mode="advanced" %}
+        </div>
+    </div>
+    {% if search_results %}
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h2 class="mb-0">Résultats</h2>
+            <span class="badge bg-secondary">
+                {{ search_results|length }}
+                résultat{{ search_results|length|pluralize }}
+            </span>
+        </div>
+        <div class="row g-4">
+            {% for media in search_results %}
+                <div class="col-sm-6 col-md-4 col-lg-3 col-xl-2">{% include "tracking/components/_media_card.html" %}</div>
+            {% endfor %}
+        </div>
+    {% elif request.method == "POST" %}
+        {% include "tracking/components/_empty_state.html" with icon="🔍" title="Aucun résultat" message="Essayez un autre terme ou élargissez vos filtres." %}
+    {% endif %}
+{% endblock content %}

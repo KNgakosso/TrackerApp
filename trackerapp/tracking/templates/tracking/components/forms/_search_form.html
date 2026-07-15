@@ -1,0 +1,36 @@
+<form method="post" action="{% url 'tracking:research' %}">
+    {% csrf_token %}
+    {% include "tracking/components/forms/_field.html" with field=form.q %}
+    {% if mode == "advanced" %}
+        <button class="btn btn-outline-secondary mb-3"
+                type="button"
+                data-bs-toggle="collapse"
+                data-bs-target="#searchFilters">Filtres</button>
+        <div class="collapse mt-3" id="searchFilters">
+            <div class="card bg-dark border-secondary text-light">
+                <div class="card-body">
+                    <h5 class="mb-3">📺 Type</h5>
+                    {% include "tracking/components/forms/_checkbox_group.html" with field=form.type %}
+                    <hr class="border-secondary">
+                    <h5 class="mb-3">⭐ Score</h5>
+                    {% include "tracking/components/forms/_number_range.html" with min_field=form.min_score max_field=form.max_score %}
+                    <hr class="border-secondary">
+                    <h5 class="mb-3">🔞 Classification</h5>
+                    {% include "tracking/components/forms/_field.html" with field=form.rating %}
+                    <hr class="border-secondary">
+                    <h5 class="mb-3">🎭 Genres</h5>
+                    {% include "tracking/components/forms/_checkbox_group.html" with field=form.genres %}
+                    <hr class="border-secondary">
+                    <h5 class="mb-3">✨ Thèmes</h5>
+                    {% include "tracking/components/forms/_checkbox_group.html" with field=form.themes %}
+                    <hr class="border-secondary">
+                    <h5 class="mb-3">👥 Public visé</h5>
+                    {% include "tracking/components/forms/_checkbox_group.html" with field=form.demographics %}
+                    <hr class="border-secondary">
+                    {% include "tracking/components/forms/_field.html" with field=form.sfw %}
+                </div>
+            </div>
+        </div>
+    {% endif %}
+    <button class="btn btn-primary" type="submit">Rechercher</button>
+</form>
