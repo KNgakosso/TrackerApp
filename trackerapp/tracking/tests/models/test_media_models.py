@@ -2,8 +2,8 @@ import pytest
 from tracking.models.media_models import (
     DemographicModel,
     GenreModel,
-    ImagesModel,
     MediaModel,
+    MediaModelStatus,
     ThemeModel,
 )
 
@@ -27,3 +27,12 @@ def test_demographic_model_str(db):
 def test_theme_model_str(db):
     theme_model = ThemeModel.objects.create(name="Mecha")
     assert str(theme_model) == "Mecha"
+
+
+# TESTS MEDIA MODEL
+#######################################################
+def test_media_model_default_value(db):
+    media_model = MediaModel.objects.create(
+        mal_id=1, title="Naruto", rank=1, status="En cours de publication"
+    )
+    assert media_model.user_completion == MediaModelStatus.NOT_STARTED

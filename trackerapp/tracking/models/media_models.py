@@ -47,8 +47,8 @@ class MediaModel(PolymorphicModel):
     score = models.FloatField(null=True, blank=True)
     synopsis = models.CharField(blank=True)
     number_sections = models.IntegerField(null=True, blank=True)
-    rank = models.IntegerField()
-    status = models.CharField()
+    rank = models.IntegerField(null=True, blank=True)
+    status = models.CharField(blank=True)
     themes = models.ManyToManyField(ThemeModel)
     genres = models.ManyToManyField(GenreModel)
     demographics = models.ManyToManyField(DemographicModel)
@@ -75,6 +75,11 @@ class ImagesModel(models.Model):
     media = models.OneToOneField(
         MediaModel, on_delete=models.CASCADE, related_name="images"
     )
-    small_image_url = models.CharField()
-    medium_image_url = models.CharField()
-    large_image_url = models.CharField()
+    small_image_url = models.CharField(blank=True)
+    medium_image_url = models.CharField(blank=True)
+    large_image_url = models.CharField(blank=True)
+
+
+class SectionCompletion(models.TextChoices):
+    NOT_STARTED = "not_started", "Non commencé"
+    COMPLETED = "completed", "Terminé"

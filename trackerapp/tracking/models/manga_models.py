@@ -1,9 +1,12 @@
 from django.db import models
-from .media_models import MediaModel
+
+from .media_models import MediaModel, SectionCompletion
+
 
 class AuthorModel(models.Model):
     name = models.CharField()
     mal_id = models.IntegerField()
+
 
 class MangaModel(MediaModel):
     authors = models.ManyToManyField(AuthorModel)
@@ -11,21 +14,18 @@ class MangaModel(MediaModel):
 
     def type(self):
         return "manga"
-    
+
+
 class VolumeModel(models.Model):
-    mal_id  = models.IntegerField()
-    title = models.CharField()
-    number = models.IntegerField()
-    score = models.FloatField()
-    user_score = models.IntegerField()
-    user_completion_choices = [
-        ('Finished', 'Finished'),
-        ('Unseen', 'Unseen')
-    ]
-    user_completion = models.CharField(default = 'Unseen', choices=user_completion_choices)
-    synopsis = models.CharField()
+    mal_id = models.IntegerField()
+    title = models.CharField(blank=True)
+    number = models.IntegerField(blank=True, null=True)
+    score = models.FloatField(blank=True, null=True)
+    user_score = models.IntegerField(blank=True, null=True)
+    user_completion = models.CharField(
+        default=SectionCompletion.NOT_STARTED, choices=SectionCompletion
+    )
+    synopsis = models.CharField(blank=True)
     manga = models.ForeignKey(
-        MangaModel,
-        on_delete=models.CASCADE,
-        related_name="volumes"
+        MangaModel, on_delete=models.CASCADE, related_name="volumes"
     )
