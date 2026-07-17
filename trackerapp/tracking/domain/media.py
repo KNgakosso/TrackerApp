@@ -1,4 +1,5 @@
 from dataclasses import dataclass
+from enum import StrEnum
 
 from ..external.schemas.media_schemas import (
     DemographicSchema,
@@ -138,6 +139,12 @@ class Relations():
 """
 
 
+class MediaStatus(StrEnum):
+    NOT_STARTED = "not_started"
+    IN_PROGRESS = "in_progress"
+    COMPLETED = "completed"
+
+
 @dataclass
 class Media:
     mal_id: int
@@ -153,7 +160,7 @@ class Media:
     # relations : list[Relations] | None
     status: str | None
     user_score: float | None
-    user_completion: str
+    user_completion: MediaStatus
     user_current_section: int
 
     def type(self):
@@ -182,7 +189,7 @@ class Media:
             # "relations": relations,
             "status": status,
             "user_score": None,
-            "user_completion": "Unseen",
+            "user_completion": MediaStatus.NOT_STARTED,
             "user_current_section": 0,
         }
 
@@ -205,6 +212,6 @@ class Media:
             # "relations": [Relations.from_model(relation) for relation in media_model.relations.all()],
             "status": media_model.status,
             "user_score": media_model.user_score,
-            "user_completion": media_model.user_completion,
+            "user_completion": MediaStatus(media_model.user_completion),
             "user_current_section": media_model.user_current_section,
         }

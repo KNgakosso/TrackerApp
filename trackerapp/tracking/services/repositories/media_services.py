@@ -10,6 +10,7 @@ from ...models.media_models import (
     GenreModel,
     ImagesModel,
     MediaModel,
+    MediaModelStatus,
     ThemeModel,
 )
 from ..utils import DOMAIN_TO_MODEL, TYPE_TO_CLASS, TYPE_TO_MODEL
@@ -87,14 +88,14 @@ def _update_media_model_user_completion(media_model: MediaModel):
             "Impossible de mettre à jour la complétion sans valeur de number_sections."
         )
     if media_model.user_current_section == media_model.number_sections:
-        completion = "Finished"
+        completion = MediaModelStatus.COMPLETED
     elif media_model.user_current_section == 0:
-        completion = "Unseen"
+        completion = MediaModelStatus.NOT_STARTED
     elif (
         media_model.user_current_section > 0
         and media_model.user_current_section < media_model.number_sections
     ):
-        completion = "Ongoing"
+        completion = MediaModelStatus.IN_PROGRESS
     return _set_media_model_user_completion(media_model, completion)
 
 
@@ -129,7 +130,7 @@ def create_media(media: Media) -> Media:
         "mal_id",
         "title",
         "user_score",
-        "user_completion",
+        # "user_completion",
         "score",
         "rank",
         "status",
@@ -146,8 +147,8 @@ def create_media(media: Media) -> Media:
     data = {
         field: value for field, value in media.__dict__.items() if field in valid_fields
     }
-
     media_model = media_model_cls.objects.create(**data)
+    media_model.user_completion = media.user_completion.value
 
     media_model.themes.set([_get_theme_model(theme.name) for theme in media.themes])
     media_model.genres.set([_get_genre_model(genre.name) for genre in media.genres])

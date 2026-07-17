@@ -29,17 +29,18 @@ class ThemeModel(models.Model):
         return self.name
 
 
+class MediaModelStatus(models.TextChoices):
+    NOT_STARTED = "not_started", "Non commencé"
+    IN_PROGRESS = "in_progress", "En cours"
+    COMPLETED = "completed", "Terminé"
+
+
 class MediaModel(PolymorphicModel):
     mal_id = models.IntegerField()
     title = models.CharField()
     user_score = models.IntegerField(null=True, blank=True)
-    user_completion_choices = [
-        ("Finished", "Finished"),
-        ("Ongoing", "Ongoing"),
-        ("Unseen", "Unseen"),
-    ]
     user_completion = models.CharField(
-        default="Unseen", choices=user_completion_choices
+        default=MediaModelStatus.NOT_STARTED, choices=MediaModelStatus
     )
     user_current_section = models.IntegerField(null=True, blank=True)
 
@@ -47,10 +48,10 @@ class MediaModel(PolymorphicModel):
     synopsis = models.CharField(blank=True)
     number_sections = models.IntegerField(null=True, blank=True)
     rank = models.IntegerField()
+    status = models.CharField()
     themes = models.ManyToManyField(ThemeModel)
     genres = models.ManyToManyField(GenreModel)
     demographics = models.ManyToManyField(DemographicModel)
-    status = models.CharField()
 
     def type(self):
         raise NotImplementedError

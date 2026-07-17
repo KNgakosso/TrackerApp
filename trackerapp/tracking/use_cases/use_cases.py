@@ -1,4 +1,4 @@
-from ..domain.media import Media
+from ..domain.media import Media, MediaStatus
 from ..domain.watchlist import Watchlist
 from ..forms import ScoreForm, SectionNumberForm, WatchlistForm
 from ..services.repositories import media_services, watchlist_services
@@ -37,11 +37,11 @@ def update_completion(current_section: int, max_section: int):
     if current_section > max_section:
         raise ValueError
     elif current_section == max_section:
-        return "Finished"
+        return MediaStatus.COMPLETED
     elif current_section == 0:
-        return "Unseen"
+        return MediaStatus.NOT_STARTED
     else:
-        return "Ongoing"
+        return MediaStatus.IN_PROGRESS
 
 
 def complete_media_next_section(mal_id: int, media_type: str):
@@ -78,7 +78,7 @@ def set_media_current_user_section(
 def finish_media(mal_id: int, media_type: str) -> Media:
     media = basis.get_or_import_media(mal_id, media_type)
     media.user_current_section = media.number_sections
-    media.user_completion = "Finished"
+    media.user_completion = MediaStatus.COMPLETED
     return media_services.update_media(media)
 
 
