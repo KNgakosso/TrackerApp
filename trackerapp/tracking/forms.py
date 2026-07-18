@@ -1,5 +1,6 @@
 from django import forms
 
+from .external.schemas.enums import AgeRating
 from .models.media_models import DemographicModel, GenreModel, ThemeModel
 from .models.watchlist_model import WatchlistModel
 
@@ -34,16 +35,11 @@ class WatchlistSelectionForm(forms.Form):
 class SearchForm(forms.Form):
     q = forms.CharField(label="Titre", required=False)
 
-    ratings = [
-        (None, "--"),
-        ("G", "Tout âge"),
-        ("PG", "Enfant"),
-        ("PG-13", "Adolescence"),
-        ("R", "17+"),
-        ("R", "Nudité partielle"),
-        ("Rx", "Hentai"),
-    ]
-    rating = forms.ChoiceField(label="Classification", choices=ratings, required=False)
+    rating = forms.ChoiceField(
+        label="Classification",
+        choices=[(rating.filter_value, rating.display) for rating in AgeRating],
+        required=False,
+    )
     min_score = forms.FloatField(
         label="Score min", min_value=0, max_value=10, required=False
     )

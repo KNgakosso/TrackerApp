@@ -1,15 +1,20 @@
-from .media_schemas import MediaSchema, MediaFullSchema 
 from pydantic import BaseModel
 
+from .media_schemas import MediaFullSchema, MediaSchema
+
+
 class AuthorSchema(BaseModel):
-    mal_id : int
-    name : str
+    mal_id: int
+    name: str
+
 
 class MangaSchema(MediaSchema):
-    chapters : int | None
+    chapters: int | None
+
 
 class MangaFullSchema(MediaFullSchema, MangaSchema):
-    authors : list[AuthorSchema]
+    authors: list[AuthorSchema]
+
 
 class MangaSearchSchema(BaseModel):
-    data : list[MangaSchema]
+    data: list[MangaSchema]
