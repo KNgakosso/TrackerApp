@@ -1,4 +1,3 @@
-import pytest
 from tracking.models.media_models import (
     DemographicModel,
     GenreModel,
