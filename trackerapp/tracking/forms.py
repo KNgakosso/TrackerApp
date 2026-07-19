@@ -18,11 +18,11 @@ class ScoreForm(forms.Form):
 class SectionNumberForm(forms.Form):
     section_number = forms.TypedChoiceField(coerce=int)
 
-    def __init__(self, *args, max_value=0, **kwargs):
+    def __init__(self, *args, max_value: int = 0, **kwargs):
         super().__init__(*args, **kwargs)
 
-        self.fields["section_number"].choices = [
-            (i, str(i)) for i in range(max_value + 1)
+        self.fields["section_number"].choices = [(0, "--")] + [
+            (i, str(i)) for i in range(1, max_value + 1)
         ]
 
 
@@ -69,11 +69,11 @@ class SearchForm(forms.Form):
         initial=["anime", "manga"],
     )
 
-    def clean_min_score(self):
+    def clean(self):
         min_score = self.cleaned_data.get("min_score")
         max_score = self.cleaned_data.get("max_score")
         if min_score is not None and max_score is not None:
-            if min_score > self.max_score:
+            if min_score > max_score:
                 raise forms.ValidationError(
                     "Le score minimal ne peut pas être plus grand que le score maximal."
                 )
