@@ -71,7 +71,7 @@ class RelationModel(models.Model):
 """
 
 
-class ImagesModel(models.Model):
+class ImagesUrlsModel(models.Model):
     media = models.OneToOneField(
         MediaModel, on_delete=models.CASCADE, related_name="images"
     )
