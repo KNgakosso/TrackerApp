@@ -29,7 +29,7 @@ class DemographicSchema(BaseModel):
 
 class MediaShortSchema(BaseModel):
     mal_id: int
-    format: str | None = Field(alias="type")
+    format: str | None = Field(validation_alias="type")
     title: str = Field(validation_alias=AliasChoices("title", "name"))
 
 
@@ -41,7 +41,6 @@ class RelationSchema(BaseModel):
 
 
 class MediaSchema(MediaShortSchema):
-    mal_id: int
     images: ImagesSchema
     title: str = Field(validation_alias=AliasChoices("title", "name"))
     score: float | None
