@@ -8,7 +8,6 @@ from ...models import AnimeModel, MangaModel
 from ...models.media_models import (
     DemographicModel,
     GenreModel,
-    ImagesModel,
     MediaModel,
     MediaModelStatus,
     ThemeModel,

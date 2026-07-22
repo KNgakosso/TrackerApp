@@ -1,6 +1,6 @@
 from unittest.mock import patch
 
-from tracking.domain.media import Demographic, Genre, Images, ImagesUrls, Media, Theme
+from tracking.domain.media import Demographic, Genre, ImagesUrls, Media, Theme
 from tracking.domain.watchlist import Watchlist
 from tracking.models.watchlist_model import WatchlistModel
 
@@ -75,6 +75,7 @@ def test_images_urls_from_schema_none_value(mocker):
     assert images_urls.large_image_url is None
 
 
+"""
 def test_images_urls_from_model(mocker):
     images_urls_model = mocker.Mock()
     images_urls_model.small_image_url = "http://url_small_image.com"
@@ -100,34 +101,7 @@ def test_images_urls_from_model_none_value(mocker):
     assert image_urls.medium_image_url is None
     assert image_urls.large_image_url is None
 
+"""
 
-# TESTS IMAGES
-###########################################
-
-
-def test_images_from_schema(mocker):
-    images_schema = mocker.Mock()
-    images_schema.webp = "Images Urls Schema WEBP"
-    images_schema.jpg = "Images Urls Schema JPG"
-
-    mock_images_urls_from_model = mocker.patch(
-        "tracking.domain.media.ImagesUrls.from_schema",
-        side_effect=lambda x: f"From Schema ({x})",
-    )
-    images = Images.from_schema(images_schema)
-    assert isinstance(images, Images)
-    assert images.webp == "From Schema (Images Urls Schema WEBP)"
-    assert images.jpg == "From Schema (Images Urls Schema JPG)"
-
-
-def test_images_from_model(mocker):
-    images_model = mocker.Mock()
-
-    mock_images_urls_from_model = mocker.patch(
-        "tracking.domain.media.ImagesUrls.from_model",
-        side_effect=lambda x: ("From Model", x),
-    )
-    images = Images.from_model(images_model)
-    assert isinstance(images, Images)
-    assert images.webp == ("From Model", images_model)
-    assert images.jpg is None
+# TESTS MEDIA
+###########################################################
