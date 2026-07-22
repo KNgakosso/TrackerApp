@@ -4,26 +4,19 @@ from enum import StrEnum
 from ..external.schemas.media_schemas import (
     DemographicSchema,
     GenreSchema,
-    ImagesSchema,
     ImagesUrlsSchema,
     MediaFullSchema,
     MediaSchema,
     ThemeSchema,
 )
-from ..models.media_models import (
-    DemographicModel,
-    GenreModel,
-    ImagesModel,
-    MediaModel,
-    ThemeModel,
-)
+from ..models.media_models import DemographicModel, GenreModel, MediaModel, ThemeModel
 
 
 @dataclass
 class ImagesUrls:
-    small_image_url: str
-    medium_image_url: str
-    large_image_url: str
+    small_image_url: str | None
+    medium_image_url: str | None
+    large_image_url: str | None
 
     @classmethod
     def from_schema(cls, images_urls_schema: ImagesUrlsSchema):
@@ -32,31 +25,6 @@ class ImagesUrls:
             medium_image_url=images_urls_schema.image_url,
             large_image_url=images_urls_schema.large_image_url,
         )
-
-    @classmethod
-    def from_model(cls, images_urls_model: ImagesModel):
-        return ImagesUrls(
-            small_image_url=images_urls_model.small_image_url,
-            medium_image_url=images_urls_model.medium_image_url,
-            large_image_url=images_urls_model.large_image_url,
-        )
-
-
-@dataclass
-class Images:
-    webp: ImagesUrls | None
-    jpg: ImagesUrls | None
-
-    @classmethod
-    def from_schema(cls, images_schema: ImagesSchema):
-        return Images(
-            webp=ImagesUrls.from_schema(images_schema.webp),
-            jpg=ImagesUrls.from_schema(images_schema.jpg),
-        )
-
-    @classmethod
-    def from_model(cls, images_model: ImagesModel):
-        return Images(webp=ImagesUrls.from_model(images_model), jpg=None)
 
 
 @dataclass
@@ -148,7 +116,7 @@ class MediaStatus(StrEnum):
 @dataclass
 class Media:
     mal_id: int
-    images: Images
+    images_urls: ImagesUrls | None
     title: str
     score: float | None
     synopsis: str | None
@@ -174,7 +142,7 @@ class Media:
         )
         return {
             "mal_id": media_schema.mal_id,
-            "images": Images.from_schema(media_schema.images),
+            "images_urls": ImagesUrls.from_schema(media_schema.images.webp),
             "title": media_schema.title,
             "score": media_schema.score,
             "synopsis": media_schema.synopsis,
@@ -197,7 +165,11 @@ class Media:
     def _base_fields_from_model(cls, media_model: MediaModel):
         return {
             "mal_id": media_model.mal_id,
-            "images": Images.from_model(media_model.images),
+            "images_urls": ImagesUrls(
+                small_image_url=media_model.small_image_url,
+                medium_image_url=media_model.medium_image_url,
+                large_image_url=media_model.large_image_url,
+            ),
             "title": media_model.title,
             "score": media_model.score,
             "synopsis": media_model.synopsis,

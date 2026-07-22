@@ -8,8 +8,8 @@ class ImagesUrlsSchema(BaseModel):
 
 
 class ImagesSchema(BaseModel):
-    webp: ImagesUrlsSchema | None
-    jpg: ImagesUrlsSchema | None
+    webp: ImagesUrlsSchema
+    jpg: ImagesUrlsSchema
 
 
 class GenreSchema(BaseModel):

@@ -52,6 +52,9 @@ class MediaModel(PolymorphicModel):
     themes = models.ManyToManyField(ThemeModel)
     genres = models.ManyToManyField(GenreModel)
     demographics = models.ManyToManyField(DemographicModel)
+    small_image_url = models.CharField(blank=True)
+    medium_image_url = models.CharField(blank=True)
+    large_image_url = models.CharField(blank=True)
 
     def type(self):
         raise NotImplementedError
@@ -69,15 +72,6 @@ class RelationModel(models.Model):
     image_url = models.CharField(blank=True)
     media_type = models.CharField(blank=True)
 """
-
-
-class ImagesUrlsModel(models.Model):
-    media = models.OneToOneField(
-        MediaModel, on_delete=models.CASCADE, related_name="images"
-    )
-    small_image_url = models.CharField(blank=True)
-    medium_image_url = models.CharField(blank=True)
-    large_image_url = models.CharField(blank=True)
 
 
 class SectionCompletion(models.TextChoices):
