@@ -135,7 +135,7 @@ class Media:
         raise NotImplementedError
 
     @classmethod
-    def _base_fiedls_from_schema(cls, media_schema: MediaSchema | MediaFullSchema):
+    def _base_fields_from_schema(cls, media_schema: MediaSchema | MediaFullSchema):
         # relations = Relations.from_schema(media_schema.relations) if isinstance(media_schema, MediaFullSchema) else None
         status = (
             media_schema.status if isinstance(media_schema, MediaFullSchema) else None

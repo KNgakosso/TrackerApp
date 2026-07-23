@@ -205,9 +205,9 @@ def one_piece_anime_model() -> AnimeModel:
         status="Currently Airing",
         rating="pg13",
         number_episodes=None,
-        small_image_url="https:\/\/cdn.myanimelist.net\/images\/anime\/1244\/138851t.webp",
-        medium_image_url="https:\/\/cdn.myanimelist.net\/images\/anime\/1244\/138851.webp",
-        large_image_url="https:\/\/cdn.myanimelist.net\/images\/anime\/1244\/138851l.webp",
+        small_image_url="https://cdn.myanimelist.net/images/anime/1244/138851t.webp",
+        medium_image_url="https://cdn.myanimelist.net/images/anime/1244/138851.webp",
+        large_image_url="https://cdn.myanimelist.net/images/anime/1244/138851l.webp",
     )
 
 
@@ -217,9 +217,9 @@ def one_piece_anime_schema() -> AnimeFullSchema:
         mal_id=17,
         images=ImagesSchema(
             webp=ImagesUrlsSchema(
-                small_image_url="https:\/\/cdn.myanimelist.net\/images\/anime\/1244\/138851t.webp",
-                image_url="https:\/\/cdn.myanimelist.net\/images\/anime\/1244\/138851.webp",
-                large_image_url="https:\/\/cdn.myanimelist.net\/images\/anime\/1244\/138851l.webp",
+                small_image_url="https://cdn.myanimelist.net/images/anime/1244/138851t.webp",
+                image_url="https://cdn.myanimelist.net/images/anime/1244/138851.webp",
+                large_image_url="https://cdn.myanimelist.net/images/anime/1244/138851l.webp",
             ),
             jpg=ImagesUrlsSchema(
                 small_image_url=None, image_url=None, large_image_url=None
@@ -260,8 +260,8 @@ def hunter_x_hunter_anime_model() -> AnimeModel:
         status="Finished Airing",
         rating="pg13",
         number_episodes=148,
-        medium_image_url="https://cdn.myanimelist.net/images/anime/1337/99013.webp",
         small_image_url="https://cdn.myanimelist.net/images/anime/1337/99013t.webp",
+        medium_image_url="https://cdn.myanimelist.net/images/anime/1337/99013.webp",
         large_image_url="https://cdn.myanimelist.net/images/anime/1337/99013l.webp",
     )
 
@@ -316,14 +316,28 @@ def naruto_manga_model() -> MangaModel:
         rank=698,
         status="Finished",
         number_volumes=72,
+        small_image_url="https://cdn.myanimelist.net/images/manga/3/249658t.webp",
+        medium_image_url="https://cdn.myanimelist.net/images/manga/3/249658.webp",
+        large_image_url="https://cdn.myanimelist.net/images/manga/3/249658l.webp",
     )
 
 
 @pytest.fixture()
-def naruto_manga_schema() -> MangaModel:
-    return MangaModel(
+def naruto_manga_schema() -> MangaFullSchema:
+    return MangaFullSchema(
         mal_id=11,
         title="Naruto",
+        format="Manga",
+        images=ImagesSchema(
+            webp=ImagesUrlsSchema(
+                small_image_url="https://cdn.myanimelist.net/images/manga/3/249658t.webp",
+                image_url="https://cdn.myanimelist.net/images/manga/3/249658.webp",
+                large_image_url="https://cdn.myanimelist.net/images/manga/3/249658l.webp",
+            ),
+            jpg=ImagesUrlsSchema(
+                small_image_url=None, image_url=None, large_image_url=None
+            ),
+        ),
         user_score=7,
         user_completion=MediaModelStatus.IN_PROGRESS,
         user_current_section=71,
@@ -359,6 +373,9 @@ def slam_dunk_manga_model() -> MangaModel:
         rank=7,
         status="Finished",
         number_volumes=31,
+        small_image_url="https://cdn.myanimelist.net/images/manga/2/258749t.webp",
+        medium_image_url="https://cdn.myanimelist.net/images/manga/2/258749.webp",
+        large_image_url="https://cdn.myanimelist.net/images/manga/2/258749l.webp",
     )
 
 

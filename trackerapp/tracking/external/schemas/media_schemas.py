@@ -1,4 +1,4 @@
-from pydantic import AliasChoices, BaseModel, Field
+from pydantic import AliasChoices, BaseModel, ConfigDict, Field
 
 
 class ImagesUrlsSchema(BaseModel):
@@ -28,8 +28,10 @@ class DemographicSchema(BaseModel):
 
 
 class MediaShortSchema(BaseModel):
+    model_config = ConfigDict(validate_by_name=True, validate_by_alias=True)
+    # model_config pour utiliser les attributs sans utiliser leurs alias
     mal_id: int
-    format: str | None = Field(validation_alias="type")
+    format: str | None = Field(alias="type")
     title: str = Field(validation_alias=AliasChoices("title", "name"))
 
 
