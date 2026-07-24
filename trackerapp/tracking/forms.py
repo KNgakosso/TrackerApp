@@ -1,6 +1,6 @@
 from django import forms
 
-from .external.schemas.enums import AgeRating
+from .domain.enums import AnimeRating
 from .models.media_models import DemographicModel, GenreModel, ThemeModel
 from .models.watchlist_model import WatchlistModel
 
@@ -37,7 +37,7 @@ class SearchForm(forms.Form):
 
     rating = forms.ChoiceField(
         label="Classification",
-        choices=[(rating.filter_value, rating.display) for rating in AgeRating],
+        choices=[(rating.filter_value, rating.display) for rating in AnimeRating],
         required=False,
     )
     min_score = forms.FloatField(

@@ -1,6 +1,6 @@
+from ..domain.enums import MediaCompletion
 from ..domain.media import Media
 from ..forms import SectionNumberForm
-from ..models.media_models import MediaModelStatus
 from ..services.integrations import jikan_services
 from ..services.repositories import media_services
 
@@ -21,15 +21,15 @@ def get_or_import_media(mal_id: int, media_type: str) -> Media:
 
 
 def get_ongoing_medias() -> list[Media]:
-    return media_services.get_medias(user_completion=MediaModelStatus.IN_PROGRESS)
+    return media_services.get_medias(user_completion=MediaCompletion.IN_PROGRESS)
 
 
 def get_finished_medias() -> list[Media]:
-    return media_services.get_medias(user_completion=MediaModelStatus.COMPLETED)
+    return media_services.get_medias(user_completion=MediaCompletion.COMPLETED)
 
 
 def get_unseen_medias() -> list[Media]:
-    return media_services.get_medias(user_completion=MediaModelStatus.NOT_STARTED)
+    return media_services.get_medias(user_completion=MediaCompletion.NOT_STARTED)
 
 
 def get_section_number_form(mal_id: int, media_type: str) -> SectionNumberForm | None:

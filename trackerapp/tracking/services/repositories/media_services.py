@@ -3,15 +3,10 @@ from itertools import chain
 from django.core.exceptions import FieldError
 from django.db import IntegrityError
 
+from ...domain.enums import MediaCompletion
 from ...domain.media import Demographic, Genre, Media, Theme
 from ...models import AnimeModel, MangaModel
-from ...models.media_models import (
-    DemographicModel,
-    GenreModel,
-    MediaModel,
-    MediaModelStatus,
-    ThemeModel,
-)
+from ...models.media_models import DemographicModel, GenreModel, MediaModel, ThemeModel
 from ..utils import DOMAIN_TO_MODEL, TYPE_TO_CLASS, TYPE_TO_MODEL
 
 
@@ -87,14 +82,14 @@ def _update_media_model_user_completion(media_model: MediaModel):
             "Impossible de mettre à jour la complétion sans valeur de number_sections."
         )
     if media_model.user_current_section == media_model.number_sections:
-        completion = MediaModelStatus.COMPLETED
+        completion = MediaCompletion.COMPLETED
     elif media_model.user_current_section == 0:
-        completion = MediaModelStatus.NOT_STARTED
+        completion = MediaCompletion.NOT_STARTED
     elif (
         media_model.user_current_section > 0
         and media_model.user_current_section < media_model.number_sections
     ):
-        completion = MediaModelStatus.IN_PROGRESS
+        completion = MediaCompletion.IN_PROGRESS
     return _set_media_model_user_completion(media_model, completion)
 
 
