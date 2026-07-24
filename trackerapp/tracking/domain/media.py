@@ -1,5 +1,4 @@
 from dataclasses import dataclass
-from enum import StrEnum
 
 from ..external.schemas.media_schemas import (
     DemographicSchema,
@@ -10,81 +9,61 @@ from ..external.schemas.media_schemas import (
     ThemeSchema,
 )
 from ..models.media_models import DemographicModel, GenreModel, MediaModel, ThemeModel
+from .enums import MediaCompletion, MediaStatus
 
 
 @dataclass
 class ImagesUrls:
     small_image_url: str | None
-    medium_image_url: str | None
+    image_url: str | None
     large_image_url: str | None
 
     @classmethod
     def from_schema(cls, images_urls_schema: ImagesUrlsSchema):
         return ImagesUrls(
             small_image_url=images_urls_schema.small_image_url,
-            medium_image_url=images_urls_schema.image_url,
+            image_url=images_urls_schema.image_url,
             large_image_url=images_urls_schema.large_image_url,
         )
 
 
 @dataclass
 class Genre:
-    # mal_id : int
     name: str
 
     @classmethod
     def from_schema(cls, genre_schema: GenreSchema):
-        return Genre(
-            # mal_id = genre_schema.mal_id,
-            name=genre_schema.name
-        )
+        return Genre(name=genre_schema.name)
 
     @classmethod
     def from_model(cls, genre_model: GenreModel):
-        return Genre(
-            # mal_id = genre_model.mal_id,
-            name=genre_model.name
-        )
+        return Genre(name=genre_model.name)
 
 
 @dataclass
 class Theme:
-    # mal_id : int
     name: str
 
     @classmethod
     def from_schema(cls, theme_schema: ThemeSchema):
-        return Theme(
-            # mal_id = theme_schema.mal_id,
-            name=theme_schema.name
-        )
+        return Theme(name=theme_schema.name)
 
     @classmethod
     def from_model(cls, theme_model: ThemeModel):
-        return Theme(
-            # mal_id = theme_model.mal_id,
-            name=theme_model.name
-        )
+        return Theme(name=theme_model.name)
 
 
 @dataclass
 class Demographic:
     name: str
 
-    # mal_id : int
     @classmethod
     def from_schema(cls, demographic_schema: DemographicSchema):
-        return Demographic(
-            # mal_id = demographic_schema.mal_id,
-            name=demographic_schema.name
-        )
+        return Demographic(name=demographic_schema.name)
 
     @classmethod
     def from_model(cls, demographic_model: DemographicModel):
-        return Demographic(
-            # mal_id = demographic_model.mal_id,
-            name=demographic_model.name
-        )
+        return Demographic(name=demographic_model.name)
 
 
 """
@@ -107,28 +86,23 @@ class Relations():
 """
 
 
-class MediaStatus(StrEnum):
-    NOT_STARTED = "not_started"
-    IN_PROGRESS = "in_progress"
-    COMPLETED = "completed"
-
-
 @dataclass
 class Media:
     mal_id: int
-    images_urls: ImagesUrls | None
     title: str
-    score: float | None
+    images_urls: ImagesUrls | None
+    format: str | None
     synopsis: str | None
-    number_sections: int | None
+    score: float | None
     rank: int | None
     themes: list[Theme]
     genres: list[Genre]
     demographics: list[Demographic]
+    number_sections: int | None
     # relations : list[Relations] | None
-    status: str | None
+    status: MediaStatus | None
     user_score: float | None
-    user_completion: MediaStatus
+    user_completion: MediaCompletion
     user_current_section: int
 
     def type(self):
@@ -137,16 +111,12 @@ class Media:
     @classmethod
     def _base_fields_from_schema(cls, media_schema: MediaSchema | MediaFullSchema):
         # relations = Relations.from_schema(media_schema.relations) if isinstance(media_schema, MediaFullSchema) else None
-        status = (
-            media_schema.status if isinstance(media_schema, MediaFullSchema) else None
-        )
         return {
             "mal_id": media_schema.mal_id,
-            "images_urls": ImagesUrls.from_schema(media_schema.images.webp),
             "title": media_schema.title,
-            "score": media_schema.score,
+            "images_urls": ImagesUrls.from_schema(media_schema.images.webp),
             "synopsis": media_schema.synopsis,
-            "number_sections": media_schema.number_sections,
+            "score": media_schema.score,
             "rank": media_schema.rank,
             "themes": [Theme.from_schema(theme) for theme in media_schema.themes],
             "genres": [Genre.from_schema(genre) for genre in media_schema.genres],
@@ -154,26 +124,29 @@ class Media:
                 Demographic.from_schema(demographic)
                 for demographic in media_schema.demographics
             ],
+            "number_sections": media_schema.number_sections,
             # "relations": relations,
-            "status": status,
+            "status": media_schema.status,
             "user_score": None,
-            "user_completion": MediaStatus.NOT_STARTED,
+            "user_completion": MediaCompletion.NOT_STARTED,
             "user_current_section": 0,
         }
 
     @classmethod
     def _base_fields_from_model(cls, media_model: MediaModel):
+        def none_if_empty(string: str) -> str | None:
+            return None if string == "" else string
+
         return {
             "mal_id": media_model.mal_id,
-            "images_urls": ImagesUrls(
-                small_image_url=media_model.small_image_url,
-                medium_image_url=media_model.medium_image_url,
-                large_image_url=media_model.large_image_url,
-            ),
             "title": media_model.title,
+            "images_urls": ImagesUrls(
+                small_image_url=none_if_empty(media_model.small_image_url),
+                image_url=none_if_empty(media_model.image_url),
+                large_image_url=none_if_empty(media_model.large_image_url),
+            ),
+            "synopsis": none_if_empty(media_model.synopsis),
             "score": media_model.score,
-            "synopsis": media_model.synopsis,
-            "number_sections": media_model.number_sections,
             "rank": media_model.rank,
             "themes": [Theme.from_model(theme) for theme in media_model.themes.all()],
             "genres": [Genre.from_model(genre) for genre in media_model.genres.all()],
@@ -181,9 +154,10 @@ class Media:
                 Demographic.from_model(demographic)
                 for demographic in media_model.demographics.all()
             ],
+            "number_sections": media_model.number_sections,
             # "relations": [Relations.from_model(relation) for relation in media_model.relations.all()],
-            "status": media_model.status,
+            "status": MediaStatus(media_model.status),
             "user_score": media_model.user_score,
-            "user_completion": MediaStatus(media_model.user_completion),
+            "user_completion": MediaCompletion(media_model.user_completion),
             "user_current_section": media_model.user_current_section,
         }

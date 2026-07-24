@@ -1,5 +1,7 @@
 from pydantic import AliasChoices, BaseModel, ConfigDict, Field
 
+from ...domain.enums import MediaStatus
+
 
 class ImagesUrlsSchema(BaseModel):
     small_image_url: str | None
@@ -27,14 +29,6 @@ class DemographicSchema(BaseModel):
     name: str
 
 
-class MediaShortSchema(BaseModel):
-    model_config = ConfigDict(validate_by_name=True, validate_by_alias=True)
-    # model_config pour utiliser les attributs sans utiliser leurs alias
-    mal_id: int
-    format: str | None = Field(alias="type")
-    title: str = Field(validation_alias=AliasChoices("title", "name"))
-
-
 """
 class RelationSchema(BaseModel):
     relation : str
@@ -42,19 +36,25 @@ class RelationSchema(BaseModel):
 """
 
 
-class MediaSchema(MediaShortSchema):
+class MediaSchema(BaseModel):
+    model_config = ConfigDict(validate_by_name=True, validate_by_alias=True)
+    # model_config pour utiliser les attributs sans utiliser leurs alias
+    mal_id: int
+    title: str = Field(validation_alias=AliasChoices("title", "name"))
     images: ImagesSchema
+    format: str | None = Field(alias="type")
     synopsis: str | None
     score: float | None
-    number_sections: int | None = Field(
-        validation_alias=AliasChoices("episodes", "volumes")
-    )
     rank: int | None
     themes: list[ThemeSchema]
     genres: list[GenreSchema]
     demographics: list[DemographicSchema]
+    number_sections: int | None = Field(
+        validation_alias=AliasChoices("episodes", "volumes")
+    )
+    status: MediaStatus | None  # State of the Publication / Diffusion
 
 
 class MediaFullSchema(MediaSchema):
+    pass
     # relations : list[RelationSchema]
-    status: str | None  # State of the Publication / Diffusion

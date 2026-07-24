@@ -10,10 +10,11 @@ class AuthorSchema(BaseModel):
 
 class MangaSchema(MediaSchema):
     chapters: int | None
+    authors: list[AuthorSchema]
 
 
 class MangaFullSchema(MediaFullSchema, MangaSchema):
-    authors: list[AuthorSchema]
+    pass
 
 
 class MangaSearchSchema(BaseModel):

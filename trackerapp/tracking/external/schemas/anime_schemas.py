@@ -1,6 +1,6 @@
 from pydantic import BaseModel
 
-from .enums import AgeRating
+from ...domain.enums import AnimeRating
 from .media_schemas import MediaFullSchema, MediaSchema
 
 
@@ -10,13 +10,13 @@ class StudioSchema(BaseModel):
 
 
 class AnimeSchema(MediaSchema):
-    pass
+    studios: list[StudioSchema]
+    duration: str | None
+    rating: AnimeRating | None
 
 
 class AnimeFullSchema(MediaFullSchema, AnimeSchema):
-    studios: list[StudioSchema]
-    duration: str | None
-    rating: AgeRating | None
+    pass
 
 
 class AnimeSearchSchema(BaseModel):

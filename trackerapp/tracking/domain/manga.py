@@ -21,8 +21,7 @@ class Author:
 
 @dataclass
 class Manga(Media):
-    number_chapters: int | None
-
+    chapters: int | None
     authors: list[Author] | None
 
     def type(self):
@@ -30,19 +29,19 @@ class Manga(Media):
 
     @classmethod
     def from_schema(cls, manga_schema: MangaSchema | MangaFullSchema):
-        authors = (
-            [Author.from_schema(author) for author in manga_schema.authors]
-            if isinstance(manga_schema, MangaFullSchema)
-            else None
-        )
+
         base = cls._base_fields_from_schema(manga_schema)
-        return cls(**base, number_chapters=manga_schema.chapters, authors=authors)
+        return cls(
+            **base,
+            chapters=manga_schema.chapters,
+            authors=[Author.from_schema(author) for author in manga_schema.authors],
+        )
 
     @classmethod
     def from_model(cls, manga_model: MangaModel):
         base = cls._base_fields_from_model(manga_model)
         return cls(
             **base,
+            chapters=manga_model.chapters,
             authors=[Author.from_model(author) for author in manga_model.authors.all()],
-            number_chapters=manga_model.number_volumes
         )

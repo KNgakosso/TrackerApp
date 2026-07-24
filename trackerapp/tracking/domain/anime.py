@@ -21,7 +21,7 @@ class Studio:
 
 @dataclass
 class Anime(Media):
-    studios: list[Studio] | None
+    studios: list[Studio]
     duration: str | None
     rating: str | None
 
@@ -30,26 +30,24 @@ class Anime(Media):
 
     @classmethod
     def from_schema(cls, anime_schema: AnimeSchema | AnimeFullSchema):
-        studios = (
-            [Studio.from_schema(studio) for studio in anime_schema.studios]
-            if isinstance(anime_schema, AnimeFullSchema)
-            else None
+
+        base = cls._base_fields_from_schema(anime_schema)
+        return cls(
+            **base,
+            studios=[Studio.from_schema(studio) for studio in anime_schema.studios],
+            duration=anime_schema.duration,
+            rating=anime_schema.rating
         )
-        duration = (
-            anime_schema.duration if isinstance(anime_schema, AnimeFullSchema) else None
-        )
-        rating = (
-            anime_schema.rating if isinstance(anime_schema, AnimeFullSchema) else None
-        )
-        base = cls._base_fiedls_from_schema(anime_schema)
-        return cls(**base, studios=studios, duration=duration, rating=rating)
 
     @classmethod
     def from_model(cls, anime_model: AnimeModel):
+        def none_if_empty(string: str) -> str | None:
+            return None if string == "" else string
+
         base = cls._base_fields_from_model(anime_model)
         return cls(
             **base,
             studios=[Studio.from_model(studio) for studio in anime_model.studios.all()],
-            duration=None,
+            duration=none_if_empty(anime_model.duration),
             rating=anime_model.rating
         )

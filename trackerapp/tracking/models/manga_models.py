@@ -9,8 +9,8 @@ class AuthorModel(models.Model):
 
 
 class MangaModel(MediaModel):
+    chapters = models.IntegerField(null=True, blank=True)
     authors = models.ManyToManyField(AuthorModel)
-    number_volumes = models.IntegerField(null=True, blank=True)
 
     def type(self):
         return "manga"

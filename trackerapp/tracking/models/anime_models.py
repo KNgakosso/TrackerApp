@@ -1,5 +1,6 @@
 from django.db import models
 
+from ..domain.enums import AnimeRating
 from .media_models import MediaModel, SectionCompletion
 
 
@@ -10,8 +11,10 @@ class StudioModel(models.Model):
 
 class AnimeModel(MediaModel):
     studios = models.ManyToManyField(StudioModel)
-    rating = models.CharField(blank=True)
-    number_seasons = models.IntegerField(null=True, blank=True)
+    duration = models.CharField(blank=True)
+    rating = models.CharField(
+        blank=True, choices=[(rating.value, rating.display) for rating in AnimeRating]
+    )
 
     def type(self):
         return "anime"
