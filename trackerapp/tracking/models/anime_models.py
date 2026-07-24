@@ -11,7 +11,6 @@ class StudioModel(models.Model):
 class AnimeModel(MediaModel):
     studios = models.ManyToManyField(StudioModel)
     rating = models.CharField(blank=True)
-    number_episodes = models.IntegerField(null=True, blank=True)
     number_seasons = models.IntegerField(null=True, blank=True)
 
     def type(self):

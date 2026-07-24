@@ -44,9 +44,8 @@ class RelationSchema(BaseModel):
 
 class MediaSchema(MediaShortSchema):
     images: ImagesSchema
-    title: str = Field(validation_alias=AliasChoices("title", "name"))
-    score: float | None
     synopsis: str | None
+    score: float | None
     number_sections: int | None = Field(
         validation_alias=AliasChoices("episodes", "volumes")
     )

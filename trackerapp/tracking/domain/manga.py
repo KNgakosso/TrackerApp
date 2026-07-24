@@ -35,7 +35,7 @@ class Manga(Media):
             if isinstance(manga_schema, MangaFullSchema)
             else None
         )
-        base = cls._base_fiedls_from_schema(manga_schema)
+        base = cls._base_fields_from_schema(manga_schema)
         return cls(**base, number_chapters=manga_schema.chapters, authors=authors)
 
     @classmethod

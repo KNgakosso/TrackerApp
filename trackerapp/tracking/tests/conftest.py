@@ -1,20 +1,19 @@
 from typing import Callable
 
 import pytest
-
-from tracking.external.schemas.anime_schemas import AnimeFullSchema, StudioSchema
+from tracking.external.schemas.anime_schemas import (AnimeFullSchema,
+                                                     StudioSchema)
 from tracking.external.schemas.enums import AgeRating
-from tracking.external.schemas.manga_schemas import AuthorSchema, MangaFullSchema
-from tracking.external.schemas.media_schemas import (
-    DemographicSchema,
-    GenreSchema,
-    ImagesSchema,
-    ImagesUrlsSchema,
-    ThemeSchema,
-)
+from tracking.external.schemas.manga_schemas import (AuthorSchema,
+                                                     MangaFullSchema)
+from tracking.external.schemas.media_schemas import (DemographicSchema,
+                                                     GenreSchema, ImagesSchema,
+                                                     ImagesUrlsSchema,
+                                                     ThemeSchema)
 from tracking.models.anime_models import AnimeModel
 from tracking.models.manga_models import MangaModel
-from tracking.models.media_models import MediaModelStatus
+from tracking.models.media_models import (DemographicModel, GenreModel,
+                                          MediaModelStatus, ThemeModel)
 
 AnimeModelMaker = Callable[[], AnimeModel]
 MangaModelMaker = Callable[[], MangaModel]
@@ -191,8 +190,8 @@ def anime_schema_example() -> AnimeSchemaMaker:
 
 
 @pytest.fixture()
-def one_piece_anime_model() -> AnimeModel:
-    return AnimeModel(
+def one_piece_anime_model(db) -> AnimeModel:
+    return AnimeModel.objects.create(
         mal_id=21,
         title="One Piece",
         user_score=8,
@@ -200,7 +199,7 @@ def one_piece_anime_model() -> AnimeModel:
         user_current_section=190,
         score=8.73,
         synopsis="Barely surviving in a barrel after passing through a terrible whirlpool at sea, carefree Monkey D. Luffy ends up aboard a ship under attack by fearsome pirates. Despite being a naive-looking teenager, he is not to be underestimated. Unmatched in battle, Luffy is a pirate himself who resolutely pursues the coveted One Piece treasure and the King of the Pirates title that comes with it.\n\nThe late King of the Pirates, Gol D. Roger, stirred up the world before his death by disclosing the whereabouts of his hoard of riches and daring everyone to obtain it. Ever since then, countless powerful pirates have sailed dangerous seas for the prized One Piece only to never return. Although Luffy lacks a crew and a proper ship, he is endowed with a superhuman ability and an unbreakable spirit that make him not only a formidable adversary but also an inspiration to many.\n\nAs he faces numerous challenges with a big smile on his face, Luffy gathers one-of-a-kind companions to join him in his ambitious endeavor, together embracing perils and wonders on their once-in-a-lifetime adventure",
-        number_sections=1250,
+        number_sections=None,
         rank=54,
         status="Currently Airing",
         rating="pg13",
@@ -246,10 +245,10 @@ def one_piece_anime_schema() -> AnimeFullSchema:
 
 
 @pytest.fixture()
-def hunter_x_hunter_anime_model() -> AnimeModel:
-    return AnimeModel(
+def hunter_x_hunter_anime_model(db) -> AnimeModel:
+    return AnimeModel.objects.create(
         mal_id=11061,
-        title="Hunter x hunter (2011)",
+        title="Hunter x Hunter (2011)",
         user_score=10,
         user_completion=MediaModelStatus.COMPLETED,
         user_current_section=148,
@@ -263,6 +262,13 @@ def hunter_x_hunter_anime_model() -> AnimeModel:
         small_image_url="https://cdn.myanimelist.net/images/anime/1337/99013t.webp",
         medium_image_url="https://cdn.myanimelist.net/images/anime/1337/99013.webp",
         large_image_url="https://cdn.myanimelist.net/images/anime/1337/99013l.webp",
+        themes=[],
+        genres=[
+            GenreModel.objects.create(mal_id=1, name="Action"),
+            GenreModel.objects.create(mal_id=2, name="Adventure"),
+            GenreModel.objects.create(mal_id=10, name="Fantasy"),
+        ],
+        demographics=[DemographicModel.objects.create(mal_id=27, name="Shounen")],
     )
 
 
@@ -303,8 +309,8 @@ def hunter_x_hunter_anime_schema() -> AnimeFullSchema:
 
 
 @pytest.fixture()
-def naruto_manga_model() -> MangaModel:
-    return MangaModel(
+def naruto_manga_model(db) -> MangaModel:
+    return MangaModel.objects.create(
         mal_id=11,
         title="Naruto",
         user_score=7,
@@ -316,6 +322,9 @@ def naruto_manga_model() -> MangaModel:
         rank=698,
         status="Finished",
         number_volumes=72,
+        themes = [
+
+        ]
         small_image_url="https://cdn.myanimelist.net/images/manga/3/249658t.webp",
         medium_image_url="https://cdn.myanimelist.net/images/manga/3/249658.webp",
         large_image_url="https://cdn.myanimelist.net/images/manga/3/249658l.webp",
@@ -360,8 +369,8 @@ def naruto_manga_schema() -> MangaFullSchema:
 
 
 @pytest.fixture()
-def slam_dunk_manga_model() -> MangaModel:
-    return MangaModel(
+def slam_dunk_manga_model(db) -> MangaModel:
+    return MangaModel.objects.create(
         mal_id=51,
         title="Slam Dunk",
         user_score=None,
