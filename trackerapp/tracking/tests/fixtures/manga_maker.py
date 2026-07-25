@@ -2,8 +2,9 @@ from typing import Callable
 
 import pytest
 
+from ...domain.enums import MediaCompletion, MediaStatus
 from ...domain.manga import Author, Manga
-from ...domain.media import Demographic, Genre, ImagesUrls, MediaStatus, Theme
+from ...domain.media import Demographic, Genre, ImagesUrls, Theme
 from ...external.schemas.manga_schemas import AuthorSchema, MangaFullSchema
 from ...external.schemas.media_schemas import (
     DemographicSchema,
@@ -36,25 +37,26 @@ MangaSchemaMaker = Callable[[], MangaFullSchema]
 def manga_schema_example() -> MangaSchemaMaker:
     def make_manga_schema(
         mal_id: int = 0,
-        type_: str = "TV",
         title: str = "An Manga",
-        small_image_url: str = "https:///images/manga/mal_id/small.webp",
-        image_url: str = "https:///images/manga/mal_id/medium.webp",
-        large_image_url: str = "https:///images/manga/mal_id/large.webp",
-        synopsis: str = "A synopsis.",
-        score: float = 4.3,
-        number_sections: int = 25,
-        rank: int = 78,
+        small_image_url: str | None = "https:///images/manga/mal_id/small.webp",
+        image_url: str | None = "https:///images/manga/mal_id/medium.webp",
+        large_image_url: str | None = "https:///images/manga/mal_id/large.webp",
+        type_: str | None = "TV",
+        synopsis: str | None = "A synopsis.",
+        score: float | None = 6.5,
+        rank: int | None = 90,
         themes: list[ThemeSchema] = [theme_schema_example()],
         genres: list[GenreSchema] = [genre_schema_example()],
         demographics: list[DemographicSchema] = [demographic_schema_example()],
-        status: str = "Finished",
+        number_sections: int | None = 12,
+        status: MediaStatus = MediaStatus.FINISHED,
+        chapters: int | None = 100,
         authors: list[AuthorSchema] = [author_schema_example()],
-        chapters: int = 300,
         **kwargs
     ) -> MangaFullSchema:
         return MangaFullSchema(
             mal_id=mal_id,
+            title=title,
             images=ImagesSchema(
                 webp=ImagesUrlsSchema(
                     small_image_url=small_image_url,
@@ -66,7 +68,6 @@ def manga_schema_example() -> MangaSchemaMaker:
                 ),
             ),
             type=type_,
-            title=title,
             score=score,
             synopsis=synopsis,
             number_sections=number_sections,
@@ -87,76 +88,81 @@ def manga_example() -> MangaMaker:
     def make_manga(
         mal_id: int = 0,
         title: str = "An Manga",
-        small_image_url: str = "https:///images/manga/mal_id/small.webp",
-        image_url: str = "https:///images/manga/mal_id/medium.webp",
-        large_image_url: str = "https:///images/manga/mal_id/large.webp",
-        synopsis: str = "A synopsis.",
-        score: float = 4.3,
-        number_sections: int = 25,
-        rank: int = 78,
+        small_image_url: str | None = "https:///images/manga/mal_id/small.webp",
+        image_url: str | None = "https:///images/manga/mal_id/medium.webp",
+        large_image_url: str | None = "https:///images/manga/mal_id/large.webp",
+        format: str | None = "TV",
+        synopsis: str | None = "A synopsis.",
+        score: float | None = 6.5,
+        rank: int | None = 90,
         themes: list[Theme] = [theme_example()],
         genres: list[Genre] = [genre_example()],
         demographics: list[Demographic] = [demographic_example()],
-        status: str = "Finished",
-        user_score: int = 5,
-        user_completion: MediaStatus = MediaStatus.NOT_STARTED,
-        user_current_section: int = 0,
+        number_sections: int | None = 12,
+        status: MediaStatus | None = MediaStatus.FINISHED,
+        chapters: int | None = 100,
         authors: list[Author] = [author_example()],
-        number_chapters: int = 300,
+        user_score: int | None = 5,
+        user_completion: MediaCompletion = MediaCompletion.NOT_STARTED,
+        user_current_section: int | None = 0,
     ) -> Manga:
         return Manga(
             mal_id=mal_id,
+            title=title,
             images_urls=ImagesUrls(
                 small_image_url=small_image_url,
-                medium_image_url=image_url,
+                image_url=image_url,
                 large_image_url=large_image_url,
             ),
-            title=title,
-            score=score,
+            format=format,
             synopsis=synopsis,
             number_sections=number_sections,
+            score=score,
             rank=rank,
             themes=themes,
             genres=genres,
             demographics=demographics,
             status=status,
+            chapters=chapters,
+            authors=authors,
             user_score=user_score,
             user_completion=user_completion,
             user_current_section=user_current_section,
-            authors=authors,
-            number_chapters=number_chapters,
         )
 
     return make_manga
 
 
 @pytest.fixture()
-def manga_model_example() -> MangaModelMaker:
+def manga_model_example(db) -> MangaModelMaker:
     def make_manga_model(
         mal_id: int = 0,
         title: str = "An Manga",
-        small_image_url: str = "https:///images/manga/mal_id/small.webp",
-        image_url: str = "https:///images/manga/mal_id/medium.webp",
-        large_image_url: str = "https:///images/manga/mal_id/large.webp",
-        synopsis: str = "A synopsis.",
-        score: float = 4.3,
-        number_sections: int = 25,
-        rank: int = 78,
+        small_image_url: str | None = "https:///images/manga/mal_id/small.webp",
+        image_url: str | None = "https:///images/manga/mal_id/medium.webp",
+        large_image_url: str | None = "https:///images/manga/mal_id/large.webp",
+        format: str | None = "TV",
+        synopsis: str | None = "A synopsis.",
+        score: float | None = 6.5,
+        rank: int | None = 90,
         themes: list[ThemeModel] = [theme_model_example()],
         genres: list[GenreModel] = [genre_model_example()],
         demographics: list[DemographicModel] = [demographic_model_example()],
-        user_score: int = 5,
-        user_completion: MediaStatus = MediaStatus.NOT_STARTED,
-        user_current_section: int = 0,
-        status: str = "Finished",
+        number_sections: int | None = 12,
+        status: MediaStatus | None = MediaStatus.FINISHED,
+        chapters: int | None = 100,
         authors: list[AuthorModel] = [author_model_example()],
+        user_score: int | None = 5,
+        user_completion: MediaCompletion = MediaCompletion.NOT_STARTED,
+        user_current_section: int | None = 0,
         **kwargs
     ) -> MangaModel:
-        return MangaModel(
+        return MangaModel.objects.create(
             mal_id=mal_id,
             small_image_url=small_image_url,
             image_url=image_url,
             large_image_url=large_image_url,
+            format=format,
             title=title,
             score=score,
             synopsis=synopsis,
@@ -166,6 +172,7 @@ def manga_model_example() -> MangaModelMaker:
             genres=genres,
             demographics=demographics,
             status=status,
+            chapters=chapters,
             authors=authors,
             user_score=user_score,
             user_completion=user_completion,

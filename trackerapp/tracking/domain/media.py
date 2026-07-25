@@ -103,7 +103,7 @@ class Media:
     status: MediaStatus | None
     user_score: float | None
     user_completion: MediaCompletion
-    user_current_section: int
+    user_current_section: int | None
 
     def type(self):
         raise NotImplementedError
