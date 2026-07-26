@@ -166,7 +166,7 @@ def manga_model_example(
 ) -> MangaModelMaker:
     def make_manga_model(
         mal_id: int = 0,
-        title: str = "An Manga",
+        title: str = "A Manga",
         small_image_url: str | None = "https:///images/manga/mal_id/small.webp",
         image_url: str | None = "https:///images/manga/mal_id/medium.webp",
         large_image_url: str | None = "https:///images/manga/mal_id/large.webp",

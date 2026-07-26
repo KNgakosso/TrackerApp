@@ -146,7 +146,7 @@ class Media:
                 image_url=none_if_empty(media_model.image_url),
                 large_image_url=none_if_empty(media_model.large_image_url),
             ),
-            "format": media_model.format,
+            "format": none_if_empty(media_model.format),
             "synopsis": none_if_empty(media_model.synopsis),
             "score": media_model.score,
             "rank": media_model.rank,
@@ -158,7 +158,9 @@ class Media:
             ],
             "number_sections": media_model.number_sections,
             # "relations": [Relations.from_model(relation) for relation in media_model.relations.all()],
-            "status": MediaStatus(media_model.status),
+            "status": (
+                None if media_model.status == "" else MediaStatus(media_model.status)
+            ),
             "user_score": media_model.user_score,
             "user_completion": MediaCompletion(media_model.user_completion),
             "user_current_section": media_model.user_current_section,

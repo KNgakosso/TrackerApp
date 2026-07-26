@@ -222,7 +222,7 @@ def anime_model_example(
             if genres is None
             else [genre_model_example(**genre_data) for genre_data in genres]
         )
-        anime_model.themes.set(genres_models)
+        anime_model.genres.set(genres_models)
 
         demographics_models = (
             [demographic_model_example()]
@@ -232,14 +232,15 @@ def anime_model_example(
                 for demographic_data in demographics
             ]
         )
-        anime_model.themes.set(demographics_models)
+        anime_model.demographics.set(demographics_models)
 
         studios_models = (
             [studio_model_example()]
             if studios is None
             else [studio_model_example(**studio_data) for studio_data in studios]
         )
-        anime_model.themes.set(studios_models)
+        anime_model.studios.set(studios_models)
+
         return anime_model
 
     return make_anime_model

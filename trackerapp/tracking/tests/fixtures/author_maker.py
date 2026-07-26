@@ -13,7 +13,7 @@ AuthorModelMaker = Callable[[], AuthorModel]
 
 @pytest.fixture()
 def author_schema_example():
-    def make_author_schema(mal_id: int = 0, name: str = "A Author") -> AuthorSchema:
+    def make_author_schema(mal_id: int = 0, name: str = "An Author") -> AuthorSchema:
         return AuthorSchema(mal_id=mal_id, name=name)
 
     return make_author_schema
@@ -21,7 +21,7 @@ def author_schema_example():
 
 @pytest.fixture()
 def author_example():
-    def make_author(mal_id: int = 0, name: str = "A Author") -> Author:
+    def make_author(mal_id: int = 0, name: str = "An Author") -> Author:
         return Author(mal_id=mal_id, name=name)
 
     return make_author
@@ -29,7 +29,7 @@ def author_example():
 
 @pytest.fixture()
 def author_model_example(db):
-    def make_author_model(mal_id: int = 0, name: str = "A Author") -> AuthorModel:
+    def make_author_model(mal_id: int = 0, name: str = "An Author") -> AuthorModel:
         return AuthorModel.objects.create(mal_id=mal_id, name=name)
 
     return make_author_model

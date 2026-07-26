@@ -1,6 +1,4 @@
-from unittest.mock import patch
-
-from tracking.domain.enums import AnimeRating, MediaCompletion, MediaStatus
+from tracking.domain.enums import MediaCompletion, MediaStatus
 from tracking.domain.media import Demographic, Genre, ImagesUrls, Media, Theme
 from tracking.tests.data.anime_data import HUNTER_X_HUNTER_ANIME, ONE_PIECE_ANIME
 from tracking.tests.data.manga_data import NARUTO_MANGA, SLAM_DUNK_MANGA
@@ -294,7 +292,6 @@ def test_base_fields_from_model_hunter_x_hunter_anime_model(
         side_effect=lambda demographic_model: f"from_model({demographic_model.name})",
     )
     data = Media._base_fields_from_model(hunter_x_hunter_anime_model)
-    """
     assert data["mal_id"] == 11061
     assert data["title"] == "Hunter x Hunter (2011)"
     assert (
@@ -322,7 +319,7 @@ def test_base_fields_from_model_hunter_x_hunter_anime_model(
     assert data["user_score"] == 10
     assert data["user_completion"] == MediaCompletion.COMPLETED
     assert data["user_current_section"] == 148
-    assert len(data.items()) == 15"""
+    assert len(data.items()) == 15
 
 
 def test_base_fields_from_model_slam_dunk_manga_model(mocker, manga_model_example):
@@ -368,7 +365,7 @@ def test_base_fields_from_model_manga_model_empty(manga_model_example):
         small_image_url="",
         image_url="",
         large_image_url="",
-        type_="",
+        format="",
         synopsis="",
         score=None,
         rank=None,
@@ -379,9 +376,9 @@ def test_base_fields_from_model_manga_model_empty(manga_model_example):
         number_sections=None,
     )
 
-    data = Media._base_fields_from_schema(manga_model)
+    data = Media._base_fields_from_model(manga_model)
     assert data["mal_id"] == 0
-    assert data["title"] == "An Anime"
+    assert data["title"] == "A Manga"
     assert data["images_urls"].small_image_url is None
     assert data["images_urls"].image_url is None
     assert data["images_urls"].large_image_url is None

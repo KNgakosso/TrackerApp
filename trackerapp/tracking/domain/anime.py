@@ -1,5 +1,6 @@
 from dataclasses import dataclass
 
+from ..domain.enums import AnimeRating
 from ..external.schemas.anime_schemas import AnimeFullSchema, AnimeSchema, StudioSchema
 from ..models.anime_models import AnimeModel, StudioModel
 from .media import Media
@@ -23,7 +24,7 @@ class Studio:
 class Anime(Media):
     studios: list[Studio]
     duration: str | None
-    rating: str | None
+    rating: AnimeRating | None
 
     def type(self):
         return "anime"
@@ -49,5 +50,5 @@ class Anime(Media):
             **base,
             studios=[Studio.from_model(studio) for studio in anime_model.studios.all()],
             duration=none_if_empty(anime_model.duration),
-            rating=anime_model.rating
+            rating=AnimeRating(anime_model.rating) if anime_model.rating else None
         )
