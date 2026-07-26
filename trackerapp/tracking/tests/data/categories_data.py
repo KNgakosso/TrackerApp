@@ -3,9 +3,9 @@
 
 ACTION_GENRE = {"mal_id_manga": 1, "mal_id_anime": 1, "name": "Action"}
 ADVENTURE_GENRE = {"mal_id_manga": 2, "mal_id_anime": 2, "name": "Adventure"}
-AWARD_WINNING_GENRE = {"mal_id_manga": 46, "mal_anime_id": 46, "name": "Award Winning"}
+AWARD_WINNING_GENRE = {"mal_id_manga": 46, "mal_id_anime": 46, "name": "Award Winning"}
 FANTASY_GENRE = {"mal_id_manga": 10, "mal_id_anime": 10, "name": "Fantasy"}
-SPORTS_GENRE = {"mal_id_manga": 30, "mal_anime_id": 30, "name": "Sports"}
+SPORTS_GENRE = {"mal_id_manga": 30, "mal_id_anime": 30, "name": "Sports"}
 
 # THEME DATA
 ##################

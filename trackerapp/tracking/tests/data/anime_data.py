@@ -18,7 +18,6 @@ ONE_PIECE_ANIME = {
     "score": 8.73,
     "rank": 54,
     "status": MediaStatus.CURRENTLY_AIRING,
-    "number_episodes": None,
     "themes": [],
     "genres": [
         ACTION_GENRE,
@@ -46,14 +45,13 @@ HUNTER_X_HUNTER_ANIME = {
     "score": 9.03,
     "rank": 10,
     "status": MediaStatus.FINISHED_AIRING,
-    "number_episodes": 148,
     "themes": [],
     "genres": [
         ACTION_GENRE,
         ADVENTURE_GENRE,
         FANTASY_GENRE,
     ],
-    "demographic": [SHOUNEN_DEMOGRAPHIC],
+    "demographics": [SHOUNEN_DEMOGRAPHIC],
     "number_sections": 148,
     "studios": [MADHOUSE],
     "duration": "23 min per ep",

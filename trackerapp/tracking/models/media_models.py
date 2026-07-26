@@ -37,13 +37,13 @@ class MediaModel(PolymorphicModel):
     small_image_url = models.CharField(blank=True)
     image_url = models.CharField(blank=True)
     large_image_url = models.CharField(blank=True)
-
+    format = models.CharField(blank=True)
     score = models.FloatField(null=True, blank=True)
     synopsis = models.CharField(blank=True)
     number_sections = models.IntegerField(null=True, blank=True)
     rank = models.IntegerField(null=True, blank=True)
     status = models.CharField(
-        choices=[(status.value, status.display) for status in MediaStatus]
+        blank=True, choices=[(status.value, status.display) for status in MediaStatus]
     )
     themes = models.ManyToManyField(ThemeModel)
     genres = models.ManyToManyField(GenreModel)

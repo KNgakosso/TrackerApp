@@ -52,9 +52,10 @@ def genre_model_example(db) -> GenreModelMaker:
     def make_genre_model(
         mal_id_anime: int = 0, mal_id_manga: int = 0, name: str = "Un genre", **kwargs
     ) -> GenreModel:
-        return GenreModel.objects.create(
-            mal_id_anime=mal_id_anime, mal_id_manga=mal_id_manga, name=name
-        )
+        return GenreModel.objects.get_or_create(
+            name=name,
+            defaults={"mal_id_anime": mal_id_anime, "mal_id_manga": mal_id_manga},
+        )[0]
 
     return make_genre_model
 
@@ -65,22 +66,22 @@ def genre_model_example(db) -> GenreModelMaker:
 
 @pytest.fixture()
 def theme_schema_example() -> ThemeSchemaMaker:
-    def make_theme_model(
+    def make_theme_schema(
         mal_id: int = 0, name: str = "A Theme", **kwargs
     ) -> ThemeSchema:
         if "mal_id_anime" in kwargs.keys():
             mal_id = kwargs["mal_id_anime"]
         return ThemeSchema(mal_id=mal_id, name=name)
 
-    return make_theme_model
+    return make_theme_schema
 
 
 @pytest.fixture()
 def theme_example() -> ThemeMaker:
-    def make_theme_model(name: str = "A Theme", **kwargs) -> Theme:
+    def make_theme(name: str = "A Theme", **kwargs) -> Theme:
         return Theme(name=name)
 
-    return make_theme_model
+    return make_theme
 
 
 @pytest.fixture()
@@ -88,9 +89,9 @@ def theme_model_example(db) -> ThemeModelMaker:
     def make_theme_model(
         mal_id_anime: int = 0, mal_id_manga: int = 0, name: str = "A Theme", **kwargs
     ) -> ThemeModel:
-        return ThemeModel.objects.create(
+        return ThemeModel.objects.get_or_create(
             mal_id_anime=mal_id_anime, mal_id_manga=mal_id_manga, name=name
-        )
+        )[0]
 
     return make_theme_model
 
@@ -101,22 +102,22 @@ def theme_model_example(db) -> ThemeModelMaker:
 
 @pytest.fixture()
 def demographic_schema_example() -> DemographicSchemaMaker:
-    def make_demographic_model(
+    def make_demographic_schema(
         mal_id: int = 0, name: str = "A Demographic", **kwargs
     ) -> DemographicSchema:
         if "mal_id_anime" in kwargs.keys():
             mal_id = kwargs["mal_id_anime"]
         return DemographicSchema(mal_id=mal_id, name=name)
 
-    return make_demographic_model
+    return make_demographic_schema
 
 
 @pytest.fixture()
 def demographic_example() -> DemographicMaker:
-    def make_demographic_model(name: str = "A Demographic", **kwargs) -> Demographic:
+    def make_demographic(name: str = "A Demographic", **kwargs) -> Demographic:
         return Demographic(name=name)
 
-    return make_demographic_model
+    return make_demographic
 
 
 @pytest.fixture()
@@ -127,8 +128,8 @@ def demographic_model_example(db) -> DemographicModelMaker:
         name: str = "A Demographic",
         **kwargs
     ) -> DemographicModel:
-        return DemographicModel.objects.create(
+        return DemographicModel.objects.get_or_create(
             mal_id_anime=mal_id_anime, mal_id_manga=mal_id_manga, name=name
-        )
+        )[0]
 
     return make_demographic_model

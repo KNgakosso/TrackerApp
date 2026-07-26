@@ -115,6 +115,7 @@ class Media:
             "mal_id": media_schema.mal_id,
             "title": media_schema.title,
             "images_urls": ImagesUrls.from_schema(media_schema.images.webp),
+            "format": media_schema.format,
             "synopsis": media_schema.synopsis,
             "score": media_schema.score,
             "rank": media_schema.rank,
@@ -129,7 +130,7 @@ class Media:
             "status": media_schema.status,
             "user_score": None,
             "user_completion": MediaCompletion.NOT_STARTED,
-            "user_current_section": 0,
+            "user_current_section": None if media_schema.number_sections is None else 0,
         }
 
     @classmethod
@@ -145,6 +146,7 @@ class Media:
                 image_url=none_if_empty(media_model.image_url),
                 large_image_url=none_if_empty(media_model.large_image_url),
             ),
+            "format": media_model.format,
             "synopsis": none_if_empty(media_model.synopsis),
             "score": media_model.score,
             "rank": media_model.rank,
