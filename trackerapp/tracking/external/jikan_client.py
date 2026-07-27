@@ -10,17 +10,16 @@ from .schemas.manga_schemas import MangaFullSchema, MangaSchema, MangaSearchSche
 BASE_URL = "https://api.jikan.moe/v4"
 
 
-def _get(path, params=None):
-    response = requests.get(f"{BASE_URL}{path}", params=params, timeout=10)
-    # response.raise_for_status()
-
+def _get(path: str, params: dict | None = None):
     try:
+        response = requests.get(f"{BASE_URL}{path}", params=params, timeout=10)
+        response.raise_for_status()
         return response.json()["data"]
     except requests.RequestException as exc:
         raise ExternalApiError("Jikan API is unavailable.") from exc
     except (ValueError, KeyError) as exc:
         raise ExternalApiError(
-            f"Invalid API response format for path : {path}, params : {params}"
+            f"Invalid API response format for path : {path}, params : {params}."
         ) from exc
 
 
@@ -46,7 +45,7 @@ def get_anime_full(mal_id: int) -> AnimeFullSchema:
 
 def get_manga(mal_id: int) -> MangaSchema:
     data = _get(path=f"/manga/{mal_id}")
-    return MangaFullSchema(**data)
+    return MangaSchema(**data)
 
 
 def get_manga_full(mal_id: int) -> MangaFullSchema:
