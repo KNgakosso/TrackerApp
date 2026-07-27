@@ -22,7 +22,7 @@ class Author:
 @dataclass
 class Manga(Media):
     chapters: int | None
-    authors: list[Author] | None
+    authors: list[Author]
 
     def type(self):
         return "manga"

@@ -10,7 +10,7 @@ from .forms import (
     WatchlistForm,
     WatchlistSelectionForm,
 )
-from .services.integrations import jikan_services
+from .services.integrations.tenrai import tenrai_services
 from .services.repositories import watchlist_services
 from .use_cases import basis, use_cases
 
@@ -59,7 +59,7 @@ def research(request):
     if request.method == "POST":
         search_form = SearchForm(request.POST)
         if search_form.is_valid():
-            search_results = jikan_services.research_media(search_form)
+            search_results = tenrai_services.research_media(search_form)
             return render(
                 request,
                 "tracking/research.html",

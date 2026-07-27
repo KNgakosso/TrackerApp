@@ -1,7 +1,7 @@
 from ..domain.enums import MediaCompletion
 from ..domain.media import Media
 from ..forms import SectionNumberForm
-from ..services.integrations import jikan_services
+from ..services.integrations.tenrai import tenrai_services
 from ..services.repositories import media_services
 
 
@@ -9,14 +9,14 @@ def get_or_fetch_media(mal_id: int, media_type: str) -> Media:
     try:
         return media_services.get_media(mal_id=mal_id, media_type=media_type)
     except ValueError:
-        return jikan_services.get_media_full(mal_id, media_type)
+        return tenrai_services.get_media_full(mal_id, media_type)
 
 
 def get_or_import_media(mal_id: int, media_type: str) -> Media:
     try:
         return media_services.get_media(mal_id=mal_id, media_type=media_type)
     except ValueError:
-        media = jikan_services.get_media_full(mal_id, media_type)
+        media = tenrai_services.get_media_full(mal_id, media_type)
         return media_services.create_media(media)
 
 
