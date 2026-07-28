@@ -24,6 +24,7 @@ from tracking.tests.fixtures.manga_maker import (
     manga_model_example,
     manga_schema_example,
 )
+from tracking.tests.fixtures.registry_example import db_example
 from tracking.tests.fixtures.studio_maker import (
     studio_example,
     studio_model_example,

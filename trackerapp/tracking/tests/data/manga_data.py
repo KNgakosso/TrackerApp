@@ -1,15 +1,25 @@
 from ...models.media_models import MediaCompletion, MediaStatus
-from .authors_data import INOUE_TAKHEHIKO, KISHIMOTO_MASASHI
+from .authors_data import (
+    FUJIMOTO_TATSUKI,
+    INOUE_TAKHEHIKO,
+    KISHIMOTO_MASASHI,
+    YOSHIKAWA_EIJI,
+)
 from .categories_data import (
     ACTION_GENRE,
     ADVENTURE_GENRE,
     AWARD_WINNING_GENRE,
     FANTASY_GENRE,
+    GORE_THEME,
+    HISTORICAL_THEME,
     MARTIAL_ARTS_THEME,
+    SAMURAI_THEME,
     SCHOOL_THEME,
+    SEINEN_DEMOGRAPHIC,
     SHOUNEN_DEMOGRAPHIC,
     SPORTS_GENRE,
     TEAM_SPORTS_THEME,
+    URBAN_FANTASY_THEME,
 )
 
 SLAM_DUNK_MANGA = {
@@ -61,4 +71,57 @@ NARUTO_MANGA = {
     "user_score": 7,
     "user_completion": MediaCompletion.IN_PROGRESS,
     "user_current_section": 71,
+}
+
+
+VAGABON_MANGA = {
+    "mal_id": 656,
+    "title": "Vagabond",
+    "small_image_url": "https://cdn.myanimelist.net/images/manga/1/259070t.webp",
+    "image_url": "https://cdn.myanimelist.net/images/manga/1/259070.webp",
+    "large_image_url": "https://cdn.myanimelist.net/images/manga/1/259070l.webp",
+    "format": "Manga",
+    "synopsis": 'In 16th-century Japan, Shinmen Takezou is a wild, rough young man in both his appearance and his actions. His aggressive nature has won him the collective reproach and fear of his village, leading him and his best friend, Matahachi Honiden, to run away in search of something grander than provincial life. The pair enlist in the Toyotomi army, yearning for glory—but when the Toyotomi suffer a crushing defeat at the hands of the Tokugawa Clan at the Battle of Sekigahara, the friends barely make it out alive.\n\nAfter the two are separated, Shinmen returns home on a self-appointed mission to notify the Hon\'iden family of Matahachi\'s survival. He instead finds himself a wanted criminal, framed for his friend\'s supposed murder based on his history of violence. Upon being captured, he is strung up on a tree and left to die. An itinerant monk, the distinguished Takuan Soho, takes pity on the "devil child," secretly freeing Shinmen and christening him with a new name to avoid pursuit by the authorities: Musashi Miyamoto.\n\nVagabond is the fictitious retelling of the life of one of Japan\'s most renowned swordsmen, the "Sword Saint" Musashi Miyamoto—his rise from a swordsman with no desire other than to become "Invincible Under the Heavens" to an enlightened warrior who slowly learns of the importance of close friends, self-reflection, and life itself.\n\n[Written by MAL Rewrite]',
+    "score": 9.27,
+    "rank": 3,
+    "status": MediaStatus.HIATUS,
+    "themes": [HISTORICAL_THEME, SAMURAI_THEME],
+    "genres": [
+        ACTION_GENRE,
+        ADVENTURE_GENRE,
+        AWARD_WINNING_GENRE,
+    ],
+    "demographics": [SEINEN_DEMOGRAPHIC],
+    "number_sections": 37,
+    "chapters": 327,
+    "authors": [INOUE_TAKHEHIKO, YOSHIKAWA_EIJI],
+    "user_score": 7,
+    "user_completion": MediaCompletion.COMPLETED,
+    "user_current_section": 37,
+}
+
+CHAINSAW_MAN_MANGA = {
+    "mal_id": 116778,
+    "title": "Chainsaw Man",
+    "small_image_url": "https://cdn.myanimelist.net/images/manga/3/216464t.webp",
+    "image_url": "https://cdn.myanimelist.net/images/manga/3/216464.webp",
+    "large_image_url": "https://cdn.myanimelist.net/images/manga/3/216464l.webp",
+    "format": "Manga",
+    "synopsis": 'In 16th-century Japan, Shinmen Takezou is a wild, rough young man in both his appearance and his actions. His aggressive nature has won him the collective reproach and fear of his village, leading him and his best friend, Matahachi Honiden, to run away in search of something grander than provincial life. The pair enlist in the Toyotomi army, yearning for glory—but when the Toyotomi suffer a crushing defeat at the hands of the Tokugawa Clan at the Battle of Sekigahara, the friends barely make it out alive.\n\nAfter the two are separated, Shinmen returns home on a self-appointed mission to notify the Hon\'iden family of Matahachi\'s survival. He instead finds himself a wanted criminal, framed for his friend\'s supposed murder based on his history of violence. Upon being captured, he is strung up on a tree and left to die. An itinerant monk, the distinguished Takuan Soho, takes pity on the "devil child," secretly freeing Shinmen and christening him with a new name to avoid pursuit by the authorities: Musashi Miyamoto.\n\nVagabond is the fictitious retelling of the life of one of Japan\'s most renowned swordsmen, the "Sword Saint" Musashi Miyamoto—his rise from a swordsman with no desire other than to become "Invincible Under the Heavens" to an enlightened warrior who slowly learns of the importance of close friends, self-reflection, and life itself.\n\n[Written by MAL Rewrite]',
+    "score": 9.27,
+    "rank": 3,
+    "status": MediaStatus.FINISHED,
+    "themes": [GORE_THEME, URBAN_FANTASY_THEME],
+    "genres": [
+        ACTION_GENRE,
+        AWARD_WINNING_GENRE,
+        FANTASY_GENRE,
+    ],
+    "demographics": [SHOUNEN_DEMOGRAPHIC],
+    "number_sections": 24,
+    "chapters": 232,
+    "authors": [FUJIMOTO_TATSUKI],
+    "user_score": 10,
+    "user_completion": MediaCompletion.IN_PROGRESS,
+    "user_current_section": 11,
 }

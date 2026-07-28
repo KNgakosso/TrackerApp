@@ -1,4 +1,8 @@
+from typing import ClassVar
+
+from django.core.validators import MaxValueValidator, MinValueValidator
 from django.db import models
+from django.db.models import Q
 from polymorphic.models import PolymorphicModel
 
 from ..domain.enums import MediaCompletion, MediaStatus
@@ -48,7 +52,14 @@ class MediaModel(PolymorphicModel):
     themes = models.ManyToManyField(ThemeModel)
     genres = models.ManyToManyField(GenreModel)
     demographics = models.ManyToManyField(DemographicModel)
-    user_score = models.IntegerField(null=True, blank=True)
+    user_score = models.IntegerField(
+        null=True,
+        blank=True,
+        validators=[
+            MinValueValidator(0),
+            MaxValueValidator(10),
+        ],
+    )
     user_completion = models.CharField(
         default=MediaCompletion.NOT_STARTED,
         choices=[
@@ -59,6 +70,14 @@ class MediaModel(PolymorphicModel):
 
     def type(self):
         raise NotImplementedError
+
+    class Meta:
+        constraints: ClassVar[list] = [
+            models.CheckConstraint(
+                condition=Q(user_score__gte=0) & Q(user_score__lte=10),
+                name="user_score_between_0_and_10",
+            ),
+        ]
 
 
 """

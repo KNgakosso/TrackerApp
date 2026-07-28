@@ -14,21 +14,21 @@ def _get_genre_model(name: str) -> GenreModel:
     try:
         return GenreModel.objects.get(name=name)
     except GenreModel.DoesNotExist:
-        raise ValueError(f"Aucun genre trouvé au nom de {name}")
+        raise ValueError(f"Aucun genre trouvé au nom de {name}.")
 
 
 def _get_theme_model(name: str) -> ThemeModel:
     try:
         return ThemeModel.objects.get(name=name)
     except ThemeModel.DoesNotExist:
-        raise ValueError(f"Aucun thème trouvé au nom de {name}")
+        raise ValueError(f"Aucun thème trouvé au nom de {name}.")
 
 
 def _get_demographic_model(name: str) -> DemographicModel:
     try:
         return DemographicModel.objects.get(name=name)
     except DemographicModel.DoesNotExist:
-        raise ValueError(f"Aucune démographie trouvé au nom de {name}")
+        raise ValueError(f"Aucune démographie trouvée au nom de {name}.")
 
 
 def _get_media_model(mal_id: int, media_type: str) -> MediaModel:
@@ -38,31 +38,48 @@ def _get_media_model(mal_id: int, media_type: str) -> MediaModel:
         )
         return media_model
     except MediaModel.DoesNotExist:
-        raise ValueError(f"Aucun {media_type} trouvé pour l'id {mal_id}")
+        raise ValueError(f"Aucun {media_type} trouvé pour l'id {mal_id}.")
 
 
-def _get_medias_models(**kwargs) -> chain:
+def _get_medias_models(**kwargs) -> list[MediaModel]:
     try:
         anime_queryset = MediaModel.objects.instance_of(AnimeModel).filter(**kwargs)
         manga_queryset = MediaModel.objects.instance_of(MangaModel).filter(**kwargs)
-        return chain(anime_queryset, manga_queryset)
+        return list(chain(anime_queryset, manga_queryset))
     except FieldError as e:
         raise ValueError(f"Filtres de recherche invalides : {e}") from e
 
 
 def _set_media_model_user_completion(
-    media_model: MediaModel, new_completion: str
-) -> str:
+    media_model: MediaModel, new_completion: MediaCompletion
+) -> MediaCompletion:
+    media_model.user_completion = new_completion
+    media_model.save()
+    return media_model.user_completion
+
+
+def _set_media_model_user_current_section(
+    media_model: MediaModel, new_current_section: int | None
+) -> int | None:
+    media_model.user_current_section = new_current_section
+    media_model.save()
+    return media_model.user_current_section
+
+
+def _set_media_model_user_score(
+    media_model: MediaModel, new_score: int | None
+) -> int | None:
     try:
-        media_model.user_completion = new_completion
+        media_model.user_score = new_score
         media_model.save()
-        return media_model.user_completion
-    except IntegrityError:
+        return media_model.user_score
+    except IntegrityError as exc:
         raise ValueError(
-            "La complétion du media_model doit être attribuée sur 'Finished', 'Ongoing' ou 'Unseen'."
-        )
+            "Le Score doit être un entier entre 0 et 10, ou la valeur None."
+        ) from exc
 
 
+"""
 def _set_media_user_current_section(media_model: MediaModel, new_current_section: int):
     if new_current_section > media_model.number_sections:
         raise ValueError(
@@ -74,6 +91,8 @@ def _set_media_user_current_section(media_model: MediaModel, new_current_section
         return media_model.user_current_section
     except IntegrityError:
         raise ValueError("Une erreur d'intégrite est survenue lors de l'enregistrement")
+
+"""
 
 
 def _update_media_model_user_completion(media_model: MediaModel):

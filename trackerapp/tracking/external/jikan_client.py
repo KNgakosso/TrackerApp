@@ -1,5 +1,3 @@
-from typing import List
-
 import requests
 
 from .exceptions import ExternalApiError
@@ -58,7 +56,7 @@ def get_episode(anime_mal_id: int, episode_mal_id: int) -> EpisodeSchema:
     return EpisodeSchema(**data)
 
 
-def get_episodes_list(anime_mal_id: int) -> List[EpisodeSchema]:
+def get_episodes_list(anime_mal_id: int) -> list[EpisodeSchema]:
     data = _get(path=f"/anime/{anime_mal_id}/episodes")
     result = [EpisodeSchema(**episode_json) for episode_json in data]
     return result

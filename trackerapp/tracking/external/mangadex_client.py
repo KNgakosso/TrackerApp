@@ -1,10 +1,6 @@
-from typing import List
-
 import requests
 
-from .schemas.anime_schemas import AnimeFullSchema, AnimeSchema, AnimeSearchSchema
-from .schemas.episodes_schemas import EpisodeSchema
-from .schemas.manga_schemas import MangaFullSchema, MangaSchema, MangaSearchSchema
+from .schemas.manga_schemas import MangaSchema
 
 BASE_URL = "https://api.mangadex.org"
 

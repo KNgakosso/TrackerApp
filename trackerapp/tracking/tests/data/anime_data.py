@@ -1,11 +1,20 @@
 from ...domain.enums import AnimeRating, MediaCompletion, MediaStatus
 from .categories_data import (
     ACTION_GENRE,
+    ADULT_CAST_THEME,
     ADVENTURE_GENRE,
     FANTASY_GENRE,
+    GORE_THEME,
+    HORROR_GENRE,
+    MYSTERY_GENRE,
+    ORGANIZED_CRIME_THEME,
+    PSYCHOLOGICAL_THEME,
+    SCI_FI_GENRE,
+    SEINEN_DEMOGRAPHIC,
     SHOUNEN_DEMOGRAPHIC,
+    SUSPENSE_GENRE,
 )
-from .studios_data import MADHOUSE, TOEI_ANIMATION
+from .studios_data import MADHOUSE, TOEI_ANIMATION, WIT_STUDIO
 
 ONE_PIECE_ANIME = {
     "mal_id": 21,
@@ -59,4 +68,52 @@ HUNTER_X_HUNTER_ANIME = {
     "user_score": 10,
     "user_completion": MediaCompletion.COMPLETED,
     "user_current_section": 148,
+}
+
+
+KISEIJUU_ANIME = {
+    "mal_id": 22535,
+    "title": "Kiseijuu: Sei no Kakuritsu",
+    "small_image_url": "https://cdn.myanimelist.net/images/anime/3/73178t.webp",
+    "image_url": "https://cdn.myanimelist.net/images/anime/3/73178.webp",
+    "large_image_ur": "https://cdn.myanimelist.net/images/anime/3/73178l.webp",
+    "format": "TV",
+    "synopsis": "All of a sudden, they arrived: parasitic aliens that descended upon Earth and quickly infiltrated humanity by burrowing into the brains of vulnerable targets. These insatiable beings acquire full control of their host and are able to morph into a variety of forms in order to feed on unsuspecting prey.\n \nSixteen-year-old high school student Shinichi Izumi falls victim to one of these parasites, but it fails to take over his brain, ending up in his right hand instead. Unable to relocate, the parasite, now named Migi, has no choice but to rely on Shinichi in order to stay alive. Thus, the pair is forced into an uneasy coexistence and must defend themselves from hostile parasites that hope to eradicate this new threat to their species.\n\n[Written by MAL Rewrite]",
+    "score": 8.32,
+    "rank": 307,
+    "status": MediaStatus.FINISHED_AIRING,
+    "themes": [GORE_THEME, PSYCHOLOGICAL_THEME],
+    "genres": [ACTION_GENRE, HORROR_GENRE, SCI_FI_GENRE, SUSPENSE_GENRE],
+    "demographics": [SEINEN_DEMOGRAPHIC],
+    "number_sections": 24,
+    "studios": [MADHOUSE],
+    "duration": "23 min per ep",
+    "rating": AnimeRating.R17,
+    "user_score": None,
+    "user_completion": MediaCompletion.NOT_STARTED,
+    "user_current_section": 0,
+}
+
+
+GREAT_PRETENDER_ANIME = {
+    "mal_id": 40052,
+    "title": "Great Pretender",
+    "small_image_url": "https://cdn.myanimelist.net/images/anime/1418/107954t.webp",
+    "image_url": "https://cdn.myanimelist.net/images/anime/1418/107954.webp",
+    "large_image_ur": "https://cdn.myanimelist.net/images/anime/1418/107954l.webp",
+    "format": "TV",
+    "synopsis": 'A series of unfortunate events has led Makoto Edamura to adopt the life of crime—pickpocketing and scamming others for a living. However, after swindling a seemingly clueless tourist, Makoto discovers that he was the one tricked and, to make matters worse, that the police are now after him. \n\nWhile making his escape, he runs into the tourist once again, who turns out to be a fellow con man named Laurent Thierry, and ends up following him to Los Angeles. In an attempt to defend his self-proclaimed title of "Japan\'s Greatest Swindler," Makoto challenges his rival to determine the better scammer. Accepting the competition, Laurent drops them off outside a huge mansion and claims that their target will be the biggest mafia boss on the West Coast.\n\nAs Makoto becomes increasingly involved with the cunning Laurent, his colorful associates, and the world of international high-stakes fraud, he soon realizes that he got more than what he bargained for as his self-declared skills are continually put to the test.\n\n[Written by MAL Rewrite]',
+    "score": 8.19,
+    "rank": 465,
+    "status": MediaStatus.FINISHED_AIRING,
+    "themes": [ADULT_CAST_THEME, ORGANIZED_CRIME_THEME],
+    "genres": [ACTION_GENRE, ADVENTURE_GENRE, MYSTERY_GENRE],
+    "demographics": [],
+    "number_sections": 23,
+    "studios": [WIT_STUDIO],
+    "duration": "23 min per ep",
+    "rating": AnimeRating.R17,
+    "user_score": None,
+    "user_completion": MediaCompletion.IN_PROGRESS,
+    "user_current_section": 1,
 }
