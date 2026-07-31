@@ -14,6 +14,7 @@ def get_or_fetch_media(mal_id: int, media_type: str) -> Media:
 
 def get_or_import_media(mal_id: int, media_type: str) -> Media:
     try:
+        # raise ValueError
         return storage_services.get_media(mal_id=mal_id, media_type=media_type)
     except ValueError:
         media = tenrai_services.get_media_full(mal_id, media_type)

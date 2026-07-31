@@ -44,18 +44,11 @@ def update_completion(current_section: int, max_section: int):
         return MediaCompletion.IN_PROGRESS
 
 
-def complete_media_next_section(mal_id: int, media_type: str):
+def complete_media_next_section(mal_id: int, media_type: str) -> Media:
     media = basis.get_or_import_media(mal_id, media_type)
-    if (
-        media.number_sections is None
-        or media.user_current_section == media.number_sections
-    ):
-        raise ValueError
-    media.user_current_section += 1
-    media.user_completion = update_completion(
-        media.user_current_section, media.number_sections
-    )
-    return storage_services.update_media(media)
+    media.complete_next()
+    storage_services.update_media(media)
+    return media
 
 
 def set_media_current_user_section(

@@ -101,7 +101,7 @@ class Media:
     number_sections: int | None
     # relations : list[Relations] | None
     status: MediaStatus | None
-    user_score: float | None
+    user_score: int | None
     user_completion: MediaCompletion
     user_current_section: int | None
 
@@ -165,3 +165,43 @@ class Media:
             "user_completion": MediaCompletion(media_model.user_completion),
             "user_current_section": media_model.user_current_section,
         }
+
+    def complete_next(self) -> int | None:
+        if self.number_sections is None:
+            return None
+        if (
+            not self.user_current_section is None
+            and self.user_current_section < self.number_sections
+        ):
+            self.user_current_section += 1
+        self._update_media_completion()
+
+    def complete(self):
+        self.user_completion = MediaCompletion.COMPLETED
+        if not self.number_sections is None:
+            self.user_current_section = self.number_sections
+
+    def restart(self):
+        self.user_completion = MediaCompletion.NOT_STARTED
+        if not self.number_sections is None:
+            self.user_current_section = 0
+
+    def define_current_section(self, new_current_section: int):
+        if not self.number_sections is None:
+            if new_current_section >= 0 and new_current_section < self.number_sections:
+                self.user_current_section = new_current_section
+        self._update_media_completion()
+
+    def _update_media_completion(self):
+        if not self.number_sections is None and not self.user_current_section is None:
+            if self.user_current_section == 0:
+                self.user_completion = MediaCompletion.NOT_STARTED
+            elif self.user_current_section == self.number_sections:
+                self.user_completion = MediaCompletion.COMPLETED
+            elif (
+                self.user_current_section > 0
+                and self.user_current_section < self.number_sections
+            ):
+                self.user_completion = MediaCompletion.IN_PROGRESS
+            else:
+                raise ValueError()

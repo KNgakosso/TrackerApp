@@ -22,7 +22,7 @@ def research_media(search_form: SearchForm) -> list[Media]:
             for anime_schema in tenrai_client.get_anime_research_list(params).data
         ]
     results = sorted(
-        results, key=lambda media: (media.score is None, media.score), reverse=True
+        results, key=lambda media: (media.score is not None, media.score), reverse=True
     )
     return results
 

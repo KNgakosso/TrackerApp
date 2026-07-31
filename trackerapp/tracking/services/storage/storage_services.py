@@ -102,14 +102,13 @@ def create_media(media: Media) -> Media:
 
 
 def update_media(media: Media):
-    media_model = repository.get_media_model(media.mal_id, media.type())
-    media_model.user_completion = media.user_completion
-    media_model.user_score = media.user_score
-    media_model.user_current_section = media.user_current_section
     try:
-        media_model.save()
-        return TYPE_TO_CLASS[media.type()].from_model(media_model)
-
+        media_model = repository.get_media_model(media.mal_id, media.type())
+        repository.set_media_model_user_completion(media_model, media.user_completion)
+        repository.set_media_model_user_current_section(
+            media_model, media.user_current_section
+        )
+        repository.set_media_model_user_score(media_model, media.user_score)
     except IntegrityError:
         raise ValueError(
             f"Mise à jour des données utilisateurs du média {media.mal_id} impossible."

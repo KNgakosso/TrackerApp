@@ -37,7 +37,10 @@ class SearchForm(forms.Form):
 
     rating = forms.ChoiceField(
         label="Classification",
-        choices=[(rating.filter_value, rating.display) for rating in AnimeRating],
+        choices=[
+            ("", "--"),
+            *[(rating.filter_value, rating.display) for rating in AnimeRating],
+        ],
         required=False,
     )
     min_score = forms.FloatField(
@@ -68,6 +71,10 @@ class SearchForm(forms.Form):
         widget=forms.CheckboxSelectMultiple(),
         initial=["anime", "manga"],
     )
+
+    def clean_rating(self):
+        rating = self.cleaned_data.get("rating") or None
+        return rating
 
     def clean(self):
         min_score = self.cleaned_data.get("min_score")
