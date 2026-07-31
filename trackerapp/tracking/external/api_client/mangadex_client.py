@@ -1,6 +1,6 @@
 import requests
 
-from .schemas.manga_schemas import MangaSchema
+from ..schemas.manga_schemas import MangaSchema
 
 BASE_URL = "https://api.mangadex.org"
 

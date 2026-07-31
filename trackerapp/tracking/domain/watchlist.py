@@ -1,7 +1,7 @@
 from dataclasses import dataclass
 
 from ..models.watchlist_model import WatchlistModel
-from ..services.utils import MODEL_TO_DOMAIN
+from ..utils import MODEL_TO_DOMAIN
 from .media import Media
 
 

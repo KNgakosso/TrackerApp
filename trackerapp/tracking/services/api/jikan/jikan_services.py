@@ -2,13 +2,9 @@ from ....domain.anime import Anime
 from ....domain.episode import Episode
 from ....domain.manga import Manga
 from ....domain.media import Media
-from ....external import jikan_client
+from ....external.api_client import jikan_client
 from ....forms import SearchForm
-from .jikan_query_builder import (
-    build_search_params,
-    build_search_params_anime,
-    build_search_params_manga,
-)
+from .jikan_query_builder import build_search_params_anime, build_search_params_manga
 
 
 def research_media(search_form: SearchForm) -> list[Media]:

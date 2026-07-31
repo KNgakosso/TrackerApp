@@ -1,4 +1,4 @@
-from ...domain.enums import AnimeRating, MediaCompletion, MediaStatus
+from ...enums import AnimeRating, MediaCompletion, MediaStatus
 from .categories_data import (
     ACTION_GENRE,
     ADULT_CAST_THEME,

@@ -1,5 +1,5 @@
 from tracking.domain.anime import Anime, Studio
-from tracking.domain.enums import AnimeRating
+from tracking.enums import AnimeRating
 from tracking.tests.data.anime_data import HUNTER_X_HUNTER_ANIME, ONE_PIECE_ANIME
 from tracking.tests.data.studios_data import MADHOUSE, TOEI_ANIMATION
 

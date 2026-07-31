@@ -74,7 +74,7 @@ NARUTO_MANGA = {
 }
 
 
-VAGABON_MANGA = {
+VAGABOND_MANGA = {
     "mal_id": 656,
     "title": "Vagabond",
     "small_image_url": "https://cdn.myanimelist.net/images/manga/1/259070t.webp",

@@ -1,5 +1,5 @@
-from tracking.domain.enums import MediaCompletion, MediaStatus
 from tracking.domain.media import Demographic, Genre, ImagesUrls, Media, Theme
+from tracking.enums import MediaCompletion, MediaStatus
 from tracking.tests.data.anime_data import HUNTER_X_HUNTER_ANIME, ONE_PIECE_ANIME
 from tracking.tests.data.manga_data import NARUTO_MANGA, SLAM_DUNK_MANGA
 

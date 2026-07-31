@@ -1,6 +1,6 @@
 from pydantic import BaseModel
 
-from ...domain.enums import AnimeRating
+from ...enums import AnimeRating
 from .media_schemas import MediaFullSchema, MediaSchema
 
 

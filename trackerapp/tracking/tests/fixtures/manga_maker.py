@@ -2,9 +2,9 @@ from collections.abc import Callable
 
 import pytest
 
-from ...domain.enums import MediaCompletion, MediaStatus
 from ...domain.manga import Author, Manga
 from ...domain.media import Demographic, Genre, ImagesUrls, Theme
+from ...enums import MediaCompletion, MediaStatus
 from ...external.schemas.manga_schemas import MangaFullSchema
 from ...external.schemas.media_schemas import ImagesSchema, ImagesUrlsSchema
 from ...models.manga_models import MangaModel

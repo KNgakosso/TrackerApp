@@ -1,5 +1,6 @@
 from dataclasses import dataclass
 
+from ..enums import MediaCompletion, MediaStatus
 from ..external.schemas.media_schemas import (
     DemographicSchema,
     GenreSchema,
@@ -9,7 +10,6 @@ from ..external.schemas.media_schemas import (
     ThemeSchema,
 )
 from ..models.media_models import DemographicModel, GenreModel, MediaModel, ThemeModel
-from .enums import MediaCompletion, MediaStatus
 
 
 @dataclass

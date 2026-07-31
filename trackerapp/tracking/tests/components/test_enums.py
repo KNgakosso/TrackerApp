@@ -1,5 +1,5 @@
 import pytest
-from tracking.domain.enums import AnimeRating, MediaCompletion, MediaStatus
+from tracking.enums import AnimeRating, MediaCompletion, MediaStatus
 
 # ANIME RATING : FILTER_VALUE
 #############################################

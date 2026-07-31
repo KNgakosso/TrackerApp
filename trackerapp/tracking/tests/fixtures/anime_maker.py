@@ -3,8 +3,8 @@ from collections.abc import Callable
 import pytest
 
 from ...domain.anime import Anime, Studio
-from ...domain.enums import AnimeRating, MediaCompletion, MediaStatus
 from ...domain.media import Demographic, Genre, ImagesUrls, Theme
+from ...enums import AnimeRating, MediaCompletion, MediaStatus
 from ...external.schemas.anime_schemas import AnimeFullSchema
 from ...external.schemas.media_schemas import ImagesSchema, ImagesUrlsSchema
 from ...models.anime_models import AnimeModel

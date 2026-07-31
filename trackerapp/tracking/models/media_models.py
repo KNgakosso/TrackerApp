@@ -5,7 +5,7 @@ from django.db import models
 from django.db.models import Q
 from polymorphic.models import PolymorphicModel
 
-from ..domain.enums import MediaCompletion, MediaStatus
+from ..enums import MediaCompletion, MediaStatus
 
 
 class GenreModel(models.Model):

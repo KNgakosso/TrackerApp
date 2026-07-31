@@ -1,6 +1,6 @@
 import pytest
 import requests
-from tracking.external import tenrai_client as tenrai
+from tracking.external.api_client import tenrai_client as tenrai
 from tracking.external.exceptions import ExternalApiError
 
 # TESTS _GET
@@ -14,7 +14,7 @@ def test_get_OK(mocker, params):
     response = mocker.Mock()
     response.json.return_value = {"data": {"title": "Titre", "mal_id": 0}}
     mock_requests_get = mocker.patch(
-        "tracking.external.tenrai_client.requests.get", return_value=response
+        "tracking.external.api_client.tenrai_client.requests.get", return_value=response
     )
     data = tenrai._get("/path", params=params)
     assert data == {"title": "Titre", "mal_id": 0}
@@ -27,7 +27,9 @@ def test_get_request_exception(mocker):
     response = mocker.Mock()
     response.json.return_value = {"data": {"title": "Titre", "mal_id": 0}}
     response.raise_for_status.side_effect = requests.RequestException()
-    mocker.patch("tracking.external.tenrai_client.requests.get", return_value=response)
+    mocker.patch(
+        "tracking.external.api_client.tenrai_client.requests.get", return_value=response
+    )
     with pytest.raises(ExternalApiError) as e:
         tenrai._get("/path", params={"min_score": 5})
     assert str(e.value) == "Tenrai API is unavailable."
@@ -37,7 +39,9 @@ def test_get_value_error(mocker):
     response = mocker.Mock()
     response.json.return_value = {"data": {"title": "Titre", "mal_id": 0}}
     response.json.side_effect = ValueError()
-    mocker.patch("tracking.external.tenrai_client.requests.get", return_value=response)
+    mocker.patch(
+        "tracking.external.api_client.tenrai_client.requests.get", return_value=response
+    )
     params = {"min_score": 5}
     with pytest.raises(ExternalApiError) as e:
         tenrai._get("/path", params=params)
@@ -54,7 +58,9 @@ def test_get_key_error(mocker):
 
     response = mocker.Mock()
     response.json.return_value = FakeJson()
-    mocker.patch("tracking.external.tenrai_client.requests.get", return_value=response)
+    mocker.patch(
+        "tracking.external.api_client.tenrai_client.requests.get", return_value=response
+    )
     params = {"min_score": 5}
     with pytest.raises(ExternalApiError) as e:
         tenrai._get("/path", params=params)
@@ -69,9 +75,11 @@ def test_get_key_error(mocker):
 @pytest.mark.parametrize("params", [{"q": "Naruto"}, {}, None])
 def test_get_anime_research_list(mocker, params):
     data = [{"animeschema 1": 1}, {"anime_schema_2": 2}]
-    _get_mock = mocker.patch("tracking.external.tenrai_client._get", return_value=data)
+    _get_mock = mocker.patch(
+        "tracking.external.api_client.tenrai_client._get", return_value=data
+    )
     mocker.patch(
-        "tracking.external.tenrai_client.AnimeSearchSchema",
+        "tracking.external.api_client.tenrai_client.AnimeSearchSchema",
         side_effect=lambda data: f"AnimeSearchSchema({data})",
     )
     anime_research_schema = tenrai.get_anime_research_list(params=params)
@@ -85,9 +93,11 @@ def test_get_anime_research_list(mocker, params):
 @pytest.mark.parametrize("params", [{"q": "Naruto"}, {}, None])
 def test_get_manga_research_list(mocker, params):
     data = [{"mangaschema 1": 1}, {"manga_schema_2": 2}]
-    _get_mock = mocker.patch("tracking.external.tenrai_client._get", return_value=data)
+    _get_mock = mocker.patch(
+        "tracking.external.api_client.tenrai_client._get", return_value=data
+    )
     mocker.patch(
-        "tracking.external.tenrai_client.MangaSearchSchema",
+        "tracking.external.api_client.tenrai_client.MangaSearchSchema",
         side_effect=lambda data: f"MangaSearchSchema({data})",
     )
     manga_research_schema = tenrai.get_manga_research_list(params=params)
@@ -100,9 +110,11 @@ def test_get_manga_research_list(mocker, params):
 ############################################
 def test_get_anime(mocker):
     data = {"mal_id": 0, "title": "anime"}
-    _get_mock = mocker.patch("tracking.external.tenrai_client._get", return_value=data)
+    _get_mock = mocker.patch(
+        "tracking.external.api_client.tenrai_client._get", return_value=data
+    )
     mocker.patch(
-        "tracking.external.tenrai_client.AnimeSchema",
+        "tracking.external.api_client.tenrai_client.AnimeSchema",
         side_effect=lambda **data: f"AnimeSchema(**{data})",
     )
     anime_schema = tenrai.get_anime(0)
@@ -117,9 +129,11 @@ def test_get_anime(mocker):
 
 def test_get_anime_full(mocker):
     data = {"mal_id": 12345, "title": "anime"}
-    _get_mock = mocker.patch("tracking.external.tenrai_client._get", return_value=data)
+    _get_mock = mocker.patch(
+        "tracking.external.api_client.tenrai_client._get", return_value=data
+    )
     mocker.patch(
-        "tracking.external.tenrai_client.AnimeFullSchema",
+        "tracking.external.api_client.tenrai_client.AnimeFullSchema",
         side_effect=lambda **data: f"AnimeFullSchema(**{data})",
     )
     anime_full_schema = tenrai.get_anime_full(12345)
@@ -132,9 +146,11 @@ def test_get_anime_full(mocker):
 ############################################
 def test_get_manga(mocker):
     data = {"mal_id": 2, "title": "manga"}
-    _get_mock = mocker.patch("tracking.external.tenrai_client._get", return_value=data)
+    _get_mock = mocker.patch(
+        "tracking.external.api_client.tenrai_client._get", return_value=data
+    )
     mocker.patch(
-        "tracking.external.tenrai_client.MangaSchema",
+        "tracking.external.api_client.tenrai_client.MangaSchema",
         side_effect=lambda **data: f"MangaSchema(**{data})",
     )
     manga_schema = tenrai.get_manga(2)
@@ -149,9 +165,11 @@ def test_get_manga(mocker):
 
 def test_get_manga_full(mocker):
     data = {"mal_id": 949, "title": "manga"}
-    _get_mock = mocker.patch("tracking.external.tenrai_client._get", return_value=data)
+    _get_mock = mocker.patch(
+        "tracking.external.api_client.tenrai_client._get", return_value=data
+    )
     mocker.patch(
-        "tracking.external.tenrai_client.MangaFullSchema",
+        "tracking.external.api_client.tenrai_client.MangaFullSchema",
         side_effect=lambda **data: f"MangaFullSchema(**{data})",
     )
     manga_full_schema = tenrai.get_manga_full(949)
@@ -166,9 +184,11 @@ def test_get_manga_full(mocker):
 
 def test_get_episode(mocker):
     data = {"episode_id": 10, "title": "Titre de l'épisode"}
-    _get_mock = mocker.patch("tracking.external.tenrai_client._get", return_value=data)
+    _get_mock = mocker.patch(
+        "tracking.external.api_client.tenrai_client._get", return_value=data
+    )
     mocker.patch(
-        "tracking.external.tenrai_client.EpisodeSchema",
+        "tracking.external.api_client.tenrai_client.EpisodeSchema",
         side_effect=lambda **data: f"EpisodeSchema(**{data})",
     )
     episode_schema = tenrai.get_episode(anime_mal_id=488, episode_mal_id=10)
@@ -187,9 +207,11 @@ def test_get_episode_list(mocker):
         {"episode_id": 2, "title": "Titre de l'épisode 2"},
         {"episode_id": 3, "title": "Titre de l'épisode 3"},
     ]
-    _get_mock = mocker.patch("tracking.external.tenrai_client._get", return_value=data)
+    _get_mock = mocker.patch(
+        "tracking.external.api_client.tenrai_client._get", return_value=data
+    )
     mocker.patch(
-        "tracking.external.tenrai_client.EpisodeSchema",
+        "tracking.external.api_client.tenrai_client.EpisodeSchema",
         side_effect=lambda **data: f"EpisodeSchema(**{data})",
     )
     episode_list_schema = tenrai.get_episodes_list(anime_mal_id=488)

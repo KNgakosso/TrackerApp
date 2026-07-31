@@ -1,6 +1,6 @@
 from dataclasses import dataclass
 
-from ..domain.enums import AnimeRating
+from ..enums import AnimeRating
 from ..external.schemas.anime_schemas import AnimeFullSchema, AnimeSchema, StudioSchema
 from ..models.anime_models import AnimeModel, StudioModel
 from .media import Media

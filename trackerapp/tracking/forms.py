@@ -1,6 +1,6 @@
 from django import forms
 
-from .domain.enums import AnimeRating
+from .enums import AnimeRating
 from .models.media_models import DemographicModel, GenreModel, ThemeModel
 from .models.watchlist_model import WatchlistModel
 

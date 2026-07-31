@@ -1,6 +1,6 @@
 from pydantic import AliasChoices, BaseModel, ConfigDict, Field
 
-from ...domain.enums import MediaStatus
+from ...enums import MediaStatus
 
 
 class ImagesUrlsSchema(BaseModel):

@@ -10,8 +10,8 @@ from .forms import (
     WatchlistForm,
     WatchlistSelectionForm,
 )
-from .services.integrations.tenrai import tenrai_services
-from .services.repositories import watchlist_services
+from .services.api.tenrai import tenrai_services
+from .services.storage import storage_services
 from .use_cases import basis, use_cases
 
 
@@ -36,7 +36,7 @@ def handle_api_errors(view):
 
 def index(request):
     medias = basis.get_ongoing_medias()
-    watchlists = watchlist_services.get_watchlists()
+    watchlists = storage_services.get_watchlists()
     search_form = SearchForm()
     return render(
         request,
@@ -100,7 +100,7 @@ def create_watchlist(request):
             )
     else:
         watchlist_form = WatchlistForm()
-    watchlists = watchlist_services.get_watchlists()
+    watchlists = storage_services.get_watchlists()
     return render(
         request,
         "tracking/watchlists.html",
@@ -109,7 +109,7 @@ def create_watchlist(request):
 
 
 def watchlist_details(request, name: str):
-    watchlist = watchlist_services.get_watchlist(name=name)
+    watchlist = storage_services.get_watchlist(name=name)
     return render(
         request, "tracking/watchlist_details.html", context={"watchlist": watchlist}
     )
@@ -148,8 +148,8 @@ def remove_media_from_watchlist(
 
 
 def delete_watchlist(request, name: str):
-    watchlist_services.delete_watchlist(name)
-    watchlists = watchlist_services.get_watchlists()
+    storage_services.delete_watchlist(name)
+    watchlists = storage_services.get_watchlists()
     return redirect("tracking:watchlists")
 
 
@@ -219,7 +219,7 @@ def rename_watchlist(request, name: str):
 
 def watchlists(request):
     watchlist_form = WatchlistForm()
-    watchlists = watchlist_services.get_watchlists()
+    watchlists = storage_services.get_watchlists()
     return render(
         request,
         "tracking/watchlists.html",

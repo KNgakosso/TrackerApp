@@ -1,9 +1,9 @@
 import requests
 
-from .exceptions import ExternalApiError
-from .schemas.anime_schemas import AnimeFullSchema, AnimeSchema, AnimeSearchSchema
-from .schemas.episodes_schemas import EpisodeSchema
-from .schemas.manga_schemas import MangaFullSchema, MangaSchema, MangaSearchSchema
+from ..exceptions import ExternalApiError
+from ..schemas.anime_schemas import AnimeFullSchema, AnimeSchema, AnimeSearchSchema
+from ..schemas.episodes_schemas import EpisodeSchema
+from ..schemas.manga_schemas import MangaFullSchema, MangaSchema, MangaSearchSchema
 
 BASE_URL = "https://api.tenrai.org/v1"
 

@@ -1,4 +1,4 @@
-from tracking.domain.enums import MediaCompletion
+from tracking.enums import MediaCompletion
 from tracking.models.media_models import (
     DemographicModel,
     GenreModel,

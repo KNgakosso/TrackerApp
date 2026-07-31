@@ -1,6 +1,6 @@
 from django.db import models
 
-from ..domain.enums import AnimeRating
+from ..enums import AnimeRating
 from .media_models import MediaModel, SectionCompletion
 
 
