@@ -1,6 +1,11 @@
 from enum import StrEnum
 
 
+class MediaType(StrEnum):
+    ANIME = "anime"
+    MANGA = "manga"
+
+
 class AnimeRating(StrEnum):
     G = "G - All Ages"
     PG = "PG - Children"

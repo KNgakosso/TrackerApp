@@ -10,6 +10,7 @@ from ..external.schemas.media_schemas import (
     ThemeSchema,
 )
 from ..models.media_models import DemographicModel, GenreModel, MediaModel, ThemeModel
+from ..utils import MODEL_TO_DOMAIN
 
 
 @dataclass
@@ -107,6 +108,11 @@ class Media:
 
     def type(self):
         raise NotImplementedError
+
+    @classmethod
+    def from_model(cls, media_model: MediaModel):
+        media_cls = MODEL_TO_DOMAIN[type(media_model)]
+        return media_cls.from_model(media_model)
 
     @classmethod
     def _base_fields_from_schema(cls, media_schema: MediaSchema | MediaFullSchema):

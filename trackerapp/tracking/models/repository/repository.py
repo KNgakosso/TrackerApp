@@ -3,9 +3,7 @@ from itertools import chain
 from django.core.exceptions import FieldError
 from django.db import IntegrityError
 
-from ...domain.anime import Studio
-from ...domain.manga import Author
-from ...domain.media import Demographic, Genre, Media, Theme
+from ...domain.media import Media
 from ...domain.watchlist import Watchlist
 from ...enums import MediaCompletion
 from ...utils import DOMAIN_TO_MODEL, TYPE_TO_MODEL
@@ -25,8 +23,8 @@ def get_genre_model(name: str) -> GenreModel:
         raise ValueError(f"Aucun genre trouvé au nom de {name}.")
 
 
-def _set_media_model_genres(media_model: MediaModel, genres: list[Genre]):
-    media_model.genres.set([get_genre_model(genre.name) for genre in genres])
+def _set_media_model_genres(media_model: MediaModel, genres: list[GenreModel]):
+    media_model.genres.set(genres)
     media_model.save()
 
 
@@ -41,8 +39,8 @@ def get_theme_model(name: str) -> ThemeModel:
         raise ValueError(f"Aucun thème trouvé au nom de {name}.")
 
 
-def _set_media_model_themes(media_model: MediaModel, themes: list[Theme]):
-    media_model.themes.set([get_theme_model(theme.name) for theme in themes])
+def _set_media_model_themes(media_model: MediaModel, themes: list[ThemeModel]):
+    media_model.themes.set(themes)
     media_model.save()
 
 
@@ -58,11 +56,9 @@ def get_demographic_model(name: str) -> DemographicModel:
 
 
 def _set_media_model_demographics(
-    media_model: MediaModel, demographics: list[Demographic]
+    media_model: MediaModel, demographics: list[DemographicModel]
 ):
-    media_model.demographics.set(
-        [get_demographic_model(demographic.name) for demographic in demographics]
-    )
+    media_model.demographics.set(demographics)
     media_model.save()
 
 
@@ -79,15 +75,25 @@ def create_media_model(media: Media) -> MediaModel:
         if not field in valid_fields
     }
     media_model = media_model_cls.objects.create(**data)
-    # media_model.user_completion = media.user_completion.value
-    _set_media_model_themes(media_model, media.themes)
-    _set_media_model_genres(media_model, media.genres)
-    _set_media_model_demographics(media_model, media.demographics)
+    _set_media_model_themes(
+        media_model, [get_theme_model(theme.name) for theme in media.themes]
+    )
+    _set_media_model_genres(
+        media_model, [get_genre_model(genre.name) for genre in media.genres]
+    )
+    _set_media_model_demographics(
+        media_model,
+        [get_demographic_model(demographic.name) for demographic in media.demographics],
+    )
     if isinstance(media_model, MangaModel):
-        _set_manga_model_authors(media_model, media.authors)
+        _set_manga_model_authors(
+            media_model, [get_author_model(author.mal_id) for author in media.authors]
+        )
     elif isinstance(media_model, AnimeModel):
-        _set_anime_model_studios(media_model, media.studios)
-    return media_model
+        _set_anime_model_studios(
+            media_model, [get_studio_model(studio.mal_id) for studio in media.studios]
+        )
+    return get_media_model(media.mal_id, type(media))
 
 
 def get_media_model(mal_id: int, media_type: str) -> MediaModel:
@@ -98,6 +104,13 @@ def get_media_model(mal_id: int, media_type: str) -> MediaModel:
         return media_model
     except MediaModel.DoesNotExist:
         raise ValueError(f"Aucun {media_type} trouvé pour l'id {mal_id}.")
+
+
+def get_or_create_media_model(media: Media) -> MediaModel:
+    try:
+        return get_media_model(media.mal_id, type(media))
+    except ValueError:
+        return create_media_model(media)
 
 
 def get_medias_models(**kwargs) -> list[MediaModel]:
@@ -177,8 +190,8 @@ def get_studio_model(mal_id: int) -> StudioModel:
         raise ValueError(f"Aucun studio trouvé pour mal_id : {mal_id}.")
 
 
-def _set_anime_model_studios(anime_model: AnimeModel, studios: list[Studio]):
-    anime_model.studios.set([get_studio_model(studio.mal_id) for studio in studios])
+def _set_anime_model_studios(anime_model: AnimeModel, studios: list[StudioModel]):
+    anime_model.studios.set(studios)
     anime_model.save()
 
 
@@ -208,8 +221,8 @@ def get_author_model(mal_id: int) -> AuthorModel:
         raise ValueError(f"Aucun auteur trouvé pour mal_id : {mal_id}.")
 
 
-def _set_manga_model_authors(manga_model: MangaModel, authors: list[Author]):
-    manga_model.authors.set([get_author_model(author.mal_id) for author in authors])
+def _set_manga_model_authors(manga_model: MangaModel, authors: list[AuthorModel]):
+    manga_model.authors.set(authors)
     manga_model.save()
 
 
@@ -224,8 +237,8 @@ def get_watchlist_model(name: str) -> WatchlistModel:
         raise ValueError(f"Aucune Watchlist trouvée au nom de {name}")
 
 
-def get_watchlists_models() -> list[WatchlistModel]:
-    return list(WatchlistModel.objects.all())
+def get_watchlists_models(**kwargs) -> list[WatchlistModel]:
+    return list(WatchlistModel.objects.filter(**kwargs))
 
 
 def create_watchlist_model(watchlist: Watchlist) -> WatchlistModel:
@@ -235,15 +248,26 @@ def create_watchlist_model(watchlist: Watchlist) -> WatchlistModel:
             for field, value in watchlist.__dict__.items()
             if field != "medias"
         }
-        return WatchlistModel.objects.create(**data)
+        watchlist_model = WatchlistModel.objects.create(**data)
+        set_watchlist_model_medias(
+            watchlist_model,
+            [get_media_model(media.mal_id, media.type()) for media in watchlist.medias],
+        )
+        return get_watchlist_model(watchlist.name)
     except IntegrityError:
         raise ValueError("Erreur lors de l'enregistrement de la watchlist.")
+
+
+def set_watchlist_model_medias(
+    watchlist_model: WatchlistModel, medias: list[MediaModel]
+):
+    watchlist_model.medias.set(medias)
+    watchlist_model.save()
 
 
 def add_media_model_to_watchlist_model(
     watchlist_model: WatchlistModel, media_model: MediaModel
 ):
-    # Empêcher l'ajout 2 fois
     watchlist_model.medias.add(media_model)
     watchlist_model.save()
 
@@ -251,15 +275,9 @@ def add_media_model_to_watchlist_model(
 def remove_media_model_from_watchlist_model(
     watchlist_model: WatchlistModel, media_model: MediaModel
 ):
-    # Intercepter les erreurs
     watchlist_model.medias.remove(media_model)
     watchlist_model.save()
 
 
 def delete_watchlist_model(watchlist_model: WatchlistModel):
-    try:
-        watchlist_model.delete()
-    except WatchlistModel.DoesNotExist:
-        raise ValueError(
-            f"Erreur lors de la suppression de la watchlist {watchlist_model.name}"
-        )
+    watchlist_model.delete()

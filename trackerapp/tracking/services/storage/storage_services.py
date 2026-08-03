@@ -4,7 +4,6 @@ from ...domain.anime import Anime
 from ...domain.manga import Manga
 from ...domain.media import Demographic, Genre, Media, Theme
 from ...domain.watchlist import Watchlist
-from ...enums import MediaCompletion
 from ...models.repository import repository
 from ...utils import TYPE_TO_CLASS
 
@@ -43,64 +42,12 @@ def get_media(mal_id: int, media_type: str) -> Media:
     )
 
 
-def get_medias(**kwargs) -> list[Media]:
+def get_medias_(**kwargs) -> list[Media]:
     medias_models = repository.get_medias_models(**kwargs)
-    return [
-        get_media(media_model.mal_id, media_model.type())
-        for media_model in medias_models
-    ]
+    return [Media.from_model(media_model) for media_model in medias_models]
 
 
-def create_media(media: Media) -> Media:
-    pass
-    """
-    media_model_cls: AnimeModel | MangaModel = DOMAIN_TO_MODEL[type(media)]
-    valid_fields = [
-        "mal_id",
-        "title",
-        "small_image_url",
-        "image_url",
-        "large_image_url",
-        "user_score",
-        "format",
-        "score",
-        "synopsis",
-        "number_sections",
-        "rank",
-        "status",
-        "user_score",
-        "user_completion",
-        "user_current_section",
-        "chapters",
-        "rating",
-    ]
-    data = {
-        field: value for field, value in media.__dict__.items() if field in valid_fields
-    }
-    repository.create_media_model(media)
-    media_model = media_model_cls.objects.create(**data)
-    media_model.user_completion = media.user_completion.value
-
-    repository._set_media_model_themes(media_model, media.themes)
-    repository._set_media_model_genres(media_model, media.genres)
-    repository._set_media_model_demographics(media_model, media.demographics)
-    if media.type == "anime":
-        repository._set_manga_model_authors(media_model, media.authors)
-    else:
-        repository._set_anime_model_studios(media_model, media.studios)
-
-    
-    media_model.relations.all().delete()
-    if not media.relations is None:
-        for relation in media.relations:
-            media_model.relations.create(
-                origin_media=media_model, relation_type=relation.type
-            )
-    
-    return media
-    """
-
-
+"""
 def update_media(media: Media):
     try:
         media_model = repository.get_media_model(media.mal_id, media.type())
@@ -113,8 +60,22 @@ def update_media(media: Media):
         raise ValueError(
             f"Mise à jour des données utilisateurs du média {media.mal_id} impossible."
         )
+"""
 
 
+def save_media(media: Media):
+    try:
+        media_model = repository.get_media_model(media.mal_id, media.type())
+        repository.set_media_model_user_completion(media_model, media.user_completion)
+        repository.set_media_model_user_current_section(
+            media_model, media.user_current_section
+        )
+        repository.set_media_model_user_score(media_model, media.user_score)
+    except IntegrityError:
+        repository.create_media_model(media)
+
+
+"""
 def set_media_user_completion(
     mal_id: int, media_type: str, new_completion: MediaCompletion
 ) -> str:
@@ -129,15 +90,7 @@ def set_media_user_current_section(
     return repository.set_media_model_user_current_section(
         media_model, new_current_section
     )
-
-
-def update_media_user_completion(
-    mal_id: int,
-    media_type: str,
-):
-    media_model = repository.get_media_model(mal_id=mal_id, media_type=media_type)
-    return repository._update_media_model_user_completion(media_model)
-
+"""
 
 # ANIME STORAGE SERVICES
 ##############################################################
@@ -192,6 +145,18 @@ def create_watchlist(watchlist: Watchlist) -> Watchlist:
     return watchlist
 
 
+def save_watchlist(watchlist: Watchlist):
+    try:
+        watchlist_model = repository.get_watchlist_model(watchlist.name)
+        repository.set_watchlist_model_medias(
+            watchlist_model,
+            [repository.get_or_create_media_model(media) for media in watchlist.medias],
+        )
+    except IntegrityError:
+        watchlist_model = repository.create_watchlist_model(watchlist)
+
+
+"""
 def add_media_to_watchlist(watchlist: Watchlist, media: Media) -> Watchlist:
     watchlist_model = repository.get_watchlist_model(watchlist.name)
     media_model = repository.get_media_model(media.mal_id, media.type())
@@ -204,6 +169,7 @@ def remove_media_from_watchlist(watchlist: Watchlist, media: Media) -> Watchlist
     media_model = repository.get_media_model(media.mal_id, media.type())
     repository.remove_media_model_from_watchlist_model(watchlist_model, media_model)
     return Watchlist.from_model(watchlist_model)
+"""
 
 
 def delete_watchlist(name: str):
