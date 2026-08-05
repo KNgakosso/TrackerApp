@@ -1,6 +1,6 @@
-from ..domain.anime import Anime
 from ..domain.media import Media
 from ..enums import MediaCompletion, MediaType
+from ..exceptions import MediaNotFoundError
 from ..forms import SectionNumberForm
 from ..services.api.tenrai import tenrai_services
 from ..services.storage import storage_services
@@ -9,14 +9,14 @@ from ..services.storage import storage_services
 def get_or_fetch_media(mal_id: int, media_type: MediaType) -> Media:
     try:
         return storage_services.get_media(mal_id=mal_id, media_type=media_type)
-    except ValueError:
+    except MediaNotFoundError:
         return tenrai_services.get_media_full(mal_id, media_type)
 
 
 def get_or_import_media(mal_id: int, media_type: MediaType) -> Media:
     try:
         return storage_services.get_media(mal_id=mal_id, media_type=media_type)
-    except ValueError:
+    except MediaNotFoundError:
         media = tenrai_services.get_media_full(mal_id, media_type)
         storage_services.save_media(media)
         return media

@@ -81,6 +81,11 @@ class MediaModel(PolymorphicModel):
         ]
 
 
+class SectionCompletion(models.TextChoices):
+    NOT_STARTED = "not_started", "Non commencé"
+    COMPLETED = "completed", "Terminé"
+
+
 """
 class RelationModel(models.Model):
     origin_media = models.ForeignKey(
@@ -93,8 +98,3 @@ class RelationModel(models.Model):
     image_url = models.CharField(blank=True)
     media_type = models.CharField(blank=True)
 """
-
-
-class SectionCompletion(models.TextChoices):
-    NOT_STARTED = "not_started", "Non commencé"
-    COMPLETED = "completed", "Terminé"

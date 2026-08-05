@@ -1,10 +1,9 @@
-from django.db import IntegrityError
-
 from ...domain.anime import Anime
 from ...domain.manga import Manga
 from ...domain.media import Demographic, Genre, Media, Theme
 from ...domain.watchlist import Watchlist
 from ...enums import MediaType
+from ...exceptions import MediaNotFoundError, WatchlistNotFoundError
 from ...models.repository import repository
 from ...utils import TYPE_TO_DOMAIN
 
@@ -76,7 +75,7 @@ def save_media(media: Media):
             media_model, media.user_current_section
         )
         repository.set_media_model_user_score(media_model, media.user_score)
-    except ValueError:
+    except MediaNotFoundError:
         repository.create_media_model(media)
 
 
@@ -134,22 +133,9 @@ def get_watchlists() -> list[Watchlist]:
     ]
 
 
-def set_watchlist_name(prev_name: str, new_name: str):
+def rename_watchlist(prev_name: str, new_name: str):
     watchlist_model = repository.get_watchlist_model(prev_name)
-    try:
-        watchlist_model.name = new_name
-        watchlist_model.save()
-    except IntegrityError:
-        raise ValueError(
-            f"Impossible de modifier le nom de la watchlist {prev_name} pour {new_name}"
-        )
-
-
-"""
-def create_watchlist(watchlist: Watchlist) -> Watchlist:
-    repository.create_watchlist_model(watchlist)
-    return watchlist
-"""
+    repository.set_watchlist_model_name(watchlist_model, new_name)
 
 
 def save_watchlist(watchlist: Watchlist):
@@ -159,7 +145,7 @@ def save_watchlist(watchlist: Watchlist):
             watchlist_model,
             [repository.get_or_create_media_model(media) for media in watchlist.medias],
         )
-    except ValueError:
+    except WatchlistNotFoundError:
         watchlist_model = repository.create_watchlist_model(watchlist)
 
 

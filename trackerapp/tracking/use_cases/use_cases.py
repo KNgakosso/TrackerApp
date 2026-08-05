@@ -94,7 +94,7 @@ def set_media_user_score(
 
 def rename_watchlist(name: str, watchlist_form: WatchlistForm) -> Watchlist:
     new_name = watchlist_form.cleaned_data["name"]
-    storage_services.set_watchlist_name(prev_name=name, new_name=new_name)
+    storage_services.rename_watchlist(prev_name=name, new_name=new_name)
     return storage_services.get_watchlist(new_name)
 
 
