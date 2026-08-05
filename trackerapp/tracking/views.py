@@ -2,6 +2,7 @@ from functools import wraps
 
 from django.shortcuts import redirect, render
 
+from .enums import MediaType
 from .external.exceptions import ExternalApiError
 from .forms import (
     ScoreForm,
@@ -35,16 +36,13 @@ def handle_api_errors(view):
 
 
 def index(request):
-    medias = basis.get_ongoing_medias()
-    watchlists = storage_services.get_watchlists()
-    search_form = SearchForm()
     return render(
         request,
         "tracking/index.html",
         context={
-            "watchlists": watchlists,
-            "search_form": search_form,
-            "medias": medias,
+            "watchlists": storage_services.get_watchlists(),
+            "search_form": SearchForm(),
+            "medias": basis.get_ongoing_medias(),
         },
     )
 
@@ -72,18 +70,15 @@ def research(request):
 
 @handle_api_errors
 def media_details(request, mal_id: int, media_type: str):
-    media = basis.get_or_fetch_media(mal_id, media_type)
-    watchlist_selection_form = WatchlistSelectionForm()
-    section_number_form = None
-    if not media.number_sections is None:
-        section_number_form = SectionNumberForm(max_value=media.number_sections)
+    media = basis.get_or_fetch_media(mal_id, MediaType(media_type))
+
     return render(
         request,
         "tracking/media_details.html",
         context={
             "media": media,
-            "watchlist_selection_form": watchlist_selection_form,
-            "section_number_form": section_number_form,
+            "watchlist_selection_form": WatchlistForm(),
+            "section_number_form": basis.get_section_number_form(media),
         },
     )
 
@@ -121,14 +116,14 @@ def add_media_to_watchlist(request, mal_id: int, media_type: str):
         if watchlist_selection_form.is_valid():
             watchlist_name = watchlist_selection_form.cleaned_data["name"]
             watchlist = use_cases.add_media_to_watchlist(
-                watchlist_name, mal_id, media_type
+                watchlist_name, mal_id, MediaType(media_type)
             )
             return redirect(
                 "tracking:media_details", mal_id=mal_id, media_type=media_type
             )
     else:
         watchlist_selection_form = WatchlistSelectionForm()
-    media = basis.get_or_fetch_media(mal_id, media_type)
+    media = basis.get_or_fetch_media(mal_id, MediaType(media_type))
     return render(
         request,
         "tracking/add_to_watchlist.html",
@@ -140,7 +135,7 @@ def remove_media_from_watchlist(
     request, watchlist_name: str, media_mal_id: int, media_type: str
 ):
     watchlist = use_cases.remove_media_from_watchlist(
-        watchlist_name, media_mal_id, media_type
+        watchlist_name, media_mal_id, MediaType(media_type)
     )
     return render(
         request, "tracking/watchlist_details.html", context={"watchlist": watchlist}
@@ -154,22 +149,36 @@ def delete_watchlist(request, name: str):
 
 
 def complete_media_next_section(request, mal_id: int, media_type: str):
-    media = use_cases.complete_media_next_section(mal_id, media_type)
-    return render(request, "tracking/media_details.html", context={"media": media})
+    media = use_cases.complete_media_next_section(mal_id, MediaType(media_type))
+    return render(
+        request,
+        "tracking/media_details.html",
+        context={
+            "media": media,
+            "watchlist_selection_form": WatchlistSelectionForm(),
+            "section_number_form": basis.get_section_number_form(media),
+        },
+    )
 
 
 def complete_media_section(request, mal_id: int, media_type: str):
+    media = "ca"
     if request.method == "POST":
-        section_number = SectionNumberForm(request.POST)
-        if section_number.is_valid():
+        section_number_form = SectionNumberForm(request.POST)
+        if section_number_form.is_valid():
             media = use_cases.set_media_current_user_section(
-                mal_id, media_type, section_number
+                mal_id, MediaType(media_type), section_number_form
             )
             return render(
-                request, "tracking/media_details.html", context={"media": media}
+                request,
+                "tracking/media_details.html",
+                context={
+                    "media": media,
+                    "watchlist_selection_form": WatchlistSelectionForm(),
+                    "section_number_form": basis.get_section_number_form(media),
+                },
             )
-    else:
-        section_number = basis.get_section_number_form(mal_id, media_type)
+
     return redirect("tracking:media_details", mal_id=mal_id, media_type=media_type)
 
 
@@ -177,13 +186,29 @@ def set_media_user_score(request, mal_id: int, media_type: str):
     if request.method == "POST":
         score_form = ScoreForm(request.POST)
         if score_form.is_valid():
-            media = use_cases.set_media_user_score(mal_id, media_type, score_form)
+            media = use_cases.set_media_user_score(
+                mal_id, MediaType(media_type), score_form
+            )
             return render(
-                request, "tracking/media_details.html", context={"media": media}
+                request,
+                "tracking/media_details.html",
+                context={
+                    "media": media,
+                    "watchlist_selection_form": WatchlistSelectionForm(),
+                    "section_number_form": basis.get_section_number_form(media),
+                },
             )
     else:
         score_form = ScoreForm()
-    return render(request, "tracking/index.html")
+    return render(
+        request,
+        "tracking/index.html",
+        context={
+            "watchlists": storage_services.get_watchlists(),
+            "search_form": SearchForm(),
+            "medias": basis.get_ongoing_medias(),
+        },
+    )
 
 
 """
@@ -200,8 +225,16 @@ def set_section_user_score(request, media_mal_id : int, media_type : str, sectio
 
 
 def finish_media(request, mal_id: int, media_type: str):
-    media = use_cases.finish_media(mal_id, media_type)
-    return render(request, "tracking/index.html", context={"media": media})
+    media = use_cases.finish_media(mal_id, MediaType(media_type))
+    return render(
+        request,
+        "tracking/index.html",
+        context={
+            "watchlists": storage_services.get_watchlists(),
+            "search_form": SearchForm(),
+            "medias": basis.get_ongoing_medias(),
+        },
+    )
 
 
 def rename_watchlist(request, name: str):
@@ -210,18 +243,29 @@ def rename_watchlist(request, name: str):
         if watchlist_form.is_valid():
             watchlist = use_cases.rename_watchlist(name, watchlist_form)
             return render(
-                request, "tracking/media_details.html", context={"watchlist": watchlist}
+                request,
+                "tracking/watchlist_details.html",
+                context={"watchlist": watchlist},
             )
     else:
         watchlist_form = WatchlistForm()
-    return render(request, "tracking/index.html")
+    return render(
+        request,
+        "tracking/index.html",
+        context={
+            "watchlists": storage_services.get_watchlists(),
+            "search_form": SearchForm(),
+            "medias": basis.get_ongoing_medias(),
+        },
+    )
 
 
 def watchlists(request):
-    watchlist_form = WatchlistForm()
-    watchlists = storage_services.get_watchlists()
     return render(
         request,
         "tracking/watchlists.html",
-        context={"watchlist_form": watchlist_form, "watchlists": watchlists},
+        context={
+            "watchlist_form": WatchlistForm(),
+            "watchlists": storage_services.get_watchlists(),
+        },
     )

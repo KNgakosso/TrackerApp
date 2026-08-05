@@ -96,7 +96,7 @@ def anime_schema_example(
     return make_anime_schema
 
 
-@pytest.fixture()
+# @pytest.fixture()
 def anime_example(
     theme_example,
     genre_example,

@@ -5,8 +5,8 @@ from django.db import IntegrityError
 
 from ...domain.media import Media
 from ...domain.watchlist import Watchlist
-from ...enums import MediaCompletion
-from ...utils import DOMAIN_TO_MODEL, TYPE_TO_MODEL
+from ...enums import MediaCompletion, MediaType
+from ...utils import TYPE_TO_MODEL
 from ..anime_models import AnimeModel, EpisodeModel, StudioModel
 from ..manga_models import AuthorModel, MangaModel
 from ..media_models import DemographicModel, GenreModel, MediaModel, ThemeModel
@@ -67,13 +67,29 @@ def _set_media_model_demographics(
 
 
 def create_media_model(media: Media) -> MediaModel:
-    media_model_cls: AnimeModel | MangaModel = DOMAIN_TO_MODEL[type(media)]
-    valid_fields = ["themes", "demographics", "genres", "authors", "studios"]
+    media_model_cls = TYPE_TO_MODEL[media.media_type]
+    valid_fields = [
+        "themes",
+        "demographics",
+        "genres",
+        "authors",
+        "studios",
+        "images_urls",
+    ]
     data = {
         field: value
         for field, value in media.__dict__.items()
         if not field in valid_fields
     }
+
+    data["small_image_url"] = (
+        media.images_urls.small_image_url if media.images_urls else ""
+    )
+    data["image_url"] = media.images_urls.image_url if media.images_urls else ""
+    data["large_image_url"] = (
+        media.images_urls.large_image_url if media.images_urls else ""
+    )
+
     media_model = media_model_cls.objects.create(**data)
     _set_media_model_themes(
         media_model, [get_theme_model(theme.name) for theme in media.themes]
@@ -93,10 +109,10 @@ def create_media_model(media: Media) -> MediaModel:
         _set_anime_model_studios(
             media_model, [get_studio_model(studio.mal_id) for studio in media.studios]
         )
-    return get_media_model(media.mal_id, type(media))
+    return get_media_model(media.mal_id, media.media_type)
 
 
-def get_media_model(mal_id: int, media_type: str) -> MediaModel:
+def get_media_model(mal_id: int, media_type: MediaType) -> MediaModel:
     try:
         media_model = MediaModel.objects.instance_of(TYPE_TO_MODEL[media_type]).get(
             mal_id=mal_id
@@ -108,7 +124,7 @@ def get_media_model(mal_id: int, media_type: str) -> MediaModel:
 
 def get_or_create_media_model(media: Media) -> MediaModel:
     try:
-        return get_media_model(media.mal_id, type(media))
+        return get_media_model(media.mal_id, media.media_type)
     except ValueError:
         return create_media_model(media)
 
@@ -171,7 +187,7 @@ def get_episode_model(anime_mal_id: int, episode_mal_id: int) -> EpisodeModel:
 def get_anime_model(mal_id: int) -> AnimeModel:
     try:
         return AnimeModel.objects.get(mal_id=mal_id)
-    except AnimeModel.DoesNotExist:
+    except (AnimeModel.DoesNotExist, ValueError):
         raise ValueError(f"Aucun animé trouvé pour l'id {mal_id}")
 
 
@@ -251,7 +267,10 @@ def create_watchlist_model(watchlist: Watchlist) -> WatchlistModel:
         watchlist_model = WatchlistModel.objects.create(**data)
         set_watchlist_model_medias(
             watchlist_model,
-            [get_media_model(media.mal_id, media.type()) for media in watchlist.medias],
+            [
+                get_media_model(media.mal_id, media.media_type)
+                for media in watchlist.medias
+            ],
         )
         return get_watchlist_model(watchlist.name)
     except IntegrityError:

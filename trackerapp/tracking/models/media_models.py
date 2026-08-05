@@ -5,7 +5,7 @@ from django.db import models
 from django.db.models import Q
 from polymorphic.models import PolymorphicModel
 
-from ..enums import MediaCompletion, MediaStatus
+from ..enums import MediaCompletion, MediaStatus, MediaType
 
 
 class GenreModel(models.Model):
@@ -68,7 +68,8 @@ class MediaModel(PolymorphicModel):
     )
     user_current_section = models.IntegerField(null=True, blank=True)
 
-    def type(self):
+    @property
+    def media_type(self) -> MediaType:
         raise NotImplementedError
 
     class Meta:

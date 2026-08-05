@@ -4,8 +4,9 @@ from ...domain.anime import Anime
 from ...domain.manga import Manga
 from ...domain.media import Demographic, Genre, Media, Theme
 from ...domain.watchlist import Watchlist
+from ...enums import MediaType
 from ...models.repository import repository
-from ...utils import TYPE_TO_CLASS
+from ...utils import TYPE_TO_DOMAIN
 
 # GENRE STORAGE SERVICES
 ##############################################################
@@ -35,16 +36,20 @@ def get_demographic(name: str) -> Demographic:
 ##############################################################
 
 
-def get_media(mal_id: int, media_type: str) -> Media:
-    media_cls = TYPE_TO_CLASS[media_type]
-    return media_cls.from_model(
+def get_media(mal_id: int, media_type: MediaType) -> Media:
+    media_class = TYPE_TO_DOMAIN[media_type]
+    return media_class.from_model(
         repository.get_media_model(mal_id=mal_id, media_type=media_type)
     )
 
 
-def get_medias_(**kwargs) -> list[Media]:
+def get_medias(**kwargs) -> list[Media]:
     medias_models = repository.get_medias_models(**kwargs)
-    return [Media.from_model(media_model) for media_model in medias_models]
+    medias = []
+    for media_model in medias_models:
+        media_class = TYPE_TO_DOMAIN[media_model.media_type]
+        medias.append(media_class.from_model(media_model))
+    return medias
 
 
 """
@@ -65,13 +70,13 @@ def update_media(media: Media):
 
 def save_media(media: Media):
     try:
-        media_model = repository.get_media_model(media.mal_id, media.type())
+        media_model = repository.get_media_model(media.mal_id, media.media_type)
         repository.set_media_model_user_completion(media_model, media.user_completion)
         repository.set_media_model_user_current_section(
             media_model, media.user_current_section
         )
         repository.set_media_model_user_score(media_model, media.user_score)
-    except IntegrityError:
+    except ValueError:
         repository.create_media_model(media)
 
 
@@ -140,9 +145,11 @@ def set_watchlist_name(prev_name: str, new_name: str):
         )
 
 
+"""
 def create_watchlist(watchlist: Watchlist) -> Watchlist:
     repository.create_watchlist_model(watchlist)
     return watchlist
+"""
 
 
 def save_watchlist(watchlist: Watchlist):
@@ -152,7 +159,7 @@ def save_watchlist(watchlist: Watchlist):
             watchlist_model,
             [repository.get_or_create_media_model(media) for media in watchlist.medias],
         )
-    except IntegrityError:
+    except ValueError:
         watchlist_model = repository.create_watchlist_model(watchlist)
 
 

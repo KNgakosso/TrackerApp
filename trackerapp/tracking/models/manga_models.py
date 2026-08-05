@@ -1,5 +1,6 @@
 from django.db import models
 
+from ..enums import MediaType
 from .media_models import MediaModel, SectionCompletion
 
 
@@ -12,8 +13,9 @@ class MangaModel(MediaModel):
     chapters = models.IntegerField(null=True, blank=True)
     authors = models.ManyToManyField(AuthorModel)
 
-    def type(self):
-        return "manga"
+    @property
+    def media_type(self):
+        return MediaType.MANGA
 
 
 class VolumeModel(models.Model):

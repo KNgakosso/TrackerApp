@@ -19,3 +19,6 @@ class Watchlist:
                 for media_model in watchlist_model.medias.all()
             ],
         )
+
+    def add_media(self, media: Media):
+        self.medias.append(media)

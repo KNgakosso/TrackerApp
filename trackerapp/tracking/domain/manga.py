@@ -1,5 +1,6 @@
 from dataclasses import dataclass
 
+from ..enums import MediaType
 from ..external.schemas.manga_schemas import AuthorSchema, MangaFullSchema, MangaSchema
 from ..models.manga_models import AuthorModel, MangaModel
 from .media import Media
@@ -24,8 +25,9 @@ class Manga(Media):
     chapters: int | None
     authors: list[Author]
 
-    def type(self):
-        return "manga"
+    @property
+    def media_type(self) -> MediaType:
+        return MediaType.MANGA
 
     @classmethod
     def from_schema(cls, manga_schema: MangaSchema | MangaFullSchema):

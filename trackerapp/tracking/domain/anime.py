@@ -1,6 +1,6 @@
 from dataclasses import dataclass
 
-from ..enums import AnimeRating
+from ..enums import AnimeRating, MediaType
 from ..external.schemas.anime_schemas import AnimeFullSchema, AnimeSchema, StudioSchema
 from ..models.anime_models import AnimeModel, StudioModel
 from .media import Media
@@ -26,8 +26,9 @@ class Anime(Media):
     duration: str | None
     rating: AnimeRating | None
 
-    def type(self):
-        return "anime"
+    @property
+    def media_type(self) -> MediaType:
+        return MediaType.ANIME
 
     @classmethod
     def from_schema(cls, anime_schema: AnimeSchema | AnimeFullSchema):

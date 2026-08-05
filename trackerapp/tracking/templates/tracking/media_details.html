@@ -12,12 +12,12 @@
                  alt="{{ media.title }}"
                  class="img-fluid rounded shadow">
             <div class="mt-3">
-                <span class="badge bg-secondary">{{ media.type|title }}</span>
+                <span class="badge bg-secondary">{{ media.media_type|title }}</span>
                 {% if media.score %}
                     <span class="badge bg-warning text-dark">⭐ {{ media.score }}</span>
                 {% endif %}
             </div>
-            {% if media.type == "anime" %}
+            {% if media.media_type == "anime" %}
                 <div class="card mt-4 text-start">
                     <div class="card-body">
                         <h5 class="card-title">Informations</h5>
@@ -46,7 +46,7 @@
                     </div>
                 </div>
             {% endif %}
-            {% if media.type == "manga" %}
+            {% if media.media_type == "manga" %}
                 {% if media.authors %}
                     <div class="card mt-4 text-start">
                         <div class="card-body">
@@ -176,14 +176,14 @@
                         <strong>{{ media.number_sections }}</strong>.
                     </p>
                     <div class="d-grid gap-2 mb-4">
-                        <a href="{% url 'tracking:complete_next' media.type media.mal_id %}"
+                        <a href="{% url 'tracking:complete_next' media.media_type media.mal_id %}"
                            class="btn btn-success">+1 section</a>
-                        <a href="{% url 'tracking:finish_media' media.type media.mal_id %}"
+                        <a href="{% url 'tracking:finish_media' media.media_type media.mal_id %}"
                            class="btn btn-outline-success">Marquer comme terminé</a>
                     </div>
                     {% if section_number_form %}
                         <hr>
-                        <form action="{% url 'tracking:set_current_section' media.type media.mal_id media.user_current_section %}"
+                        <form action="{% url 'tracking:set_current_section' media.media_type media.mal_id media.user_current_section %}"
                               method="post">
                             {% csrf_token %}
                             {{ section_number_form }}
@@ -197,7 +197,7 @@
             <div class="card h-100">
                 <div class="card-body">
                     <h5 class="card-title">Watchlists</h5>
-                    <form action="{% url 'tracking:add_to_watchlist' media.type media.mal_id %}"
+                    <form action="{% url 'tracking:add_to_watchlist' media.media_type media.mal_id %}"
                           method="post">
                         {% csrf_token %}
                         {% include "tracking/components/forms/_field.html" with field=watchlist_selection_form.name %}
@@ -205,7 +205,7 @@
                     </form>
                     <hr>
                     <h5>Ma note</h5>
-                    <form action="{% url 'tracking:set_media_user_score' media.type media.mal_id %}"
+                    <form action="{% url 'tracking:set_media_user_score' media.media_type media.mal_id %}"
                           method="post">
                         {% csrf_token %}
                         <button class="btn btn-outline-primary" type="submit">Enregistrer la note</button>

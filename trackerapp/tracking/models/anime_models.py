@@ -1,6 +1,6 @@
 from django.db import models
 
-from ..enums import AnimeRating
+from ..enums import AnimeRating, MediaType
 from .media_models import MediaModel, SectionCompletion
 
 
@@ -16,8 +16,9 @@ class AnimeModel(MediaModel):
         blank=True, choices=[(rating.value, rating.display) for rating in AnimeRating]
     )
 
-    def type(self):
-        return "anime"
+    @property
+    def media_type(self):
+        return MediaType.ANIME
 
 
 class EpisodeModel(models.Model):

@@ -3,7 +3,7 @@
     Ajouter à une watchlist | TrackAPP
 {% endblock title %}
 {% block content %}
-    <a href="{% url 'tracking:media_details' media.type media.mal_id %}"
+    <a href="{% url 'tracking:media_details' media.media_type media.mal_id %}"
        class="btn btn-outline-secondary mb-4">← Retour au média</a>
     <div class="row g-4">
         <!-- Média -->
@@ -17,7 +17,7 @@
                         Sélectionnez une watchlist existante dans laquelle ajouter
                         <strong>{{ media.title }}</strong>.
                     </p>
-                    <form action="{% url 'tracking:add_to_watchlist' media.type media.mal_id %}"
+                    <form action="{% url 'tracking:add_to_watchlist' media.media_type media.mal_id %}"
                           method="post">
                         {% csrf_token %}
                         {{ watchlist_selection_form }}

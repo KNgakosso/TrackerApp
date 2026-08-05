@@ -1,5 +1,6 @@
 from ..domain.media import Media, MediaCompletion
 from ..domain.watchlist import Watchlist
+from ..enums import MediaType
 from ..forms import ScoreForm, SectionNumberForm, WatchlistForm
 from ..services.storage import storage_services
 from . import basis
@@ -8,24 +9,28 @@ from . import basis
 def create_watchlist(watchlist_form: WatchlistForm) -> Watchlist:
     name = watchlist_form.cleaned_data["name"]
     watchlist = Watchlist(name=name, medias=[])
-    storage_services.create_watchlist_model(watchlist=watchlist)
+    storage_services.save_watchlist(watchlist=watchlist)
     return watchlist
 
 
 def add_media_to_watchlist(
-    watchlist_name: str, media_mal_id: int, media_type: str
+    watchlist_name: str, media_mal_id: int, media_type: MediaType
 ) -> Watchlist:
     watchlist = storage_services.get_watchlist(name=watchlist_name)
     media = basis.get_or_import_media(media_mal_id, media_type)
-    return storage_services.add_media_to_watchlist(watchlist, media)
+    watchlist.medias.append(media)
+    storage_services.save_watchlist(watchlist)
+    return storage_services.get_watchlist(watchlist_name)
 
 
 def remove_media_from_watchlist(
-    watchlist_name: str, media_mal_id: int, media_type: str
+    watchlist_name: str, media_mal_id: int, media_type: MediaType
 ) -> Watchlist:
     watchlist = storage_services.get_watchlist(name=watchlist_name)
     media = basis.get_or_import_media(media_mal_id, media_type)
-    return storage_services.remove_media_from_watchlist(watchlist, media)
+    watchlist.medias.remove(media)
+    storage_services.save_watchlist(watchlist)
+    return storage_services.get_watchlist(watchlist_name)
 
 
 def delete_watchlist(watchlist_name: str) -> list[Watchlist]:
@@ -44,41 +49,47 @@ def update_completion(current_section: int, max_section: int):
         return MediaCompletion.IN_PROGRESS
 
 
-def complete_media_next_section(mal_id: int, media_type: str) -> Media:
+def complete_media_next_section(mal_id: int, media_type: MediaType) -> Media:
     media = basis.get_or_import_media(mal_id, media_type)
     media.complete_next()
-    storage_services.update_media(media)
+    storage_services.save_media(media)
     return media
 
 
+#
+
+
 def set_media_current_user_section(
-    mal_id: int, media_type: str, section_number_form: SectionNumberForm
+    mal_id: int, media_type: MediaType, section_number_form: SectionNumberForm
 ) -> Media:
     new_current_section = section_number_form.cleaned_data["section_number"]
-    media = storage_services.get_media(mal_id, media_type)
+    media = basis.get_or_import_media(mal_id, media_type)
     if (
         media.user_current_section is None
         or new_current_section > media.user_current_section
     ):
         raise ValueError
-    media.user_current_section = new_current_section
-    media.user_completion = update_completion(
-        media.user_current_section, media.user_current_section
-    )
-    return storage_services.update_media(media)
+    media.define_current_section(new_current_section)
+    storage_services.save_media(media)
+    return storage_services.get_media(mal_id=mal_id, media_type=media_type)
 
 
-def finish_media(mal_id: int, media_type: str) -> Media:
+def finish_media(mal_id: int, media_type: MediaType) -> Media:
     media = basis.get_or_import_media(mal_id, media_type)
-    media.user_current_section = media.number_sections
-    media.user_completion = MediaCompletion.COMPLETED
-    return storage_services.update_media(media)
+    media.complete()
+    storage_services.save_media(media)
+
+    return storage_services.get_media(mal_id=mal_id, media_type=media_type)
 
 
-def set_media_user_score(mal_id: int, media_type: str, score_form: ScoreForm) -> Media:
-    media = storage_services.get_media(mal_id, media_type)
-    media.score = score_form.cleaned_data["score"]
-    return storage_services.update_media(media)
+def set_media_user_score(
+    mal_id: int, media_type: MediaType, score_form: ScoreForm
+) -> Media:
+    media = basis.get_or_import_media(mal_id, media_type)
+    media.user_score = score_form.cleaned_data["score"]
+    storage_services.save_media(media)
+
+    return storage_services.get_media(mal_id=mal_id, media_type=media_type)
 
 
 def rename_watchlist(name: str, watchlist_form: WatchlistForm) -> Watchlist:
