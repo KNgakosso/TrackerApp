@@ -183,7 +183,7 @@
                     </div>
                     {% if section_number_form %}
                         <hr>
-                        <form action="{% url 'tracking:set_current_section' media.media_type media.mal_id %}"
+                        <form action="{% url 'tracking:set_current_section' media.media_type media.mal_id media.user_current_section %}"
                               method="post">
                             {% csrf_token %}
                             {{ section_number_form }}
@@ -208,7 +208,6 @@
                     <form action="{% url 'tracking:set_media_user_score' media.media_type media.mal_id %}"
                           method="post">
                         {% csrf_token %}
-                        {{ score_form }}
                         <button class="btn btn-outline-primary" type="submit">Enregistrer la note</button>
                     </form>
                 </div>
