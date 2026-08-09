@@ -4,6 +4,8 @@ from typing import Any
 from django.core.exceptions import FieldError
 from django.db import IntegrityError
 
+from ...domain.anime import Studio
+from ...domain.manga import Author
 from ...domain.media import Media
 from ...domain.watchlist import Watchlist
 from ...enums import MediaCompletion, MediaType
@@ -120,12 +122,12 @@ def create_media_model(media: Media) -> MediaModel:
         if isinstance(media_model, MangaModel):
             _set_manga_model_authors(
                 media_model,
-                [get_author_model(author.mal_id) for author in media.authors],
+                [get_or_create_author_model(author) for author in media.authors],
             )
         elif isinstance(media_model, AnimeModel):
             _set_anime_model_studios(
                 media_model,
-                [get_studio_model(studio.mal_id) for studio in media.studios],
+                [get_or_create_studio_model(studio) for studio in media.studios],
             )
         return get_media_model(media.mal_id, media.media_type)
     except IntegrityError as exc:
@@ -230,6 +232,20 @@ def get_studio_model(mal_id: int) -> StudioModel:
         raise NotFoundError(f"No studio found with id : {mal_id}.") from exc
 
 
+def create_studio(studio: Studio) -> StudioModel:
+    try:
+        return StudioModel.objects.create(mal_id=studio.mal_id, name=studio.name)
+    except IntegrityError as exc:
+        raise StorageError(f"Error during creation of studio {studio.mal_id}") from exc
+
+
+def get_or_create_studio_model(studio: Studio) -> StudioModel:
+    try:
+        return get_studio_model(studio.mal_id)
+    except NotFoundError:
+        return create_studio(studio)
+
+
 def _set_anime_model_studios(anime_model: AnimeModel, studios: list[StudioModel]):
     anime_model.studios.set(studios)
     anime_model.save()
@@ -259,6 +275,20 @@ def get_author_model(mal_id: int) -> AuthorModel:
         return AuthorModel.objects.get(mal_id=mal_id)
     except AuthorModel.DoesNotExist as exc:
         raise NotFoundError(f"No author found with id : {mal_id}.") from exc
+
+
+def create_author(author: Author) -> AuthorModel:
+    try:
+        return AuthorModel.objects.create(mal_id=author.mal_id, name=author.name)
+    except IntegrityError as exc:
+        raise StorageError(f"Error during creation of author {author.mal_id}") from exc
+
+
+def get_or_create_author_model(author: Author) -> AuthorModel:
+    try:
+        return get_author_model(author.mal_id)
+    except NotFoundError:
+        return create_author(author)
 
 
 def _set_manga_model_authors(manga_model: MangaModel, authors: list[AuthorModel]):
