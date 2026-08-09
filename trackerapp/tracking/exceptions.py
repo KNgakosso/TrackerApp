@@ -30,5 +30,5 @@ class InvalidScoreError(MediaError):
     pass
 
 
-class ExternalApiError(TrackingError):
+class TenraiApiError(TrackingError):
     pass

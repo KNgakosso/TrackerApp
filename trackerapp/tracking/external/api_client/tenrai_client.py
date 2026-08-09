@@ -1,6 +1,6 @@
 import requests
 
-from ...exceptions import ExternalApiError
+from ..exceptions import ExternalApiError
 from ..schemas.anime_schemas import AnimeFullSchema, AnimeSchema, AnimeSearchSchema
 from ..schemas.episodes_schemas import EpisodeSchema
 from ..schemas.manga_schemas import MangaFullSchema, MangaSchema, MangaSearchSchema

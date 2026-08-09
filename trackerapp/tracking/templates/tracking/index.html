@@ -22,9 +22,9 @@
   </form>
   <h2 class="mb-4">{% trans "My ongoing medias" %}</h2>
   {% if medias %}
-    <div class="row g-4">
+    <div class="row">
       {% for media in medias %}
-        <div class="col-sm-6 col-md-4 col-lg-3 col-xl-2">{% include "tracking/components/_media_card.html" %}</div>
+        <div class="col-md-6 col-lg-4 mb-4">{% include "tracking/components/_media_card.html" %}</div>
       {% endfor %}
     </div>
   {% else %}
