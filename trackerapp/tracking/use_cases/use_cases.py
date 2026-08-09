@@ -66,7 +66,7 @@ def set_media_current_user_section(
     media = basis.get_or_import_media(mal_id, media_type)
     if (
         media.user_current_section is None
-        or new_current_section > media.user_current_section
+        or new_current_section > media.number_sections
     ):
         raise ValueError
     media.define_current_section(new_current_section)
