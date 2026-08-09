@@ -79,6 +79,7 @@ def media_details(request, mal_id: int, media_type: str):
             "media": media,
             "watchlist_selection_form": WatchlistForm(),
             "section_number_form": basis.get_section_number_form(media),
+            "score_form": ScoreForm(),
         },
     )
 
@@ -157,14 +158,14 @@ def complete_media_next_section(request, mal_id: int, media_type: str):
             "media": media,
             "watchlist_selection_form": WatchlistSelectionForm(),
             "section_number_form": basis.get_section_number_form(media),
+            "score_form": ScoreForm(),
         },
     )
 
 
 def complete_media_section(request, mal_id: int, media_type: str):
-    media = "ca"
     if request.method == "POST":
-        section_number_form = SectionNumberForm(request.POST)
+        section_number_form = SectionNumberForm(request.POST, max_value=100)
         if section_number_form.is_valid():
             media = use_cases.set_media_current_user_section(
                 mal_id, MediaType(media_type), section_number_form
@@ -176,6 +177,7 @@ def complete_media_section(request, mal_id: int, media_type: str):
                     "media": media,
                     "watchlist_selection_form": WatchlistSelectionForm(),
                     "section_number_form": basis.get_section_number_form(media),
+                    "score_form": ScoreForm(),
                 },
             )
 
@@ -196,6 +198,7 @@ def set_media_user_score(request, mal_id: int, media_type: str):
                     "media": media,
                     "watchlist_selection_form": WatchlistSelectionForm(),
                     "section_number_form": basis.get_section_number_form(media),
+                    "score_form": ScoreForm(),
                 },
             )
     else:

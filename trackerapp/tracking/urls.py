@@ -34,7 +34,7 @@ urlpatterns = [
         name="complete_next",
     ),
     path(
-        "media/<str:media_type>/<int:mal_id>/finish/<int:new_current_section>",
+        "media/<str:media_type>/<int:mal_id>/finish/select",
         views.complete_media_section,
         name="set_current_section",
     ),
