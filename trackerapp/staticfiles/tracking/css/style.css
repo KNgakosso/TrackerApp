@@ -1,0 +1,85 @@
+/* ==========================================================
+   FORMULAIRES
+   ========================================================== */
+
+.form-check {
+    margin-bottom: 0.35rem;
+}
+
+.form-check-label,
+.form-check-input {
+    cursor: pointer;
+}
+
+
+/* ==========================================================
+   FILTER CHIPS
+   ========================================================== */
+
+.filter-group {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+
+.filter-group input[type="checkbox"] {
+    position: absolute;
+    opacity: 0;
+    pointer-events: none;
+}
+
+.filter-chip {
+    display: inline-block;
+
+    padding: 0.45rem 0.9rem;
+
+    background-color: #212529;
+    border: 1px solid #6c757d;
+    border-radius: 999px;
+
+    color: #dee2e6 !important;
+    text-decoration: none;
+
+    cursor: pointer;
+    user-select: none;
+
+    transition:
+        background-color .2s,
+        border-color .2s,
+        color .2s,
+        transform .15s;
+}
+
+.filter-chip:hover {
+    background-color: #343a40;
+    border-color: #adb5bd;
+    color: #ffffff !important;
+    transform: translateY(-1px);
+}
+
+.filter-group input[type="checkbox"]:checked + .filter-chip {
+    background-color: #0d6efd;
+    border-color: #0d6efd;
+    color: #ffffff !important;
+}
+
+/* ===========================
+   MEDIA CARDS
+   =========================== */
+
+.card {
+    transition: transform .2s ease, box-shadow .2s ease;
+}
+
+.card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 .75rem 1.5rem rgba(0, 0, 0, .35);
+}
+
+.card-title {
+    min-height: 3rem;
+}
+
+.card-img-top {
+    object-fit: cover;
+}
