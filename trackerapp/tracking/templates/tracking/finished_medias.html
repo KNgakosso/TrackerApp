@@ -1,6 +1,7 @@
 {% extends "tracking/base.html" %}
+{% load i18n %}
 {% block title %}
-  Médias terminés | TrackAPP
+  {% trans "Completed medias" %} | TrackAPP
 {% endblock title %}
 {% block content %}
   {% include "tracking/components/_page_header.html" with title="Médias terminés" subtitle="Retrouvez tous les animes et mangas que vous avez terminés." %}

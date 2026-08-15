@@ -1,10 +1,11 @@
 {% extends "tracking/base.html" %}
+{% load i18n %}
 {% block title %}
-    Ajouter à une watchlist | TrackAPP
+    {% trans "Add to a watchlist" %} | TrackAPP
 {% endblock title %}
 {% block content %}
     <a href="{% url 'tracking:media_details' media.media_type media.mal_id %}"
-       class="btn btn-outline-secondary mb-4">← Retour au média</a>
+       class="btn btn-outline-secondary mb-4">← {% trans "Back to home" %}</a>
     <div class="row g-4">
         <!-- Média -->
         <div class="col-lg-4">{% include "tracking/components/_media_card.html" %}</div>
@@ -12,16 +13,16 @@
         <div class="col-lg-8">
             <div class="card">
                 <div class="card-body">
-                    <h1 class="card-title mb-3">Ajouter à une watchlist</h1>
+                    <h1 class="card-title mb-3">{% trans "Add to a watchlist" %}</h1>
                     <p class="text-secondary">
-                        Sélectionnez une watchlist existante dans laquelle ajouter
+                        {% trans "Select an existing watchlist" %}
                         <strong>{{ media.title }}</strong>.
                     </p>
                     <form action="{% url 'tracking:add_to_watchlist' media.media_type media.mal_id %}"
                           method="post">
                         {% csrf_token %}
                         {{ watchlist_selection_form }}
-                        <button type="submit" class="btn btn-primary mt-3">Ajouter à la watchlist</button>
+                        <button type="submit" class="btn btn-primary mt-3">{% trans "Add to the watchlist" %}</button>
                     </form>
                 </div>
             </div>

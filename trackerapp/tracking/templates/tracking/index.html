@@ -1,4 +1,5 @@
 {% extends "tracking/base.html" %}
+{% load i18n %}
 {% block title %}
   Accueil | TrackAPP
 {% endblock title %}
@@ -6,11 +7,20 @@
   <h1 class="mb-4">TrackAPP</h1>
   <div class="card mb-5">
     <div class="card-body">
-      <h2 class="card-title">Rechercher un anime ou un manga</h2>
+      <h2 class="card-title">{% trans "Research for an anime or a manga" %}</h2>
       {% include "tracking/components/forms/_search_form.html" with form=search_form mode="advanced" %}
     </div>
   </div>
-  <h2 class="mb-4">Mes médias en cours</h2>
+  <form action="{% url 'set_language' %}" method="post">
+    {% csrf_token %}
+    <input type="hidden" name="next" value="{{ request.path }}">
+    <select name="language">
+      <option value="fr">Français</option>
+      <option value="en">English</option>
+    </select>
+    <button type="submit">{% trans "Change" %}</button>
+  </form>
+  <h2 class="mb-4">{% trans "My ongoing medias" %}</h2>
   {% if medias %}
     <div class="row g-4">
       {% for media in medias %}
@@ -18,10 +28,10 @@
       {% endfor %}
     </div>
   {% else %}
-    <div class="alert alert-secondary">Aucun média en cours.</div>
+    <div class="alert alert-secondary">{% trans "No ongoing medias" %}.</div>
   {% endif %}
   <hr class="my-5" />
-  <h2 class="mb-4">Mes watchlists</h2>
+  <h2 class="mb-4">{% trans "My watchlists" %}</h2>
   {% if watchlists %}
     <div class="list-group">
       {% for watchlist in watchlists %}
@@ -33,6 +43,6 @@
       {% endfor %}
     </div>
   {% else %}
-    <div class="alert alert-secondary">Aucune watchlist créée.</div>
+    <div class="alert alert-secondary">{% trans "No created watchlist" %}.</div>
   {% endif %}
 {% endblock content %}

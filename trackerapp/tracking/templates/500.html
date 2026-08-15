@@ -1,13 +1,14 @@
 {% extends "tracking/base.html" %}
+{% load i18n %}
 {% block title %}
-    Erreur serveur | TrackAPP
+    {% trans "Internal servor error" %} | TrackAPP
 {% endblock title %}
 {% block content %}
     <div class="text-center py-5">
         <div class="display-1 mb-4">⚠️</div>
         <h1 class="display-4">500</h1>
-        <p class="lead">Une erreur interne est survenue.</p>
-        <p class="text-muted mb-4">Veuillez réessayer dans quelques instants.</p>
-        <a href="{% url 'tracking:index' %}" class="btn btn-primary">Retour à l'accueil</a>
+        <p class="lead">{% trans "An internal server error occured" %}.</p>
+        <p class="text-muted mb-4">{% trans "Please try again in few minutes" %}.</p>
+        <a href="{% url 'tracking:index' %}" class="btn btn-primary">{% trans "Back to home" %}</a>
     </div>
 {% endblock content %}

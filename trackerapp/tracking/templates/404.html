@@ -1,13 +1,14 @@
 {% extends "tracking/base.html" %}
+{% load i18n %}
 {% block title %}
-    Page introuvable | TrackAPP
+    {% trans "Page not found" %} | TrackAPP
 {% endblock title %}
 {% block content %}
     <div class="text-center py-5">
         <div class="display-1 mb-4">🔍</div>
         <h1 class="display-4">404</h1>
-        <p class="lead">Cette page n'existe pas.</p>
-        <p class="text-muted mb-4">Le lien est peut-être incorrect ou la page a été déplacée.</p>
-        <a href="{% url 'tracking:index' %}" class="btn btn-primary">Retour à l'accueil</a>
+        <p class="lead">{% trans "This page doesn't exist" %}.</p>
+        <p class="text-muted mb-4">{% trans "The link may be incorrect or the page has been moved" %}.</p>
+        <a href="{% url 'tracking:index' %}" class="btn btn-primary">{% trans "Back to home" %}</a>
     </div>
 {% endblock content %}

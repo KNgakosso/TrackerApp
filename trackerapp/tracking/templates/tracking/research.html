@@ -1,6 +1,7 @@
 {% extends "tracking/base.html" %}
+{% load i18n %}
 {% block title %}
-    Recherche | TrackAPP
+    {% trans "Search" %} | TrackAPP
 {% endblock title %}
 {% block content %}
     {% include "tracking/components/_page_header.html" with title="Rechercher un anime ou un manga" subtitle="Utilisez les filtres pour affiner vos résultats." %}
@@ -11,10 +12,10 @@
     </div>
     {% if search_results %}
         <div class="d-flex justify-content-between align-items-center mb-4">
-            <h2 class="mb-0">Résultats</h2>
+            <h2 class="mb-0">{% trans "Results" %}</h2>
             <span class="badge bg-secondary">
                 {{ search_results|length }}
-                résultat{{ search_results|length|pluralize }}
+                {% trans "result" %}{{ search_results|length|pluralize }}
             </span>
         </div>
         <div class="row g-4">

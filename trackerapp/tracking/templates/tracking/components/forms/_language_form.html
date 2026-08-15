@@ -1,0 +1,9 @@
+<form action="{% url 'set_language' %}" method="post">
+    {% csrf_token %}
+    <input type="hidden" name="next" value="{{ request.path }}">
+    <select name="language">
+        <option value="fr">Français</option>
+        <option value="en">English</option>
+    </select>
+    <button type="submit">Changer</button>
+</form>
