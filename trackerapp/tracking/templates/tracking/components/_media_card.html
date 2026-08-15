@@ -13,11 +13,11 @@
             {% endif %}
         </div>
         {% if show_progress %}
-            <p class="small text-muted mb-3">Progression : {{ media.user_completion }}</p>
+            <p class="small text-muted mb-3">{% trans "Completion" %} : {{ media.user_completion }}</p>
         {% endif %}
         <div class="mt-auto">
             <a href="{% url 'tracking:media_details' media.media_type media.mal_id %}"
-               class="btn btn-primary w-100">Voir les détails</a>
+               class="btn btn-primary w-100">{% trans "See details" %}</a>
         </div>
     </div>
 </div>

@@ -1,10 +1,11 @@
 {% extends "tracking/base.html" %}
+{% load i18n %}
 {% block title %}
     {{ media.title }} | TrackAPP
 {% endblock title %}
 {% block content %}
     <a href="javascript:history.back()"
-       class="btn btn-outline-secondary mb-4">← Retour</a>
+       class="btn btn-outline-secondary mb-4">← {% trans "Back" %}</a>
     <div class="row g-4 mb-5">
         <!-- Affiche -->
         <div class="col-lg-4 text-center">
@@ -20,24 +21,24 @@
             {% if media.media_type == "anime" %}
                 <div class="card mt-4 text-start">
                     <div class="card-body">
-                        <h5 class="card-title">Informations</h5>
+                        <h5 class="card-title">{% trans "Informations" %}</h5>
                         {% if media.duration %}
                             <p class="mb-2">
-                                <strong>Durée :</strong>
+                                <strong>{% trans "Duration" %} :</strong>
                                 <br>
                                 {{ media.duration }}
                             </p>
                         {% endif %}
                         {% if media.rating %}
                             <p class="mb-2">
-                                <strong>Classification :</strong>
+                                <strong>{% trans "Classification" %} :</strong>
                                 <br>
                                 {{ media.rating }}
                             </p>
                         {% endif %}
                         {% if media.studios %}
                             <p class="mb-1">
-                                <strong>Studios</strong>
+                                <strong>{% trans "Studios" %}</strong>
                             </p>
                             {% for studio in media.studios %}
                                 <span class="badge bg-dark border border-secondary me-1 mb-1">{{ studio.name }}</span>
@@ -50,7 +51,7 @@
                 {% if media.authors %}
                     <div class="card mt-4 text-start">
                         <div class="card-body">
-                            <h5 class="card-title">Auteurs</h5>
+                            <h5 class="card-title">{% trans "Authors" %}</h5>
                             {% for author in media.authors %}
                                 <span class="badge bg-dark border border-secondary me-1 mb-1">{{ author.name }}</span>
                             {% endfor %}
@@ -66,7 +67,7 @@
                 <div class="col-md-6">
                     <div class="card h-100">
                         <div class="card-body">
-                            <small class="text-muted">Votre note</small>
+                            <small class="text-muted">{% trans "Your note" %}</small>
                             <h4 class="mb-0">
                                 {% if media.user_score %}
                                     ⭐ {{ media.user_score }}
@@ -80,7 +81,7 @@
                 <div class="col-md-6">
                     <div class="card h-100">
                         <div class="card-body">
-                            <small class="text-muted">Classement MAL</small>
+                            <small class="text-muted">{% trans "Ranking" %}</small>
                             <h4 class="mb-0">
                                 {% if media.rank %}
                                     #{{ media.rank }}
@@ -94,7 +95,7 @@
                 <div class="col-md-6">
                     <div class="card h-100">
                         <div class="card-body">
-                            <small class="text-muted">Statut</small>
+                            <small class="text-muted">{% trans "Status" %}</small>
                             <h5 class="mb-0">{{ media.status|default:"Inconnu" }}</h5>
                         </div>
                     </div>
@@ -102,7 +103,7 @@
                 <div class="col-md-6">
                     <div class="card h-100">
                         <div class="card-body">
-                            <small class="text-muted">Progression</small>
+                            <small class="text-muted">{% trans "Completion" %}</small>
                             <h5 class="mb-0">{{ media.user_completion }}</h5>
                         </div>
                     </div>
@@ -110,11 +111,11 @@
             </div>
             <div class="card">
                 <div class="card-body">
-                    <h5 class="card-title">Synopsis</h5>
+                    <h5 class="card-title">{% trans "Synopsis" %}</h5>
                     {% if media.synopsis %}
                         <p class="mb-0">{{ media.synopsis }}</p>
                     {% else %}
-                        <p class="text-muted mb-0">Aucun synopsis disponible.</p>
+                        <p class="text-muted mb-0">{% trans "No synosis available" %}.</p>
                     {% endif %}
                 </div>
             </div>
@@ -124,13 +125,13 @@
         <div class="col-md-4">
             <div class="card h-100">
                 <div class="card-body">
-                    <h5 class="card-title">Genres</h5>
+                    <h5 class="card-title">{% trans "Genres" %}</h5>
                     {% if media.genres %}
                         {% for genre in media.genres %}
                             <span class="badge bg-primary me-1 mb-1">{{ genre.name }}</span>
                         {% endfor %}
                     {% else %}
-                        <p class="text-muted mb-0">Aucun</p>
+                        <p class="text-muted mb-0">{% trans "None" %}</p>
                     {% endif %}
                 </div>
             </div>
@@ -138,13 +139,13 @@
         <div class="col-md-4">
             <div class="card h-100">
                 <div class="card-body">
-                    <h5 class="card-title">Thèmes</h5>
+                    <h5 class="card-title">{% trans "Themes" %}</h5>
                     {% if media.themes %}
                         {% for theme in media.themes %}
                             <span class="badge bg-info text-dark me-1 mb-1">{{ theme.name }}</span>
                         {% endfor %}
                     {% else %}
-                        <p class="text-muted mb-0">Aucun</p>
+                        <p class="text-muted mb-0">{% trans "None" %}</p>
                     {% endif %}
                 </div>
             </div>
@@ -152,13 +153,13 @@
         <div class="col-md-4">
             <div class="card h-100">
                 <div class="card-body">
-                    <h5 class="card-title">Démographie</h5>
+                    <h5 class="card-title">{% trans "Demographic" %}</h5>
                     {% if media.demographics %}
                         {% for demographic in media.demographics %}
                             <span class="badge bg-success me-1 mb-1">{{ demographic.name }}</span>
                         {% endfor %}
                     {% else %}
-                        <p class="text-muted mb-0">Aucun</p>
+                        <p class="text-muted mb-0">{% trans "None" %}</p>
                     {% endif %}
                 </div>
             </div>
@@ -168,18 +169,18 @@
         <div class="col-lg-6">
             <div class="card h-100">
                 <div class="card-body">
-                    <h5 class="card-title">Ma progression</h5>
+                    <h5 class="card-title">{% trans "My completion" %}</h5>
                     <p class="text-muted">
-                        Vous êtes actuellement à la section
+                        {% trans "You are currently at section" %}
                         <strong>{{ media.user_current_section }}</strong>
-                        sur
+                        {% trans "over" %}
                         <strong>{{ media.number_sections }}</strong>.
                     </p>
                     <div class="d-grid gap-2 mb-4">
                         <a href="{% url 'tracking:complete_next' media.media_type media.mal_id %}"
-                           class="btn btn-success">+1 section</a>
+                           class="btn btn-success">+1 {% trans "section" %}</a>
                         <a href="{% url 'tracking:finish_media' media.media_type media.mal_id %}"
-                           class="btn btn-outline-success">Marquer comme terminé</a>
+                           class="btn btn-outline-success">{% trans "Mark as finished" %}</a>
                     </div>
                     {% if section_number_form %}
                         <hr>
@@ -187,7 +188,7 @@
                               method="post">
                             {% csrf_token %}
                             {{ section_number_form }}
-                            <button class="btn btn-primary mt-3" type="submit">Définir la progression</button>
+                            <button class="btn btn-primary mt-3" type="submit">{% trans "Define completion" %}</button>
                         </form>
                     {% endif %}
                 </div>
@@ -196,20 +197,20 @@
         <div class="col-lg-6">
             <div class="card h-100">
                 <div class="card-body">
-                    <h5 class="card-title">Watchlists</h5>
+                    <h5 class="card-title">{% trans "Watchlists" %}</h5>
                     <form action="{% url 'tracking:add_to_watchlist' media.media_type media.mal_id %}"
                           method="post">
                         {% csrf_token %}
                         {% include "tracking/components/forms/_field.html" with field=watchlist_selection_form.name %}
-                        <button class="btn btn-primary mt-3" type="submit">Ajouter à une watchlist</button>
+                        <button class="btn btn-primary mt-3" type="submit">{% trans "Add to a watchlist" %}</button>
                     </form>
                     <hr>
-                    <h5>Ma note</h5>
+                    <h5>{% trans "My score" %}</h5>
                     <form action="{% url 'tracking:set_media_user_score' media.media_type media.mal_id %}"
                           method="post">
                         {% csrf_token %}
                         {{ score_form }}
-                        <button class="btn btn-outline-primary" type="submit">Enregistrer la note</button>
+                        <button class="btn btn-outline-primary" type="submit">{% trans "Register the score" %}</button>
                     </form>
                 </div>
             </div>

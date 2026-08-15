@@ -1,0 +1,305 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-08-15 17:32+0200\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: .\tracking\templates\404.html:4
+msgid "Page not found"
+msgstr "Page not found"
+
+#: .\tracking\templates\404.html:10
+msgid "This page doesn't exist"
+msgstr "This page doesn't exist"
+
+#: .\tracking\templates\404.html:11
+msgid "The link may be incorrect or the page has been moved"
+msgstr "The link may be incorrect or the page has been moved"
+
+#: .\tracking\templates\404.html:12 .\tracking\templates\500.html:12
+#: .\tracking\templates\tracking\add_to_watchlist.html:8
+msgid "Back to home"
+msgstr "Back to home"
+
+#: .\tracking\templates\500.html:4
+msgid "Internal servor error"
+msgstr "Internal servor error"
+
+#: .\tracking\templates\500.html:10
+msgid "An internal server error occured"
+msgstr "An internal server error occured"
+
+#: .\tracking\templates\500.html:11
+msgid "Please try again in few minutes"
+msgstr "Please try again in few minutes"
+
+#: .\tracking\templates\tracking\add_to_watchlist.html:4
+#: .\tracking\templates\tracking\add_to_watchlist.html:16
+#: .\tracking\templates\tracking\media_details.html:205
+msgid "Add to a watchlist"
+msgstr "Add to a watchlist"
+
+#: .\tracking\templates\tracking\add_to_watchlist.html:18
+msgid "Select an existing watchlist"
+msgstr "Select an existing watchlist"
+
+#: .\tracking\templates\tracking\add_to_watchlist.html:25
+msgid "Add to the watchlist"
+msgstr "Add to the watchlist"
+
+#: .\tracking\templates\tracking\api_error.html:4
+msgid "Service unavailable"
+msgstr "Service unavailable"
+
+#: .\tracking\templates\tracking\base.html:37
+msgid "Home"
+msgstr "Home"
+
+#: .\tracking\templates\tracking\base.html:38
+msgid "New search"
+msgstr "New search"
+
+#: .\tracking\templates\tracking\base.html:39
+#: .\tracking\templates\tracking\media_details.html:200
+#: .\tracking\templates\tracking\watchlists.html:4
+msgid "Watchlists"
+msgstr "Watchlists"
+
+#: .\tracking\templates\tracking\base.html:40
+msgid "Completed"
+msgstr "Completed"
+
+#: .\tracking\templates\tracking\base.html:52
+msgid "Project protfolio Django"
+msgstr "Project protfolio Django"
+
+#: .\tracking\templates\tracking\components\_media_card.html:16
+#: .\tracking\templates\tracking\media_details.html:106
+msgid "Completion"
+msgstr "Completion"
+
+#: .\tracking\templates\tracking\components\_media_card.html:20
+msgid "See details"
+msgstr "See details"
+
+#: .\tracking\templates\tracking\components\forms\_search_form.html:9
+msgid "Filters"
+msgstr "Filters"
+
+#: .\tracking\templates\tracking\components\forms\_search_form.html:13
+msgid "Type"
+msgstr "Type"
+
+#: .\tracking\templates\tracking\components\forms\_search_form.html:16
+msgid "Score"
+msgstr "Score"
+
+#: .\tracking\templates\tracking\components\forms\_search_form.html:19
+#: .\tracking\templates\tracking\media_details.html:84
+msgid "Ranking"
+msgstr "Ranking"
+
+#: .\tracking\templates\tracking\components\forms\_search_form.html:22
+#: .\tracking\templates\tracking\media_details.html:128
+msgid "Genres"
+msgstr "Genres"
+
+#: .\tracking\templates\tracking\components\forms\_search_form.html:25
+#: .\tracking\templates\tracking\media_details.html:142
+msgid "Themes"
+msgstr "Themes"
+
+#: .\tracking\templates\tracking\components\forms\_search_form.html:28
+msgid "Public"
+msgstr "Public"
+
+#: .\tracking\templates\tracking\components\forms\_search_form.html:36
+#: .\tracking\templates\tracking\research.html:4
+msgid "Search"
+msgstr "Search"
+
+#: .\tracking\templates\tracking\finished_medias.html:4
+msgid "Completed medias"
+msgstr "Completed medias"
+
+#: .\tracking\templates\tracking\index.html:10
+msgid "Research for an anime or a manga"
+msgstr "Research for an anime or a manga"
+
+#: .\tracking\templates\tracking\index.html:21
+msgid "Change"
+msgstr "Change"
+
+#: .\tracking\templates\tracking\index.html:23
+msgid "My ongoing medias"
+msgstr "My ongoing medias"
+
+#: .\tracking\templates\tracking\index.html:31
+#, fuzzy
+#| msgid "My ongoing medias"
+msgid "No ongoing medias"
+msgstr "My ongoing medias"
+
+#: .\tracking\templates\tracking\index.html:34
+msgid "My watchlists"
+msgstr "My watchlists"
+
+#: .\tracking\templates\tracking\index.html:46
+msgid "No created watchlist"
+msgstr "No created watchlist"
+
+#: .\tracking\templates\tracking\media_details.html:8
+msgid "Back"
+msgstr "Back"
+
+#: .\tracking\templates\tracking\media_details.html:24
+msgid "Informations"
+msgstr "Informations"
+
+#: .\tracking\templates\tracking\media_details.html:27
+msgid "Duration"
+msgstr "Duration"
+
+#: .\tracking\templates\tracking\media_details.html:34
+msgid "Classification"
+msgstr "Classification"
+
+#: .\tracking\templates\tracking\media_details.html:41
+msgid "Studios"
+msgstr "Studios"
+
+#: .\tracking\templates\tracking\media_details.html:54
+msgid "Authors"
+msgstr "Authors"
+
+#: .\tracking\templates\tracking\media_details.html:70
+msgid "Your note"
+msgstr "Your note"
+
+#: .\tracking\templates\tracking\media_details.html:98
+msgid "Status"
+msgstr "Status"
+
+#: .\tracking\templates\tracking\media_details.html:114
+msgid "Synopsis"
+msgstr "Synopsis"
+
+#: .\tracking\templates\tracking\media_details.html:118
+msgid "No synosis available"
+msgstr "No synosis available"
+
+#: .\tracking\templates\tracking\media_details.html:134
+#: .\tracking\templates\tracking\media_details.html:148
+#: .\tracking\templates\tracking\media_details.html:162
+msgid "None"
+msgstr "None"
+
+#: .\tracking\templates\tracking\media_details.html:156
+msgid "Demographic"
+msgstr "Demographic"
+
+#: .\tracking\templates\tracking\media_details.html:172
+msgid "My completion"
+msgstr "My completion"
+
+#: .\tracking\templates\tracking\media_details.html:174
+msgid "You are currently at section"
+msgstr "You are currently at section"
+
+#: .\tracking\templates\tracking\media_details.html:176
+msgid "over"
+msgstr "over"
+
+#: .\tracking\templates\tracking\media_details.html:181
+msgid "section"
+msgstr "section"
+
+#: .\tracking\templates\tracking\media_details.html:183
+msgid "Mark as finished"
+msgstr "Mark as finished"
+
+#: .\tracking\templates\tracking\media_details.html:191
+msgid "Define completion"
+msgstr "Define completion"
+
+#: .\tracking\templates\tracking\media_details.html:208
+msgid "My score"
+msgstr "My score"
+
+#: .\tracking\templates\tracking\media_details.html:213
+msgid "Register the score"
+msgstr "Register the score"
+
+#: .\tracking\templates\tracking\research.html:15
+msgid "Results"
+msgstr "Results"
+
+#: .\tracking\templates\tracking\research.html:18
+msgid "result"
+msgstr "result"
+
+#: .\tracking\templates\tracking\watchlist_create.html:4
+#: .\tracking\templates\tracking\watchlists.html:10
+msgid "Create a watchlist"
+msgstr "Create a watchlist"
+
+#: .\tracking\templates\tracking\watchlist_create.html:8
+#: .\tracking\templates\tracking\watchlist_details.html:8
+msgid "Back to watchlists"
+msgstr "Back to watchlists"
+
+#: .\tracking\templates\tracking\watchlist_create.html:13
+msgid "New watchlist"
+msgstr "New watchlist"
+
+#: .\tracking\templates\tracking\watchlist_create.html:14
+msgid "Name your watchlist. You will be able to add animes and mangas."
+msgstr "Name your watchlist. You will be able to add animes and mangas."
+
+#: .\tracking\templates\tracking\watchlist_create.html:18
+msgid "Create watchlist"
+msgstr "Create watchlist"
+
+#: .\tracking\templates\tracking\watchlist_details.html:15
+#: .\tracking\templates\tracking\watchlists.html:27
+msgid "media"
+msgstr "media"
+
+#: .\tracking\templates\tracking\watchlist_details.html:17
+msgid "medias"
+msgstr "medias"
+
+#: .\tracking\templates\tracking\watchlist_details.html:20
+msgid "Find here all medias savec in this watchlist"
+msgstr "Find here all medias savec in this watchlist"
+
+#: .\tracking\templates\tracking\watchlist_details.html:23
+msgid "Delete watchlist"
+msgstr "Delete watchlist"
+
+#: .\tracking\templates\tracking\watchlist_details.html:33
+#: .\tracking\templates\tracking\watchlists.html:39
+msgid "This watchlist is empty"
+msgstr "This watchlist is empty"
+
+#: .\tracking\templates\tracking\watchlists.html:14
+msgid "Create the watchlist"
+msgstr "Create the watchlist"
+
+#: .\tracking\templates\tracking\watchlists.html:43
+msgid "See the watchlist"
+msgstr "See the watchlist"

@@ -1,16 +1,17 @@
 {% extends "tracking/base.html" %}
+{% load i18n %}
 {% block title %}
-  Watchlists | TrackAPP
+  {% trans "Watchlists" %} | TrackAPP
 {% endblock title %}
 {% block content %}
   {% include "tracking/components/_page_header.html" with title="Mes watchlists" subtitle="Organisez vos animes et mangas par listes." %}
   <div class="card bg-dark border-secondary text-light mb-5">
     <div class="card-body">
-      <h2 class="h4 mb-3">Créer une watchlist</h2>
+      <h2 class="h4 mb-3">{% trans "Create a watchlist" %}</h2>
       <form action="{% url 'tracking:watchlist_create' %}" method="post">
         {% csrf_token %}
         {% include "tracking/components/forms/_field.html" with field=watchlist_form.name %}
-        <button type="submit" class="btn btn-primary">Créer la watchlist</button>
+        <button type="submit" class="btn btn-primary">{% trans "Create the watchlist" %}</button>
       </form>
     </div>
   </div>
@@ -23,7 +24,7 @@
               <h2 class="h4 card-title">{{ watchlist.name }}</h2>
               <p class="text-muted">
                 {{ watchlist.medias|length }}
-                média{{ watchlist.medias|length|pluralize }}
+                {% trans "media" %}{{ watchlist.medias|length|pluralize }}
               </p>
               {% if watchlist.medias %}
                 <div class="small text-secondary mb-3">
@@ -35,11 +36,11 @@
                   {% endif %}
                 </div>
               {% else %}
-                <p class="small text-secondary mb-3">Cette watchlist est vide.</p>
+                <p class="small text-secondary mb-3">{% trans "This watchlist is empty" %}.</p>
               {% endif %}
               <div class="mt-auto">
                 <a href="{% url 'tracking:watchlist_details' watchlist.name %}"
-                   class="btn btn-outline-primary w-100">Voir la watchlist</a>
+                   class="btn btn-outline-primary w-100">{% trans "See the watchlist" %}</a>
               </div>
             </div>
           </div>
