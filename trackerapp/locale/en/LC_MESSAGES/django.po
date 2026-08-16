@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-08-15 17:32+0200\n"
+"POT-Creation-Date: 2026-08-16 19:09+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,6 +17,108 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: .\tracking\enums.py:33
+msgid "All ages"
+msgstr "All ages"
+
+#: .\tracking\enums.py:34
+msgid "Young audience"
+msgstr "Young audience"
+
+#: .\tracking\enums.py:35
+msgid "13+"
+msgstr "13+"
+
+#: .\tracking\enums.py:36
+msgid "Violence and profanity"
+msgstr "Violence and profanity"
+
+#: .\tracking\enums.py:37
+msgid "Mild Nudity"
+msgstr "Mild nudity"
+
+#: .\tracking\enums.py:38
+msgid "Hentai"
+msgstr "Hentai"
+
+#: .\tracking\enums.py:72
+msgid "Finished"
+msgstr "Finished"
+
+#: .\tracking\enums.py:73
+msgid "Currently publishing"
+msgstr "Currently publishing"
+
+#: .\tracking\enums.py:74
+msgid "On hiatus"
+msgstr "On hiatus"
+
+#: .\tracking\enums.py:75
+msgid "Discontinued"
+msgstr "Discontinued"
+
+#: .\tracking\enums.py:76
+msgid "Not yet published"
+msgstr "Not yet published"
+
+#: .\tracking\enums.py:78
+msgid "Finished airing"
+msgstr "Finished airing"
+
+#: .\tracking\enums.py:79
+msgid "Currently airing"
+msgstr "Currently airing"
+
+#: .\tracking\enums.py:80
+msgid "Not yet aired"
+msgstr "Not yet aired"
+
+#: .\tracking\enums.py:92
+msgid "Not started"
+msgstr "Not started"
+
+#: .\tracking\enums.py:93
+msgid "In progress"
+msgstr "In progress"
+
+#: .\tracking\enums.py:94 .\tracking\templates\tracking\base.html:40
+msgid "Completed"
+msgstr "Completed"
+
+#: .\tracking\forms.py:20
+msgid "section number"
+msgstr "section number"
+
+#: .\tracking\forms.py:32
+msgid "Name"
+msgstr "Name"
+
+#: .\tracking\forms.py:34
+#, fuzzy
+#| msgid "-- Choose a list --"
+msgid "-- Choose a list --"
+msgstr "-- Choose a list --"
+
+#: .\tracking\forms.py:39
+msgid "Title"
+msgstr "Title"
+
+#: .\tracking\forms.py:42
+msgid "Rating"
+msgstr "Rating"
+
+#: .\tracking\forms.py:50
+msgid "Min score"
+msgstr "Min score"
+
+#: .\tracking\forms.py:53
+msgid "Max score"
+msgstr "Max score"
+
+#: .\tracking\forms.py:55
+msgid "SFW"
+msgstr "SFW"
 
 #: .\tracking\templates\404.html:4
 msgid "Page not found"
@@ -79,20 +181,16 @@ msgstr "New search"
 msgid "Watchlists"
 msgstr "Watchlists"
 
-#: .\tracking\templates\tracking\base.html:40
-msgid "Completed"
-msgstr "Completed"
-
 #: .\tracking\templates\tracking\base.html:52
 msgid "Project protfolio Django"
 msgstr "Project protfolio Django"
 
-#: .\tracking\templates\tracking\components\_media_card.html:16
+#: .\tracking\templates\tracking\components\_media_card.html:17
 #: .\tracking\templates\tracking\media_details.html:106
 msgid "Completion"
 msgstr "Completion"
 
-#: .\tracking\templates\tracking\components\_media_card.html:20
+#: .\tracking\templates\tracking\components\_media_card.html:21
 msgid "See details"
 msgstr "See details"
 
@@ -149,10 +247,8 @@ msgid "My ongoing medias"
 msgstr "My ongoing medias"
 
 #: .\tracking\templates\tracking\index.html:31
-#, fuzzy
-#| msgid "My ongoing medias"
 msgid "No ongoing medias"
-msgstr "My ongoing medias"
+msgstr "No ongoing medias"
 
 #: .\tracking\templates\tracking\index.html:34
 msgid "My watchlists"
@@ -176,7 +272,7 @@ msgstr "Duration"
 
 #: .\tracking\templates\tracking\media_details.html:34
 msgid "Classification"
-msgstr "Classification"
+msgstr ""
 
 #: .\tracking\templates\tracking\media_details.html:41
 msgid "Studios"

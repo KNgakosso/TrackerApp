@@ -1,4 +1,5 @@
 from django import forms
+from django.utils.translation import gettext_lazy as _
 
 from .enums import AnimeRating
 from .models.media_models import DemographicModel, GenreModel, ThemeModel
@@ -16,7 +17,7 @@ class ScoreForm(forms.Form):
 
 
 class SectionNumberForm(forms.Form):
-    section_number = forms.TypedChoiceField(coerce=int)
+    section_number = forms.TypedChoiceField(coerce=int, label=_("section number"))
 
     def __init__(self, *args, max_value: int = 0, **kwargs):
         super().__init__(*args, **kwargs)
@@ -28,15 +29,17 @@ class SectionNumberForm(forms.Form):
 
 class WatchlistSelectionForm(forms.Form):
     name = forms.ModelChoiceField(
-        queryset=WatchlistModel.objects.all(), empty_label="-- Choisir une liste --"
+        label=_("Name"),
+        queryset=WatchlistModel.objects.all(),
+        empty_label=_("-- Choose a list --"),
     )
 
 
 class SearchForm(forms.Form):
-    q = forms.CharField(label="Titre", required=False)
+    q = forms.CharField(label=_("Title"), required=False)
 
     rating = forms.ChoiceField(
-        label="Classification",
+        label=_("Rating"),
         choices=[
             ("", "--"),
             *[(rating.filter_value, rating.display) for rating in AnimeRating],
@@ -44,12 +47,12 @@ class SearchForm(forms.Form):
         required=False,
     )
     min_score = forms.FloatField(
-        label="Score min", min_value=0, max_value=10, required=False
+        label=_("Min score"), min_value=0, max_value=10, required=False
     )
     max_score = forms.FloatField(
-        label="Score max", min_value=0, max_value=10, required=False
+        label=_("Max score"), min_value=0, max_value=10, required=False
     )
-    sfw = forms.BooleanField(initial=True, label="SFW", required=False)
+    sfw = forms.BooleanField(initial=True, label=_("SFW"), required=False)
     genres = forms.ModelMultipleChoiceField(
         queryset=GenreModel.objects.all(),
         widget=forms.CheckboxSelectMultiple,
