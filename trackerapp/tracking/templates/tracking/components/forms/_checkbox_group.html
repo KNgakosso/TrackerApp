@@ -1,6 +1,7 @@
+{% load i18n %}
 <div class="filter-group">
     {% for checkbox in field %}
         {{ checkbox.tag }}
-        <label for="{{ checkbox.id_for_label }}" class="filter-chip">{{ checkbox.choice_label }}</label>
+        <label for="{{ checkbox.id_for_label }}" class="filter-chip">{% trans checkbox.choice_label %}</label>
     {% endfor %}
 </div>
