@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-08-16 19:08+0200\n"
+"POT-Creation-Date: 2026-08-16 22:35+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -38,7 +38,7 @@ msgstr "17+ (violence et langage grossier)"
 msgid "Mild Nudity"
 msgstr "Nudité"
 
-#: .\tracking\enums.py:38
+#: .\tracking\enums.py:38 .\tracking\trans.py:81
 msgid "Hentai"
 msgstr "Hentai"
 
@@ -401,3 +401,297 @@ msgstr "Créer la watchlist"
 #: .\tracking\templates\tracking\watchlists.html:43
 msgid "See the watchlist"
 msgstr "Voir la watchlist"
+
+# TRADUCTION DES GENRES
+#: .\tracking\trans.py:5
+msgid "Action"
+msgstr "Action"
+
+#: .\tracking\trans.py:6
+msgid "Adventure"
+msgstr "Aventure"
+
+#: .\tracking\trans.py:7
+msgid "Avant Garde"
+msgstr "Avant Garde"
+
+#: .\tracking\trans.py:8
+msgid "Award Winning"
+msgstr "Récompensé"
+
+#: .\tracking\trans.py:9
+msgid "Boys Love"
+msgstr "Boys Love"
+
+#: .\tracking\trans.py:10
+msgid "Comedy"
+msgstr "Comédie"
+
+#: .\tracking\trans.py:11
+msgid "Drama"
+msgstr "Drame"
+
+#: .\tracking\trans.py:12
+msgid "Fantasy"
+msgstr "Fantasie"
+
+#: .\tracking\trans.py:13
+msgid "Girls Love"
+msgstr "Girls Love"
+
+#: .\tracking\trans.py:14
+msgid "Gourmet"
+msgstr "Culinaire"
+
+#: .\tracking\trans.py:15
+msgid "Horror"
+msgstr "Horreur"
+
+#: .\tracking\trans.py:16
+msgid "Mystery"
+msgstr "Mystère"
+
+#: .\tracking\trans.py:17
+msgid "Romance"
+msgstr "Romance"
+
+#: .\tracking\trans.py:18
+msgid "Sci-Fi"
+msgstr "Sci-Fi"
+
+#: .\tracking\trans.py:19
+msgid "Slice of Life"
+msgstr "Tranche de vie"
+
+#: .\tracking\trans.py:20
+msgid "Sports"
+msgstr "Sports"
+
+#: .\tracking\trans.py:21
+msgid "Supernatural"
+msgstr "Surnaturel"
+
+#: .\tracking\trans.py:22
+msgid "Suspense"
+msgstr "Suspense"
+
+# TRADUCTIONS DES THEMES
+#: .\tracking\trans.py:26
+msgid "Adult Cast"
+msgstr "Adult Cast"
+
+#: .\tracking\trans.py:27
+msgid "Anthropomorphic"
+msgstr "Furry"
+
+#: .\tracking\trans.py:28
+msgid "CGDCT"
+msgstr "CGDCT"
+
+#: .\tracking\trans.py:29
+msgid "Childcare"
+msgstr "Childcare"
+
+#: .\tracking\trans.py:30
+msgid "Combat Sports"
+msgstr "Sports de combats"
+
+#: .\tracking\trans.py:31
+msgid "Crossdressing"
+msgstr "Crossdressing"
+
+#: .\tracking\trans.py:32
+msgid "Delinquents"
+msgstr "Delinquents"
+
+#: .\tracking\trans.py:33
+msgid "Detective"
+msgstr "Détective"
+
+#: .\tracking\trans.py:34
+msgid "Educational"
+msgstr "Éducatif"
+
+#: .\tracking\trans.py:35
+msgid "Gag Humor"
+msgstr "Humour absurde"
+
+#: .\tracking\trans.py:36
+msgid "Gore"
+msgstr "Gore"
+
+#: .\tracking\trans.py:37
+msgid "Harem"
+msgstr "Harem"
+
+#: .\tracking\trans.py:38
+msgid "High Stakes Game"
+msgstr "Jeux à hauts risques"
+
+#: .\tracking\trans.py:39
+msgid "Historical"
+msgstr "Historique"
+
+#: .\tracking\trans.py:40
+msgid "Idols (Female)"
+msgstr "Idole (Femme)"
+
+#: .\tracking\trans.py:41
+msgid "Idols (Male)"
+msgstr "Idole (Homme)"
+
+#: .\tracking\trans.py:42
+msgid "Isekai"
+msgstr "Isekai"
+
+#: .\tracking\trans.py:43
+msgid "Iyashikei"
+msgstr "Relaxant"
+
+#: .\tracking\trans.py:44
+msgid "Love Polygon"
+msgstr "Triangle amoureux"
+
+#: .\tracking\trans.py:45
+msgid "Magical Sex Shift"
+msgstr "Magical Sex Shift"
+
+#: .\tracking\trans.py:46
+msgid "Mahou Shoujo"
+msgstr "Mahou Shoujo"
+
+#: .\tracking\trans.py:47
+msgid "Martial Arts"
+msgstr "Arts martiaux"
+
+#: .\tracking\trans.py:48
+msgid "Mecha"
+msgstr "Mécha"
+
+#: .\tracking\trans.py:49
+msgid "Medical"
+msgstr "Medical"
+
+#: .\tracking\trans.py:50
+msgid "Military"
+msgstr "Militaire"
+
+#: .\tracking\trans.py:51
+msgid "Music"
+msgstr "Musique"
+
+#: .\tracking\trans.py:52
+msgid "Mythology"
+msgstr "Mythologie"
+
+#: .\tracking\trans.py:53
+msgid "Organized Crime"
+msgstr "Organisation Criminelle"
+
+#: .\tracking\trans.py:54
+msgid "Otaku Culture"
+msgstr "Culture Otaku"
+
+#: .\tracking\trans.py:55
+msgid "Parody"
+msgstr "Parodie"
+
+#: .\tracking\trans.py:56
+msgid "Performing Arts"
+msgstr "Arts du Spectacle"
+
+#: .\tracking\trans.py:57
+msgid "Pets"
+msgstr "Animaux de compagine"
+
+#: .\tracking\trans.py:58
+msgid "Psychological"
+msgstr "Psychologique"
+
+#: .\tracking\trans.py:59
+msgid "Racing"
+msgstr "Course"
+
+#: .\tracking\trans.py:60
+msgid "Reincarnation"
+msgstr "Réincarnation"
+
+#: .\tracking\trans.py:61
+msgid "Reverse Harem"
+msgstr "Harem Inversé"
+
+#: .\tracking\trans.py:62
+msgid "Love Status Quo"
+msgstr "Love Status Quo"
+
+#: .\tracking\trans.py:63
+msgid "Samurai"
+msgstr "Samouraï"
+
+#: .\tracking\trans.py:64
+msgid "School"
+msgstr "Scolaire"
+
+#: .\tracking\trans.py:65
+msgid "Showbiz"
+msgstr "Showbiz"
+
+#: .\tracking\trans.py:66
+msgid "Space"
+msgstr "Spatial"
+
+#: .\tracking\trans.py:67
+msgid "Strategy Game"
+msgstr "Jeu de stratégie"
+
+#: .\tracking\trans.py:68
+msgid "Super Power"
+msgstr "Super Pouvoir"
+
+#: .\tracking\trans.py:69
+msgid "Survival"
+msgstr "Survie"
+
+#: .\tracking\trans.py:70
+msgid "Team Sports"
+msgstr "Sports d'équipe"
+
+#: .\tracking\trans.py:71
+msgid "Time Travel"
+msgstr "Voyage Temporel"
+
+#: .\tracking\trans.py:72
+msgid "Vampire"
+msgstr "Vampire"
+
+#: .\tracking\trans.py:73
+msgid "Video Game"
+msgstr "Jeu Vidéo"
+
+#: .\tracking\trans.py:74
+msgid "Visual Arts"
+msgstr "Arts Visuels"
+
+#: .\tracking\trans.py:75
+msgid "Workplace"
+msgstr "Workplace"
+
+#: .\tracking\trans.py:76
+msgid "Urban Fantasy"
+msgstr "Urban Fantasy"
+
+#: .\tracking\trans.py:77
+msgid "Villainess"
+msgstr "Villainess"
+
+#: .\tracking\trans.py:78
+msgid "Memoir"
+msgstr "Memoir"
+
+#: .\tracking\trans.py:79
+msgid "Ecchi"
+msgstr "Ecchi"
+
+#: .\tracking\trans.py:80
+msgid "Erotica"
+msgstr "Érotique"
