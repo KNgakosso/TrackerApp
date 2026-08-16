@@ -1,3 +1,4 @@
+{% load i18n %}
 <div class="card h-100 shadow-sm">
     <img src="{{ media.images_urls.image_url }}"
          class="card-img-top object-fit-cover"
@@ -13,7 +14,7 @@
             {% endif %}
         </div>
         {% if show_progress %}
-            <p class="small text-muted mb-3">{% trans "Completion" %} : {{ media.user_completion }}</p>
+            <p class="small text-muted mb-3">{% trans "Completion" %} : {{ media.user_completion.display }}</p>
         {% endif %}
         <div class="mt-auto">
             <a href="{% url 'tracking:media_details' media.media_type media.mal_id %}"

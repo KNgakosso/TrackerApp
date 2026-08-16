@@ -33,7 +33,7 @@
                             <p class="mb-2">
                                 <strong>{% trans "Classification" %} :</strong>
                                 <br>
-                                {{ media.rating }}
+                                {{ media.rating.display }}
                             </p>
                         {% endif %}
                         {% if media.studios %}
@@ -96,7 +96,7 @@
                     <div class="card h-100">
                         <div class="card-body">
                             <small class="text-muted">{% trans "Status" %}</small>
-                            <h5 class="mb-0">{{ media.status|default:"Inconnu" }}</h5>
+                            <h5 class="mb-0">{{ media.status.display|default:"Inconnu" }}</h5>
                         </div>
                     </div>
                 </div>
@@ -104,7 +104,7 @@
                     <div class="card h-100">
                         <div class="card-body">
                             <small class="text-muted">{% trans "Completion" %}</small>
-                            <h5 class="mb-0">{{ media.user_completion }}</h5>
+                            <h5 class="mb-0">{{ media.user_completion.display }}</h5>
                         </div>
                     </div>
                 </div>
@@ -201,7 +201,7 @@
                     <form action="{% url 'tracking:add_to_watchlist' media.media_type media.mal_id %}"
                           method="post">
                         {% csrf_token %}
-                        {% include "tracking/components/forms/_field.html" with field=watchlist_selection_form.name %}
+                        {{ watchlist_selection_form }}
                         <button class="btn btn-primary mt-3" type="submit">{% trans "Add to a watchlist" %}</button>
                     </form>
                     <hr>

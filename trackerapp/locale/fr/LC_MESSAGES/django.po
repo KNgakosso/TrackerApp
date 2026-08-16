@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-08-15 17:32+0200\n"
+"POT-Creation-Date: 2026-08-16 19:08+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,6 +17,108 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
+
+#: .\tracking\enums.py:33
+msgid "All ages"
+msgstr "Tout âge"
+
+#: .\tracking\enums.py:34
+msgid "Young audience"
+msgstr "Jeune public"
+
+#: .\tracking\enums.py:35
+msgid "13+"
+msgstr "13+"
+
+#: .\tracking\enums.py:36
+msgid "Violence and profanity"
+msgstr "17+ (violence et langage grossier)"
+
+#: .\tracking\enums.py:37
+msgid "Mild Nudity"
+msgstr "Nudité"
+
+#: .\tracking\enums.py:38
+msgid "Hentai"
+msgstr "Hentai"
+
+#: .\tracking\enums.py:72
+msgid "Finished"
+msgstr "Terminé"
+
+#: .\tracking\enums.py:73
+msgid "Currently publishing"
+msgstr "En cours de publication"
+
+#: .\tracking\enums.py:74
+msgid "On hiatus"
+msgstr "En pause"
+
+#: .\tracking\enums.py:75
+msgid "Discontinued"
+msgstr "Arrêté"
+
+#: .\tracking\enums.py:76
+msgid "Not yet published"
+msgstr "Pas encore sorti"
+
+#: .\tracking\enums.py:78
+msgid "Finished airing"
+msgstr "Diffusion terminée"
+
+#: .\tracking\enums.py:79
+msgid "Currently airing"
+msgstr "En cours de diffusion"
+
+#: .\tracking\enums.py:80
+msgid "Not yet aired"
+msgstr "Pas encore diffusé"
+
+#: .\tracking\enums.py:92
+msgid "Not started"
+msgstr "Pas commencé"
+
+#: .\tracking\enums.py:93
+msgid "In progress"
+msgstr "En cours"
+
+#: .\tracking\enums.py:94 .\tracking\templates\tracking\base.html:40
+msgid "Completed"
+msgstr "Terminé"
+
+#: .\tracking\forms.py:20
+msgid "section number"
+msgstr "numéro de section"
+
+#: .\tracking\forms.py:32
+msgid "Name"
+msgstr "Nom"
+
+#: .\tracking\forms.py:34
+#, fuzzy
+#| msgid "-- Choose a list --"
+msgid "-- Choose a list --"
+msgstr "-- Choisir une liste --"
+
+#: .\tracking\forms.py:39
+msgid "Title"
+msgstr "Titre"
+
+#: .\tracking\forms.py:42
+msgid "Rating"
+msgstr "Classification"
+
+#: .\tracking\forms.py:50
+msgid "Min score"
+msgstr "Score min"
+
+#: .\tracking\forms.py:53
+msgid "Max score"
+msgstr "Score max"
+
+#: .\tracking\forms.py:55
+msgid "SFW"
+msgstr "SFW"
 
 #: .\tracking\templates\404.html:4
 msgid "Page not found"
@@ -79,20 +181,16 @@ msgstr "Nouvelle recherche"
 msgid "Watchlists"
 msgstr "Watchlists"
 
-#: .\tracking\templates\tracking\base.html:40
-msgid "Completed"
-msgstr "Terminé"
-
 #: .\tracking\templates\tracking\base.html:52
 msgid "Project protfolio Django"
 msgstr "Projet portfolio Django"
 
-#: .\tracking\templates\tracking\components\_media_card.html:16
+#: .\tracking\templates\tracking\components\_media_card.html:17
 #: .\tracking\templates\tracking\media_details.html:106
 msgid "Completion"
 msgstr "Progression"
 
-#: .\tracking\templates\tracking\components\_media_card.html:20
+#: .\tracking\templates\tracking\components\_media_card.html:21
 msgid "See details"
 msgstr "Voir les détails"
 
@@ -149,10 +247,8 @@ msgid "My ongoing medias"
 msgstr "Mes médias en cours"
 
 #: .\tracking\templates\tracking\index.html:31
-#, fuzzy
-#| msgid "My ongoing medias"
 msgid "No ongoing medias"
-msgstr "Mes médias en cours"
+msgstr "Aucun média en cours"
 
 #: .\tracking\templates\tracking\index.html:34
 msgid "My watchlists"
@@ -176,7 +272,7 @@ msgstr "Durée"
 
 #: .\tracking\templates\tracking\media_details.html:34
 msgid "Classification"
-msgstr "Classification"
+msgstr ""
 
 #: .\tracking\templates\tracking\media_details.html:41
 msgid "Studios"
@@ -268,7 +364,9 @@ msgstr "Nouvelle watchlist"
 
 #: .\tracking\templates\tracking\watchlist_create.html:14
 msgid "Name your watchlist. You will be able to add animes and mangas."
-msgstr "Donnez un nom à la watchlist. Vous pourrez ensuite y insérer des animés et des mangas"
+msgstr ""
+"Donnez un nom à la watchlist. Vous pourrez ensuite y insérer des animés et "
+"des mangas"
 
 #: .\tracking\templates\tracking\watchlist_create.html:18
 msgid "Create watchlist"

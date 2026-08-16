@@ -1,5 +1,7 @@
 from enum import StrEnum
 
+from django.utils.translation import gettext_lazy as _
+
 
 class MediaType(StrEnum):
     ANIME = "anime"
@@ -26,14 +28,14 @@ class AnimeRating(StrEnum):
         }[self]
 
     @property
-    def display(self) -> str:
+    def display(self):
         return {
-            AnimeRating.G: "Tout âge",
-            AnimeRating.PG: "Jeune public",
-            AnimeRating.PG13: "13+",
-            AnimeRating.R17: "17+ (violence et langage grossier)",
-            AnimeRating.RPLUS: "Nudité",
-            AnimeRating.RX: "Hentai",
+            AnimeRating.G: _("All ages"),
+            AnimeRating.PG: _("Young audience"),
+            AnimeRating.PG13: _("13+"),
+            AnimeRating.R17: _("Violence and profanity"),
+            AnimeRating.RPLUS: _("Mild Nudity"),
+            AnimeRating.RX: _("Hentai"),
         }[self]
 
 
@@ -65,17 +67,17 @@ class MediaStatus(StrEnum):
         }[self]
 
     @property
-    def display(self) -> str:
+    def display(self):
         return {
-            MediaStatus.FINISHED: "Terminé",
-            MediaStatus.PUBLISHING: "En cours de publication",
-            MediaStatus.HIATUS: "En pause",
-            MediaStatus.DISCONTINUED: "Arrêté",
-            MediaStatus.NOT_PUBLISHED: "Pas encore sorti",
+            MediaStatus.FINISHED: _("Finished"),
+            MediaStatus.PUBLISHING: _("Currently publishing"),
+            MediaStatus.HIATUS: _("On hiatus"),
+            MediaStatus.DISCONTINUED: _("Discontinued"),
+            MediaStatus.NOT_PUBLISHED: _("Not yet published"),
             # Anime
-            MediaStatus.FINISHED_AIRING: "Diffusion terminée",
-            MediaStatus.CURRENTLY_AIRING: "En cours de diffusion",
-            MediaStatus.NOT_AIRED: "Pas encore diffusé",
+            MediaStatus.FINISHED_AIRING: _("Finished airing"),
+            MediaStatus.CURRENTLY_AIRING: _("Currently airing"),
+            MediaStatus.NOT_AIRED: _("Not yet aired"),
         }[self]
 
 
@@ -85,9 +87,9 @@ class MediaCompletion(StrEnum):
     COMPLETED = "Completed"
 
     @property
-    def display(self) -> str:
+    def display(self):
         return {
-            MediaCompletion.NOT_STARTED: "Non commencé",
-            MediaCompletion.IN_PROGRESS: "En cours",
-            MediaCompletion.COMPLETED: "Terminé",
+            MediaCompletion.NOT_STARTED: _("Not started"),
+            MediaCompletion.IN_PROGRESS: _("In progress"),
+            MediaCompletion.COMPLETED: _("Completed"),
         }[self]
