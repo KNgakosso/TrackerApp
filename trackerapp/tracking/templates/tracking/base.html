@@ -18,30 +18,7 @@
   </head>
   <body class="bg-dark text-light">
     <!-- ==================== NAVBAR ==================== -->
-    <nav class="navbar navbar-expand-lg navbar-dark bg-black shadow-sm sticky-top">
-      <div class="container">
-        <a class="navbar-brand fw-bold" href="{% url 'tracking:index' %}">🎌 TrackAPP</a>
-        <!-- Bouton affiché uniquement sur mobile -->
-        <button class="navbar-toggler"
-                type="button"
-                data-bs-toggle="collapse"
-                data-bs-target="#navbarContent"
-                aria-controls="navbarContent"
-                aria-expanded="false"
-                aria-label="Afficher le menu">
-          <span class="navbar-toggler-icon"></span>
-        </button>
-        <!-- Contenu repliable -->
-        <div class="collapse navbar-collapse" id="navbarContent">
-          <div class="navbar-nav ms-auto">
-            <a class="nav-link" href="{% url 'tracking:index' %}">{% trans "Home" %}</a>
-            <a class="nav-link" href="{% url 'tracking:index' %}">{% trans "New search" %}</a>
-            <a class="nav-link" href="{% url 'tracking:watchlists' %}">{% trans "Watchlists" %}</a>
-            <a class="nav-link" href="{% url 'tracking:finished_medias' %}">{% trans "Completed" %}</a>
-          </div>
-        </div>
-      </div>
-    </nav>
+    {% include "tracking/components/_navbar.html" %}
     <!-- ==================== CONTENU ==================== -->
     <main class="container py-4">
       {% block content %}

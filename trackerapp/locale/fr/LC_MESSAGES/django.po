@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-08-16 22:35+0200\n"
+"POT-Creation-Date: 2026-08-17 22:08+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -82,7 +82,8 @@ msgstr "Pas commencé"
 msgid "In progress"
 msgstr "En cours"
 
-#: .\tracking\enums.py:94 .\tracking\templates\tracking\base.html:40
+#: .\tracking\enums.py:94
+#: .\tracking\templates\tracking\components\_navbar.html:21
 msgid "Completed"
 msgstr "Terminé"
 
@@ -167,21 +168,7 @@ msgstr "Ajouter à la watchlist"
 msgid "Service unavailable"
 msgstr "Service indisponible"
 
-#: .\tracking\templates\tracking\base.html:37
-msgid "Home"
-msgstr "Accueil"
-
-#: .\tracking\templates\tracking\base.html:38
-msgid "New search"
-msgstr "Nouvelle recherche"
-
-#: .\tracking\templates\tracking\base.html:39
-#: .\tracking\templates\tracking\media_details.html:200
-#: .\tracking\templates\tracking\watchlists.html:4
-msgid "Watchlists"
-msgstr "Watchlists"
-
-#: .\tracking\templates\tracking\base.html:52
+#: .\tracking\templates\tracking\base.html:29
 msgid "Project protfolio Django"
 msgstr "Projet portfolio Django"
 
@@ -193,6 +180,24 @@ msgstr "Progression"
 #: .\tracking\templates\tracking\components\_media_card.html:21
 msgid "See details"
 msgstr "Voir les détails"
+
+#: .\tracking\templates\tracking\components\_navbar.html:18
+msgid "Home"
+msgstr "Accueil"
+
+#: .\tracking\templates\tracking\components\_navbar.html:19
+msgid "New search"
+msgstr "Nouvelle recherche"
+
+#: .\tracking\templates\tracking\components\_navbar.html:20
+#: .\tracking\templates\tracking\media_details.html:200
+#: .\tracking\templates\tracking\watchlists.html:4
+msgid "Watchlists"
+msgstr "Watchlists"
+
+#: .\tracking\templates\tracking\components\_navbar.html:22
+msgid "Languages"
+msgstr "Langues"
 
 #: .\tracking\templates\tracking\components\forms\_search_form.html:9
 msgid "Filters"

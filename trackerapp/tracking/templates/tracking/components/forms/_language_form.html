@@ -1,9 +1,19 @@
-<form action="{% url 'set_language' %}" method="post">
-    {% csrf_token %}
-    <input type="hidden" name="next" value="{{ request.path }}">
-    <select name="language">
-        <option value="fr">Français</option>
-        <option value="en">English</option>
-    </select>
-    <button type="submit">Changer</button>
-</form>
+{% load i18n %}
+{% get_available_languages as LANGUAGES %}
+<div class="nav-item dropdown">
+    <a class="nav-link dropdown" href="#" data-bs-toggle="dropdown">{% trans "Languages" %}</a>
+    <ul class="dropdown-menu">
+        {% for code, name in LANGUAGES %}
+            <li>
+                <form action="{% url 'set_language' %}" method="post">
+                    {% csrf_token %}
+                    <input type="hidden" name="next" value="{{ request.path }}">
+                    <button class="dropdown-item"
+                            type="submit"
+                            name="language"
+                            value="{{ code }}">{{ name }}</button>
+                </form>
+            </li>
+        {% endfor %}
+    </ul>
+</div>
