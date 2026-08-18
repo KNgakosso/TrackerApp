@@ -1,5 +1,11 @@
 import pytest
 from tracking.enums import MediaCompletion
+from tracking.exceptions import (
+    InvalidScoreError,
+    MediaError,
+    MediaNotFoundError,
+    NotFoundError,
+)
 from tracking.models.anime_models import AnimeModel
 from tracking.models.manga_models import MangaModel
 from tracking.models.media_models import DemographicModel, GenreModel, ThemeModel
@@ -45,10 +51,10 @@ def test_get_genre_model_none_mal_ids(genre_model_example):
     assert genre_model.mal_id_manga is None
 
 
-def test_get_genre_model_value_error(db):
-    with pytest.raises(ValueError) as e:
+def test_get_genre_model_not_found_error(db):
+    with pytest.raises(NotFoundError) as e:
         repository.get_genre_model(name="Genre Inexistant")
-    assert str(e.value) == "Aucun genre trouvé au nom de Genre Inexistant."
+    assert str(e.value) == "No genre named 'Genre Inexistant' found."
 
 
 # TESTS _GET_THEME_MODEL
@@ -76,10 +82,10 @@ def test_get_theme_model_none_mal_ids(theme_model_example):
     assert theme_model.mal_id_manga is None
 
 
-def test_get_theme_model_value_error(db):
-    with pytest.raises(ValueError) as e:
+def test_get_theme_model_not_found_error(db):
+    with pytest.raises(NotFoundError) as e:
         repository.get_theme_model(name="Thème Inexistant")
-    assert str(e.value) == "Aucun thème trouvé au nom de Thème Inexistant."
+    assert str(e.value) == "No theme named 'Thème Inexistant' found."
 
 
 # TESTS _GET_DEMOGRAPHIC_MODEL
@@ -107,12 +113,10 @@ def test_get_demographic_model_none_mal_ids(demographic_model_example):
     assert demographic_model.mal_id_manga is None
 
 
-def test_get_demographic_model_value_error(db):
-    with pytest.raises(ValueError) as e:
+def test_get_demographic_model_not_found_error(db):
+    with pytest.raises(NotFoundError) as e:
         repository.get_demographic_model(name="Démographie Inexistante")
-    assert (
-        str(e.value) == "Aucune démographie trouvée au nom de Démographie Inexistante."
-    )
+    assert str(e.value) == "No demographic named 'Démographie Inexistante' found."
 
 
 # TESTS _GET_MEDIA_MODEL
@@ -132,10 +136,10 @@ def test_get_media_model_manga(db_example):
 
 
 @pytest.mark.parametrize("media_type", ["manga", "anime"])
-def test_get_media_model_value_error(db, media_type):
-    with pytest.raises(ValueError) as e:
+def test_get_media_model_media_not_found_error(db, media_type):
+    with pytest.raises(MediaNotFoundError) as e:
         repository.get_media_model(mal_id=1, media_type=media_type)
-    assert str(e.value) == f"Aucun {media_type} trouvé pour l'id 1."
+    assert str(e.value) == f"No {media_type} found with id : 1."
 
 
 # TESTS _GET_MEDIA_MODELS
@@ -158,10 +162,10 @@ def test_get_media_models_filters(db_example):
     pass
 
 
-def test_get_medias_models_value_error_invalid_filters(db_example):
-    with pytest.raises(ValueError) as e:
+def test_get_medias_models_media_error_invalid_filters(db_example):
+    with pytest.raises(MediaError) as e:
         medias_models = repository.get_medias_models(invalid_field="value")
-    assert str(e.value).startswith("Filtres de recherche invalides : ")
+    assert str(e.value).startswith("Invalid filters : ")
 
 
 # TESTS _SET_MEDIA_MODEL_USER_COMPLETION
@@ -225,11 +229,9 @@ def test_set_user_score_manga(manga_model_example, score):
 @pytest.mark.parametrize("score", [-17, -1, 11, 488])
 def test_set_user_score_manga_invalid(manga_model_example, score):
     slam_dunk_manga_model = manga_model_example(**SLAM_DUNK_MANGA)
-    with pytest.raises(ValueError) as e:
+    with pytest.raises(InvalidScoreError) as e:
         repository.set_media_model_user_score(slam_dunk_manga_model, score)
-    assert (
-        str(e.value) == "Le Score doit être un entier entre 0 et 10, ou la valeur None."
-    )
+    assert str(e.value) == "Score must be an integer between 0 and 10, or None."
 
 
 # TESTS _SET_MEDIA_MODEL_USER_CURRENT_SECTION

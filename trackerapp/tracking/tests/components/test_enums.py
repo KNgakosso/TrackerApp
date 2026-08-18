@@ -27,11 +27,11 @@ def test_anime_rating_filter_value(rating, filter_value):
 @pytest.mark.parametrize(
     ("rating", "display"),
     [
-        (AnimeRating.G, "Tout âge"),
-        (AnimeRating.PG, "Jeune public"),
+        (AnimeRating.G, "All ages"),
+        (AnimeRating.PG, "Young audience"),
         (AnimeRating.PG13, "13+"),
-        (AnimeRating.R17, "17+ (violence et langage grossier)"),
-        (AnimeRating.RPLUS, "Nudité"),
+        (AnimeRating.R17, "Violence and profanity"),
+        (AnimeRating.RPLUS, "Mild nudity"),
         (AnimeRating.RX, "Hentai"),
     ],
 )
@@ -67,14 +67,14 @@ def test_media_status_filter_value(status, filter_value):
 @pytest.mark.parametrize(
     ("status", "display"),
     [
-        (MediaStatus.FINISHED, "Terminé"),
-        (MediaStatus.PUBLISHING, "En cours de publication"),
-        (MediaStatus.HIATUS, "En pause"),
-        (MediaStatus.DISCONTINUED, "Arrêté"),
-        (MediaStatus.NOT_PUBLISHED, "Pas encore sorti"),
-        (MediaStatus.FINISHED_AIRING, "Diffusion terminée"),
-        (MediaStatus.CURRENTLY_AIRING, "En cours de diffusion"),
-        (MediaStatus.NOT_AIRED, "Pas encore diffusé"),
+        (MediaStatus.FINISHED, "Finished"),
+        (MediaStatus.PUBLISHING, "Currently publishing"),
+        (MediaStatus.HIATUS, "On hiatus"),
+        (MediaStatus.DISCONTINUED, "Discontinued"),
+        (MediaStatus.NOT_PUBLISHED, "Not yet published"),
+        (MediaStatus.FINISHED_AIRING, "Finished airing"),
+        (MediaStatus.CURRENTLY_AIRING, "Currently airing"),
+        (MediaStatus.NOT_AIRED, "Not yet aired"),
     ],
 )
 def test_media_status_display(status, display):
@@ -88,9 +88,9 @@ def test_media_status_display(status, display):
 @pytest.mark.parametrize(
     ("completion", "display"),
     [
-        (MediaCompletion.NOT_STARTED, "Non commencé"),
-        (MediaCompletion.IN_PROGRESS, "En cours"),
-        (MediaCompletion.COMPLETED, "Terminé"),
+        (MediaCompletion.NOT_STARTED, "Not started"),
+        (MediaCompletion.IN_PROGRESS, "In progress"),
+        (MediaCompletion.COMPLETED, "Completed"),
     ],
 )
 def test_media_completion_display(completion, display):

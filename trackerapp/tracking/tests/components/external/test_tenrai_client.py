@@ -1,7 +1,7 @@
 import pytest
 import requests
+from tracking.exceptions import ExternalApiError
 from tracking.external.api_client import tenrai_client as tenrai
-from tracking.external.exceptions import ExternalApiError
 
 # TESTS _GET
 ############################################

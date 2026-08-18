@@ -34,7 +34,7 @@ class AnimeRating(StrEnum):
             AnimeRating.PG: _("Young audience"),
             AnimeRating.PG13: _("13+"),
             AnimeRating.R17: _("Violence and profanity"),
-            AnimeRating.RPLUS: _("Mild Nudity"),
+            AnimeRating.RPLUS: _("Mild nudity"),
             AnimeRating.RX: _("Hentai"),
         }[self]
 

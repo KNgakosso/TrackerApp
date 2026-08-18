@@ -32,7 +32,7 @@ def get_genre_model(name: str) -> GenreModel:
     try:
         return GenreModel.objects.get(name=name)
     except GenreModel.DoesNotExist:
-        raise NotFoundError(f"No genre named {name} found.")
+        raise NotFoundError(f"No genre named '{name}' found.")
 
 
 def _set_media_model_genres(media_model: MediaModel, genres: list[GenreModel]):
@@ -48,7 +48,7 @@ def get_theme_model(name: str) -> ThemeModel:
     try:
         return ThemeModel.objects.get(name=name)
     except ThemeModel.DoesNotExist:
-        raise NotFoundError(f"No theme named {name} found.")
+        raise NotFoundError(f"No theme named '{name}' found.")
 
 
 def _set_media_model_themes(media_model: MediaModel, themes: list[ThemeModel]):
@@ -64,7 +64,7 @@ def get_demographic_model(name: str) -> DemographicModel:
     try:
         return DemographicModel.objects.get(name=name)
     except DemographicModel.DoesNotExist:
-        raise NotFoundError(f"No demographic named {name} found.")
+        raise NotFoundError(f"No demographic named '{name}' found.")
 
 
 def _set_media_model_demographics(
