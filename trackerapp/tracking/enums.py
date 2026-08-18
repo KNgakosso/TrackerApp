@@ -29,7 +29,6 @@ class AnimeRating(StrEnum):
 
     @property
     def display(self):
-    def display(self):
         return {
             AnimeRating.G: _("All ages"),
             AnimeRating.PG: _("Young audience"),
