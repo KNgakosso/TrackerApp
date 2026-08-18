@@ -1,5 +1,6 @@
 from dataclasses import dataclass
 
+from argostranslate import translate
 from django.utils.translation import gettext_lazy as _
 
 from ..enums import MediaCompletion, MediaStatus
@@ -103,6 +104,7 @@ class Media:
     images_urls: ImagesUrls | None
     format: str | None
     synopsis: str | None
+    translated_synopsis: str | None
     score: float | None
     rank: int | None
     themes: list[Theme]
@@ -132,6 +134,7 @@ class Media:
             "images_urls": ImagesUrls.from_schema(media_schema.images.webp),
             "format": media_schema.format,
             "synopsis": media_schema.synopsis,
+            "translated_synopsis": None,
             "score": media_schema.score,
             "rank": media_schema.rank,
             "themes": [Theme.from_schema(theme) for theme in media_schema.themes],
@@ -163,6 +166,7 @@ class Media:
             ),
             "format": none_if_empty(media_model.format),
             "synopsis": none_if_empty(media_model.synopsis),
+            "translated_synopsis": None,
             "score": media_model.score,
             "rank": media_model.rank,
             "themes": [Theme.from_model(theme) for theme in media_model.themes.all()],
@@ -200,6 +204,10 @@ class Media:
         self.user_completion = MediaCompletion.NOT_STARTED
         if not self.number_sections is None:
             self.user_current_section = 0
+
+    def translate_synopsis_fr(self):
+        if not self.synopsis is None:
+            self.translated_synopsis = translate.translate(self.synopsis, "en", "fr")
 
     def define_current_section(self, new_current_section: int):
         if not self.number_sections is None:

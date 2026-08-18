@@ -147,7 +147,7 @@ def test_base_fields_from_schema_one_piece_anime_schema(mocker, anime_schema_exa
     assert data["user_score"] is None
     assert data["user_completion"] == MediaCompletion.NOT_STARTED
     assert data["user_current_section"] is None
-    assert len(data.items()) == 15
+    assert len(data.items()) == 16
 
 
 def test_base_fields_from_schema_hunter_x_hunter_anime_schema(
@@ -193,7 +193,7 @@ def test_base_fields_from_schema_hunter_x_hunter_anime_schema(
     assert data["user_score"] is None
     assert data["user_completion"] == MediaCompletion.NOT_STARTED
     assert data["user_current_section"] == 0
-    assert len(data.items()) == 15
+    assert len(data.items()) == 16
 
 
 def test_base_fields_from_schema_naruto_manga_schema(mocker, manga_schema_example):
@@ -234,7 +234,7 @@ def test_base_fields_from_schema_naruto_manga_schema(mocker, manga_schema_exampl
     assert data["user_score"] is None
     assert data["user_completion"] == MediaCompletion.NOT_STARTED
     assert data["user_current_section"] == 0
-    assert len(data.items()) == 15
+    assert len(data.items()) == 16
 
 
 def test_base_fields_from_schema_anime_schema_empty(anime_schema_example):
@@ -261,6 +261,7 @@ def test_base_fields_from_schema_anime_schema_empty(anime_schema_example):
     assert data["images_urls"].large_image_url is None
     assert data["format"] is None
     assert data["synopsis"] is None
+    assert data["translated_synopsis"] is None
     assert data["score"] is None
     assert data["rank"] is None
     assert data["themes"] == []
@@ -268,7 +269,7 @@ def test_base_fields_from_schema_anime_schema_empty(anime_schema_example):
     assert data["demographics"] == []
     assert data["number_sections"] is None
     assert data["status"] is None
-    assert len(data.items()) == 15
+    assert len(data.items()) == 16
 
 
 # TESTS MEDIA : _BASE_FIELDS_FROM_MODEL
@@ -305,6 +306,7 @@ def test_base_fields_from_model_hunter_x_hunter_anime_model(
     )
     assert data["format"] == "TV"
     assert data["synopsis"] == hunter_x_hunter_anime_model.synopsis
+    assert data["translated_synopsis"] is None
     assert data["score"] == 9.03
     assert data["rank"] == 10
     assert data["status"] == MediaStatus.FINISHED_AIRING
@@ -319,7 +321,7 @@ def test_base_fields_from_model_hunter_x_hunter_anime_model(
     assert data["user_score"] == 10
     assert data["user_completion"] == MediaCompletion.COMPLETED
     assert data["user_current_section"] == 148
-    assert len(data.items()) == 15
+    assert len(data.items()) == 16
 
 
 def test_base_fields_from_model_slam_dunk_manga_model(mocker, manga_model_example):
@@ -344,6 +346,7 @@ def test_base_fields_from_model_slam_dunk_manga_model(mocker, manga_model_exampl
     assert data["images_urls"].large_image_url == slam_dunk_manga_model.large_image_url
     assert data["format"] == "Manga"
     assert data["synopsis"] == slam_dunk_manga_model.synopsis
+    assert data["translated_synopsis"] is None
     assert data["score"] == 9.09
     assert data["rank"] == 7
     assert data["status"] == MediaStatus.FINISHED
@@ -357,7 +360,7 @@ def test_base_fields_from_model_slam_dunk_manga_model(mocker, manga_model_exampl
     assert data["user_score"] is None
     assert data["user_completion"] == MediaCompletion.NOT_STARTED
     assert data["user_current_section"] == 0
-    assert len(data.items()) == 15
+    assert len(data.items()) == 16
 
 
 def test_base_fields_from_model_manga_model_empty(manga_model_example):
@@ -384,6 +387,7 @@ def test_base_fields_from_model_manga_model_empty(manga_model_example):
     assert data["images_urls"].large_image_url is None
     assert data["format"] is None
     assert data["synopsis"] is None
+    assert data["translated_synopsis"] is None
     assert data["score"] is None
     assert data["rank"] is None
     assert data["themes"] == []
@@ -391,4 +395,20 @@ def test_base_fields_from_model_manga_model_empty(manga_model_example):
     assert data["demographics"] == []
     assert data["number_sections"] is None
     assert data["status"] is None
-    assert len(data.items()) == 15
+    assert len(data.items()) == 16
+
+
+# TESTS MEDIA : TRANSLATE_SYNOSPSIS
+###########################################################
+
+
+def test_translate_simple_synopsis(anime_example):
+    anime_domain = anime_example()
+    anime_domain.translate_synopsis_fr()
+    assert anime_domain.translated_synopsis == "Un synopsis."
+
+
+def test_translate_hunter_x_hunter_synopsis(anime_example):
+    hunter_x_hunter_anime = anime_example(**HUNTER_X_HUNTER_ANIME)
+    hunter_x_hunter_anime.translate_synopsis_fr()
+    assert not hunter_x_hunter_anime is None

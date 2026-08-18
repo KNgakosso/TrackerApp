@@ -96,7 +96,7 @@ def anime_schema_example(
     return make_anime_schema
 
 
-# @pytest.fixture()
+@pytest.fixture()
 def anime_example(
     theme_example,
     genre_example,
@@ -111,6 +111,7 @@ def anime_example(
         large_image_url: str | None = "https:///images/anime/mal_id/large.webp",
         format: str | None = "TV",
         synopsis: str | None = "A synopsis.",
+        translated_synopsis: str | None = "None",
         score: float | None = 5.5,
         rank: int | None = 100,
         themes: list[Theme] | None = None,
@@ -143,6 +144,7 @@ def anime_example(
             ),
             format=format,
             synopsis=synopsis,
+            translated_synopsis=translated_synopsis,
             number_sections=number_sections,
             score=score,
             rank=rank,
