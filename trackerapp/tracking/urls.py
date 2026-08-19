@@ -12,6 +12,11 @@ urlpatterns = [
         name="media_details",
     ),
     path(
+        "media/<str:media_type>/<int:mal_id>/details/translated",
+        views.trasnlate_synopsis,
+        name="translated_synopsis",
+    ),
+    path(
         "media/<str:media_type>/<int:mal_id>/add",
         views.add_media_to_watchlist,
         name="add_to_watchlist",

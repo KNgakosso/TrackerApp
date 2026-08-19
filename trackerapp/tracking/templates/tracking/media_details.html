@@ -112,11 +112,7 @@
             <div class="card">
                 <div class="card-body">
                     <h5 class="card-title">{% trans "Synopsis" %}</h5>
-                    {% if media.synopsis %}
-                        <p class="mb-0">{{ media.synopsis }}</p>
-                    {% else %}
-                        <p class="text-muted mb-0">{% trans "No synosis available" %}.</p>
-                    {% endif %}
+                    {% include "tracking/components/_synopsis_display.html" %}
                 </div>
             </div>
         </div>

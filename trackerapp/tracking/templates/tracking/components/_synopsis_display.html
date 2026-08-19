@@ -1,0 +1,15 @@
+{% load i18n %}
+{% get_current_language as LANGUAGE_CODE %}
+{% if LANGUAGE_CODE != "en" %}
+    {% if media.synopsis %}
+        {% if not show_translation %}
+            <p class="mb-0">{{ media.synopsis }}</p>
+            <a href="{% url 'tracking:translated_synopsis' media.media_type media.mal_id %}">[{% trans "See auto-translation" %}]</a>
+        {% else %}
+            <p class="mb-0">{{ media.translated_synopsis }}</p>
+            <a href="{% url 'tracking:media_details' media.media_type media.mal_id %}">[{% trans "See original text" %}]</a>
+        {% endif %}
+    {% else %}
+        <p class="text-muted mb-0">{% trans "No synopsis available" %}.</p>
+    {% endif %}
+{% endif %}

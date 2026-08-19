@@ -3,7 +3,7 @@ from functools import wraps
 from django.shortcuts import redirect, render
 
 from .enums import MediaType
-from .external.exceptions import ExternalApiError
+from .exceptions import ExternalApiError
 from .forms import (
     ScoreForm,
     SearchForm,
@@ -80,6 +80,22 @@ def media_details(request, mal_id: int, media_type: str):
             "watchlist_selection_form": WatchlistForm(),
             "section_number_form": basis.get_section_number_form(media),
             "score_form": ScoreForm(),
+            "show_translation": False,
+        },
+    )
+
+
+def trasnlate_synopsis(request, mal_id: int, media_type: str):
+    media = use_cases.translate_synopsis(mal_id, MediaType(media_type))
+    return render(
+        request,
+        "tracking/media_details.html",
+        context={
+            "media": media,
+            "watchlist_selection_form": WatchlistForm(),
+            "section_number_form": basis.get_section_number_form(media),
+            "score_form": ScoreForm(),
+            "show_translation": True,
         },
     )
 

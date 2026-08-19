@@ -98,6 +98,12 @@ def rename_watchlist(name: str, watchlist_form: WatchlistForm) -> Watchlist:
     return storage_services.get_watchlist(new_name)
 
 
+def translate_synopsis(mal_id: int, media_type: MediaType):
+    media = basis.get_or_fetch_media(mal_id, media_type)
+    media.translate_synopsis_fr()
+    return media
+
+
 """
 def set_section_user_score_2(media_mal_id : int, media_type : str, section_mal_id : int, score_form : ScoreForm) -> Media:
     section = basis.get_section(media_mal_id, media_type, section_mal_id)
