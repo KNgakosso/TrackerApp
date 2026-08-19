@@ -124,7 +124,7 @@
                     <h5 class="card-title">{% trans "Genres" %}</h5>
                     {% if media.genres %}
                         {% for genre in media.genres %}
-                            <span class="badge bg-primary me-1 mb-1">{{ genre.name }}</span>
+                            <span class="badge bg-primary me-1 mb-1">{% trans genre.name %}</span>
                         {% endfor %}
                     {% else %}
                         <p class="text-muted mb-0">{% trans "None" %}</p>
@@ -138,7 +138,7 @@
                     <h5 class="card-title">{% trans "Themes" %}</h5>
                     {% if media.themes %}
                         {% for theme in media.themes %}
-                            <span class="badge bg-info text-dark me-1 mb-1">{{ theme.name }}</span>
+                            <span class="badge bg-info text-dark me-1 mb-1">{% trans theme.name %}</span>
                         {% endfor %}
                     {% else %}
                         <p class="text-muted mb-0">{% trans "None" %}</p>
@@ -152,7 +152,7 @@
                     <h5 class="card-title">{% trans "Demographic" %}</h5>
                     {% if media.demographics %}
                         {% for demographic in media.demographics %}
-                            <span class="badge bg-success me-1 mb-1">{{ demographic.name }}</span>
+                            <span class="badge bg-success me-1 mb-1">{% trans demographic.name %}</span>
                         {% endfor %}
                     {% else %}
                         <p class="text-muted mb-0">{% trans "None" %}</p>
