@@ -1,7 +1,8 @@
 {% extends "tracking/base.html" %}
 {% load i18n %}
+{% load mytags %}
 {% block title %}
-    {{ media.title }} | TrackAPP
+    {{ media_title }} | TrackAPP
 {% endblock title %}
 {% block content %}
     <a href="javascript:history.back()"
@@ -62,7 +63,7 @@
         </div>
         <!-- Informations -->
         <div class="col-lg-8">
-            <h1 class="mb-3">{{ media.title }}</h1>
+            <h1 class="mb-3">{% title_translated media %}</h1>
             <div class="row g-3 mb-4">
                 <div class="col-md-6">
                     <div class="card h-100">
