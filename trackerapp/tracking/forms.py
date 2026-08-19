@@ -10,6 +10,7 @@ class WatchlistForm(forms.ModelForm):
     class Meta:
         model = WatchlistModel
         fields = ["name"]
+        labels = {"name": _("Name")}
 
 
 class ScoreForm(forms.Form):
@@ -17,7 +18,7 @@ class ScoreForm(forms.Form):
 
 
 class SectionNumberForm(forms.Form):
-    section_number = forms.TypedChoiceField(coerce=int, label=_("section number"))
+    section_number = forms.TypedChoiceField(coerce=int, label=_("Section number"))
 
     def __init__(self, *args, max_value: int = 0, **kwargs):
         super().__init__(*args, **kwargs)

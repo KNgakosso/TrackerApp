@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-08-17 22:08+0200\n"
+"POT-Creation-Date: 2026-08-19 19:09+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -35,7 +35,7 @@ msgid "Violence and profanity"
 msgstr "Violence and profanity"
 
 #: .\tracking\enums.py:37
-msgid "Mild Nudity"
+msgid "Mild nudity"
 msgstr "Mild nudity"
 
 #: .\tracking\enums.py:38 .\tracking\trans.py:81
@@ -88,16 +88,14 @@ msgid "Completed"
 msgstr "Completed"
 
 #: .\tracking\forms.py:20
-msgid "section number"
-msgstr "section number"
+msgid "Section number"
+msgstr "Section number"
 
 #: .\tracking\forms.py:32
 msgid "Name"
 msgstr "Name"
 
 #: .\tracking\forms.py:34
-#, fuzzy
-#| msgid "-- Choose a list --"
 msgid "-- Choose a list --"
 msgstr "-- Choose a list --"
 
@@ -105,7 +103,7 @@ msgstr "-- Choose a list --"
 msgid "Title"
 msgstr "Title"
 
-#: .\tracking\forms.py:42
+#: .\tracking\forms.py:42 .\tracking\templates\tracking\media_details.html:34
 msgid "Rating"
 msgstr "Rating"
 
@@ -152,7 +150,7 @@ msgstr "Please try again in few minutes"
 
 #: .\tracking\templates\tracking\add_to_watchlist.html:4
 #: .\tracking\templates\tracking\add_to_watchlist.html:16
-#: .\tracking\templates\tracking\media_details.html:205
+#: .\tracking\templates\tracking\media_details.html:201
 msgid "Add to a watchlist"
 msgstr "Add to a watchlist"
 
@@ -190,12 +188,24 @@ msgid "New search"
 msgstr "New search"
 
 #: .\tracking\templates\tracking\components\_navbar.html:20
-#: .\tracking\templates\tracking\media_details.html:200
+#: .\tracking\templates\tracking\media_details.html:196
 #: .\tracking\templates\tracking\watchlists.html:4
 msgid "Watchlists"
 msgstr "Watchlists"
 
-#: .\tracking\templates\tracking\components\_navbar.html:22
+#: .\tracking\templates\tracking\components\_synopsis_display.html:7
+msgid "See auto-translation"
+msgstr "See auto-translation"
+
+#: .\tracking\templates\tracking\components\_synopsis_display.html:10
+msgid "See original text"
+msgstr "See original text"
+
+#: .\tracking\templates\tracking\components\_synopsis_display.html:13
+msgid "No synopsis available"
+msgstr "No synosis available"
+
+#: .\tracking\templates\tracking\components\forms\_language_form.html:4
 msgid "Languages"
 msgstr "Languages"
 
@@ -217,12 +227,12 @@ msgid "Ranking"
 msgstr "Ranking"
 
 #: .\tracking\templates\tracking\components\forms\_search_form.html:22
-#: .\tracking\templates\tracking\media_details.html:128
+#: .\tracking\templates\tracking\media_details.html:124
 msgid "Genres"
 msgstr "Genres"
 
 #: .\tracking\templates\tracking\components\forms\_search_form.html:25
-#: .\tracking\templates\tracking\media_details.html:142
+#: .\tracking\templates\tracking\media_details.html:138
 msgid "Themes"
 msgstr "Themes"
 
@@ -275,10 +285,6 @@ msgstr "Informations"
 msgid "Duration"
 msgstr "Duration"
 
-#: .\tracking\templates\tracking\media_details.html:34
-msgid "Classification"
-msgstr ""
-
 #: .\tracking\templates\tracking\media_details.html:41
 msgid "Studios"
 msgstr "Studios"
@@ -299,49 +305,45 @@ msgstr "Status"
 msgid "Synopsis"
 msgstr "Synopsis"
 
-#: .\tracking\templates\tracking\media_details.html:118
-msgid "No synosis available"
-msgstr "No synosis available"
-
-#: .\tracking\templates\tracking\media_details.html:134
-#: .\tracking\templates\tracking\media_details.html:148
-#: .\tracking\templates\tracking\media_details.html:162
+#: .\tracking\templates\tracking\media_details.html:130
+#: .\tracking\templates\tracking\media_details.html:144
+#: .\tracking\templates\tracking\media_details.html:158
 msgid "None"
 msgstr "None"
 
-#: .\tracking\templates\tracking\media_details.html:156
+#: .\tracking\templates\tracking\media_details.html:152
 msgid "Demographic"
 msgstr "Demographic"
 
-#: .\tracking\templates\tracking\media_details.html:172
+#: .\tracking\templates\tracking\media_details.html:168
 msgid "My completion"
 msgstr "My completion"
 
-#: .\tracking\templates\tracking\media_details.html:174
+#: .\tracking\templates\tracking\media_details.html:170
 msgid "You are currently at section"
 msgstr "You are currently at section"
 
-#: .\tracking\templates\tracking\media_details.html:176
+#: .\tracking\templates\tracking\media_details.html:172
 msgid "over"
 msgstr "over"
 
-#: .\tracking\templates\tracking\media_details.html:181
+#: .\tracking\templates\tracking\media_details.html:177
 msgid "section"
 msgstr "section"
 
-#: .\tracking\templates\tracking\media_details.html:183
+#: .\tracking\templates\tracking\media_details.html:179
 msgid "Mark as finished"
 msgstr "Mark as finished"
 
-#: .\tracking\templates\tracking\media_details.html:191
+#: .\tracking\templates\tracking\media_details.html:187
 msgid "Define completion"
 msgstr "Define completion"
 
-#: .\tracking\templates\tracking\media_details.html:208
+#: .\tracking\templates\tracking\media_details.html:204
 msgid "My score"
 msgstr "My score"
 
-#: .\tracking\templates\tracking\media_details.html:213
+#: .\tracking\templates\tracking\media_details.html:209
 msgid "Register the score"
 msgstr "Register the score"
 
@@ -561,7 +563,7 @@ msgstr "Magical Sex Shift"
 
 #: .\tracking\trans.py:46
 msgid "Mahou Shoujo"
-msgstr "Mahou Shoujo"
+msgstr "Magical girl"
 
 #: .\tracking\trans.py:47
 msgid "Martial Arts"
