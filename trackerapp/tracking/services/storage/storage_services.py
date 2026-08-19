@@ -79,6 +79,16 @@ def save_media(media: Media):
         repository.create_media_model(media)
 
 
+def save_if_stored_media(media: Media):
+    try:
+        media_model = repository.get_media_model(media.mal_id, media.media_type)
+        repository.set_media_model_synopsis_tanslated(
+            media_model, media.synopsis_translated
+        )
+    except MediaNotFoundError:
+        pass
+
+
 """
 def set_media_user_completion(
     mal_id: int, media_type: str, new_completion: MediaCompletion

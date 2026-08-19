@@ -4,9 +4,9 @@
     {% if LANGUAGE_CODE != "en" %}
         {% if not show_translation %}
             <p class="mb-0">{{ media.synopsis }}</p>
-            <a href="{% url 'tracking:translated_synopsis' media.media_type media.mal_id %}">[{% trans "See auto-translation" %}]</a>
+            <a href="{% url 'tracking:translate_synopsis' media.media_type media.mal_id %}">[{% trans "See auto-translation" %}]</a>
         {% else %}
-            <p class="mb-0">{{ media.translated_synopsis }}</p>
+            <p class="mb-0">{{ media.synopsis_translated }}</p>
             <a href="{% url 'tracking:media_details' media.media_type media.mal_id %}">[{% trans "See original text" %}]</a>
         {% endif %}
     {% else %}

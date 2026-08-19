@@ -100,7 +100,8 @@ def rename_watchlist(name: str, watchlist_form: WatchlistForm) -> Watchlist:
 
 def translate_synopsis(mal_id: int, media_type: MediaType):
     media = basis.get_or_fetch_media(mal_id, media_type)
-    media.translate_synopsis_fr()
+    media.translate_synopsis()
+    storage_services.save_if_stored_media(media)
     return media
 
 

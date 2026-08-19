@@ -1,6 +1,7 @@
 from dataclasses import dataclass
 
 from argostranslate import translate
+from django.utils.translation import get_language
 from django.utils.translation import gettext_lazy as _
 
 from ..enums import MediaCompletion, MediaStatus
@@ -101,10 +102,12 @@ class Relations():
 class Media:
     mal_id: int
     title: str
+    title_english: str | None
+    title_french: str | None
     images_urls: ImagesUrls | None
     format: str | None
     synopsis: str | None
-    translated_synopsis: str | None
+    synopsis_translated: str | None
     score: float | None
     rank: int | None
     themes: list[Theme]
@@ -131,10 +134,12 @@ class Media:
         return {
             "mal_id": media_schema.mal_id,
             "title": media_schema.title,
+            "title_english": media_schema.title_english,
+            "title_french": media_schema._get_title_french(),
             "images_urls": ImagesUrls.from_schema(media_schema.images.webp),
             "format": media_schema.format,
             "synopsis": media_schema.synopsis,
-            "translated_synopsis": None,
+            "synopsis_translated": None,
             "score": media_schema.score,
             "rank": media_schema.rank,
             "themes": [Theme.from_schema(theme) for theme in media_schema.themes],
@@ -159,6 +164,8 @@ class Media:
         return {
             "mal_id": media_model.mal_id,
             "title": media_model.title,
+            "title_english": none_if_empty(media_model.title_english),
+            "title_french": none_if_empty(media_model.title_french),
             "images_urls": ImagesUrls(
                 small_image_url=none_if_empty(media_model.small_image_url),
                 image_url=none_if_empty(media_model.image_url),
@@ -166,7 +173,7 @@ class Media:
             ),
             "format": none_if_empty(media_model.format),
             "synopsis": none_if_empty(media_model.synopsis),
-            "translated_synopsis": None,
+            "synopsis_translated": none_if_empty(media_model.synopsis_translated),
             "score": media_model.score,
             "rank": media_model.rank,
             "themes": [Theme.from_model(theme) for theme in media_model.themes.all()],
@@ -184,6 +191,13 @@ class Media:
             "user_completion": MediaCompletion(media_model.user_completion),
             "user_current_section": media_model.user_current_section,
         }
+
+    def translate_synopsis(self):
+        language_code = get_language()
+        if not self.synopsis is None:
+            self.synopsis_translated = translate.translate(
+                self.synopsis, "en", language_code
+            )
 
     def complete_next(self) -> int | None:
         if self.number_sections is None:
@@ -204,10 +218,6 @@ class Media:
         self.user_completion = MediaCompletion.NOT_STARTED
         if not self.number_sections is None:
             self.user_current_section = 0
-
-    def translate_synopsis_fr(self):
-        if not self.synopsis is None:
-            self.translated_synopsis = translate.translate(self.synopsis, "en", "fr")
 
     def define_current_section(self, new_current_section: int):
         if not self.number_sections is None:

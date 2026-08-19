@@ -77,7 +77,7 @@ def _set_media_model_demographics(
 # MEDIA MODEL
 #########################################
 def _prepare_data(media: Media) -> dict[str, Any]:
-    valid_fields = [
+    many_to_many_fields = [
         "themes",
         "demographics",
         "genres",
@@ -88,7 +88,7 @@ def _prepare_data(media: Media) -> dict[str, Any]:
     data = {
         field: value
         for field, value in media.__dict__.items()
-        if not field in valid_fields
+        if not field in many_to_many_fields
     }
 
     data["small_image_url"] = (
@@ -98,6 +98,8 @@ def _prepare_data(media: Media) -> dict[str, Any]:
     data["large_image_url"] = (
         media.images_urls.large_image_url if media.images_urls else ""
     )
+    data["synopsis"] = media.synopsis or ""
+    data["synopsis_translated"] = media.synopsis_translated or ""
     return data
 
 
@@ -134,6 +136,14 @@ def create_media_model(media: Media) -> MediaModel:
         raise StorageError(
             f"Error during the creation of media id : {media.mal_id}"
         ) from exc
+
+
+def media_model_exists(mal_id: int, media_type: MediaType) -> bool:
+    return (
+        MediaModel.objects.instance_of(TYPE_TO_MODEL[media_type])
+        .filter(mal_id=mal_id)
+        .exists()
+    )
 
 
 def get_media_model(mal_id: int, media_type: MediaType) -> MediaModel:
@@ -189,6 +199,14 @@ def set_media_model_user_score(
         raise InvalidScoreError(
             "Score must be an integer between 0 and 10, or None."
         ) from exc
+
+
+def set_media_model_synopsis_tanslated(
+    media_model: MediaModel, synopsis_translated: str
+) -> str:
+    media_model.synopsis_translated = synopsis_translated
+    media_model.save()
+    return media_model.synopsis_translated
 
 
 # EPISODE MODEL

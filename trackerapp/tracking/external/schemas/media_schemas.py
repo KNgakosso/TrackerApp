@@ -41,6 +41,8 @@ class MediaSchema(BaseModel):
     # model_config pour utiliser les attributs sans utiliser leurs alias
     mal_id: int
     title: str = Field(validation_alias=AliasChoices("title", "name"))
+    title_english: str | None
+    titles: list[dict[str, str]]
     images: ImagesSchema
     format: str | None = Field(alias="type")
     synopsis: str | None
@@ -53,6 +55,12 @@ class MediaSchema(BaseModel):
         validation_alias=AliasChoices("episodes", "volumes")
     )
     status: MediaStatus | None  # State of the Publication / Diffusion
+
+    def _get_title_french(self) -> str | None:
+        for title_dict in self.titles:
+            if title_dict["type"] == "French":
+                return title_dict["title"]
+        return None
 
 
 class MediaFullSchema(MediaSchema):

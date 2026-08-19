@@ -13,8 +13,8 @@ urlpatterns = [
     ),
     path(
         "media/<str:media_type>/<int:mal_id>/details/translated",
-        views.trasnlate_synopsis,
-        name="translated_synopsis",
+        views.translate_synopsis,
+        name="translate_synopsis",
     ),
     path(
         "media/<str:media_type>/<int:mal_id>/add",

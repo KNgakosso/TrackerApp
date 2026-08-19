@@ -85,7 +85,7 @@ def media_details(request, mal_id: int, media_type: str):
     )
 
 
-def trasnlate_synopsis(request, mal_id: int, media_type: str):
+def translate_synopsis(request, mal_id: int, media_type: str):
     media = use_cases.translate_synopsis(mal_id, MediaType(media_type))
     return render(
         request,

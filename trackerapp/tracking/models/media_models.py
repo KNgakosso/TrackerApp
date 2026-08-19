@@ -38,12 +38,15 @@ class ThemeModel(models.Model):
 class MediaModel(PolymorphicModel):
     mal_id = models.IntegerField()
     title = models.CharField()
+    title_english = models.CharField(blank=True)
+    title_french = models.CharField(blank=True)
     small_image_url = models.CharField(blank=True)
     image_url = models.CharField(blank=True)
     large_image_url = models.CharField(blank=True)
     format = models.CharField(blank=True)
     score = models.FloatField(null=True, blank=True)
     synopsis = models.CharField(blank=True)
+    synopsis_translated = models.CharField(blank=True)
     number_sections = models.IntegerField(null=True, blank=True)
     rank = models.IntegerField(null=True, blank=True)
     status = models.CharField(
