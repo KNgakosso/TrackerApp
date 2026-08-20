@@ -1,10 +1,11 @@
 from dataclasses import dataclass
 
 from argostranslate import translate
-from django.utils.translation import get_language
+from django.conf import settings
 from django.utils.translation import gettext_lazy as _
 
 from ..enums import MediaCompletion, MediaStatus
+from ..exceptions import ArgosError
 from ..external.schemas.media_schemas import (
     DemographicSchema,
     GenreSchema,
@@ -159,7 +160,7 @@ class Media:
     @classmethod
     def _base_fields_from_model(cls, media_model: MediaModel):
         def none_if_empty(string: str) -> str | None:
-            return None if string == "" else string
+            return string or None
 
         return {
             "mal_id": media_model.mal_id,
@@ -192,12 +193,11 @@ class Media:
             "user_current_section": media_model.user_current_section,
         }
 
-    def translate_synopsis(self):
-        language_code = get_language()
-        if not self.synopsis is None:
-            self.synopsis_translated = translate.translate(
-                self.synopsis, "en", language_code
-            )
+    def translate_synopsis(self, language_code: str):
+        if language_code == "en":
+            self.synopsis_translated = self.synopsis
+        elif not self.synopsis is None:
+            self.synopsis_translated = _translate(self.synopsis, language_code)
 
     def complete_next(self) -> int | None:
         if self.number_sections is None:
@@ -238,3 +238,14 @@ class Media:
                 self.user_completion = MediaCompletion.IN_PROGRESS
             else:
                 raise ValueError()
+
+
+def _translate(text: str, to_code: str) -> str:
+    if to_code == "en":
+        return text
+    elif not to_code in [code for code, _ in settings.LANGUAGES]:
+        raise ValueError(f"Unvalid language code : {to_code}")
+    try:
+        return translate.translate(text, "en", to_code)
+    except Exception as exc:
+        raise ArgosError from exc

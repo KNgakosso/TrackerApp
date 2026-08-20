@@ -24,6 +24,8 @@ def anime_schema_example(
     def make_anime_schema(
         mal_id: int = 0,
         title: str = "An Anime",
+        title_english: str | None = "An Anime",
+        titles: list[dict[str, str]] | None = None,
         small_image_url: str | None = "https:///images/anime/mal_id/small.webp",
         image_url: str | None = "https:///images/anime/mal_id/medium.webp",
         large_image_url: str | None = "https:///images/anime/mal_id/large.webp",
@@ -41,6 +43,15 @@ def anime_schema_example(
         rating: AnimeRating | None = AnimeRating.G,
         **kwargs
     ) -> AnimeFullSchema:
+        titles = (
+            titles
+            if not titles is None
+            else [
+                {"type": "Default", "title": "An Anime"},
+                {"type": "English", "title": "An Anime"},
+                {"type": "French", "title": "Un Animé"},
+            ]
+        )
 
         themes_schemas = (
             [theme_schema_example()]
@@ -69,6 +80,8 @@ def anime_schema_example(
         return AnimeFullSchema(
             mal_id=mal_id,
             title=title,
+            title_english=title_english,
+            titles=titles,
             images=ImagesSchema(
                 webp=ImagesUrlsSchema(
                     small_image_url=small_image_url,
@@ -106,12 +119,14 @@ def anime_example(
     def make_anime(
         mal_id: int = 0,
         title: str = "An Anime",
+        title_english: str | None = "An Anime",
+        title_french: str | None = "Un Animé",
         small_image_url: str | None = "https:///images/anime/mal_id/small.webp",
         image_url: str | None = "https:///images/anime/mal_id/medium.webp",
         large_image_url: str | None = "https:///images/anime/mal_id/large.webp",
         format: str | None = "TV",
         synopsis: str | None = "A synopsis.",
-        translated_synopsis: str | None = "None",
+        synopsis_translated: str | None = "Un synopsis.",
         score: float | None = 5.5,
         rank: int | None = 100,
         themes: list[Theme] | None = None,
@@ -137,6 +152,8 @@ def anime_example(
         return Anime(
             mal_id=mal_id,
             title=title,
+            title_english=title_english,
+            title_french=title_french,
             images_urls=ImagesUrls(
                 small_image_url=small_image_url,
                 image_url=image_url,
@@ -144,7 +161,7 @@ def anime_example(
             ),
             format=format,
             synopsis=synopsis,
-            translated_synopsis=translated_synopsis,
+            synopsis_translated=synopsis_translated,
             number_sections=number_sections,
             score=score,
             rank=rank,
@@ -174,11 +191,14 @@ def anime_model_example(
     def make_anime_model(
         mal_id: int = 0,
         title: str = "An Anime",
+        title_english: str | None = "An Anime",
+        title_french: str | None = "Un Animé",
         small_image_url: str | None = "https:///images/anime/mal_id/small.webp",
         image_url: str | None = "https:///images/anime/mal_id/medium.webp",
         large_image_url: str | None = "https:///images/anime/mal_id/large.webp",
         format: str | None = "TV",
         synopsis: str | None = "A synopsis.",
+        synopsis_translated: str | None = "Un synopsis.",
         score: float | None = 5.5,
         rank: int | None = 100,
         themes: list[dict] | None = None,
@@ -197,11 +217,14 @@ def anime_model_example(
         anime_model = AnimeModel.objects.create(
             mal_id=mal_id,
             title=title,
-            small_image_url=small_image_url,
-            image_url=image_url,
-            large_image_url=large_image_url,
-            format=format,
-            synopsis=synopsis,
+            title_english=title_english or "",
+            title_french=title_french or "",
+            small_image_url=small_image_url or "",
+            image_url=image_url or "",
+            large_image_url=large_image_url or "",
+            format=format or "",
+            synopsis=synopsis or "",
+            synopsis_translated=synopsis_translated or "",
             score=score,
             rank=rank,
             number_sections=number_sections,

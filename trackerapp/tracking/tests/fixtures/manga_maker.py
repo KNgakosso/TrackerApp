@@ -23,7 +23,9 @@ def manga_schema_example(
 ) -> MangaSchemaMaker:
     def make_manga_schema(
         mal_id: int = 0,
-        title: str = "An Manga",
+        title: str = "A Manga",
+        title_english: str | None = "A Manga",
+        titles: list[dict[str, str]] | None = None,
         small_image_url: str | None = "https:///images/manga/mal_id/small.webp",
         image_url: str | None = "https:///images/manga/mal_id/medium.webp",
         large_image_url: str | None = "https:///images/manga/mal_id/large.webp",
@@ -40,6 +42,12 @@ def manga_schema_example(
         authors: list[dict] | None = None,
         **kwargs
     ) -> MangaFullSchema:
+        titles = titles or [
+            {"type": "Default", "title": "A Manga"},
+            {"type": "English", "title": "A Manga"},
+            {"type": "French", "title": "Un Manga"},
+        ]
+
         themes_schemas = (
             [theme_schema_example()]
             if themes is None
@@ -67,6 +75,8 @@ def manga_schema_example(
         return MangaFullSchema(
             mal_id=mal_id,
             title=title,
+            title_english=title_english,
+            titles=titles,
             images=ImagesSchema(
                 webp=ImagesUrlsSchema(
                     small_image_url=small_image_url,
@@ -102,13 +112,15 @@ def manga_example(
 ) -> MangaMaker:
     def make_manga(
         mal_id: int = 0,
-        title: str = "An Manga",
+        title: str = "A Manga",
+        title_english: str | None = "A Manga",
+        title_french: str | None = "Un Manga",
         small_image_url: str | None = "https:///images/manga/mal_id/small.webp",
         image_url: str | None = "https:///images/manga/mal_id/medium.webp",
         large_image_url: str | None = "https:///images/manga/mal_id/large.webp",
         format: str | None = "TV",
         synopsis: str | None = "A synopsis.",
-        translated_synopsis: str | None = None,
+        synopsis_translated: str | None = "Un synopsis.",
         score: float | None = 5.5,
         rank: int | None = 100,
         themes: list[Theme] | None = None,
@@ -133,6 +145,8 @@ def manga_example(
         return Manga(
             mal_id=mal_id,
             title=title,
+            title_english=title_english,
+            title_french=title_french,
             images_urls=ImagesUrls(
                 small_image_url=small_image_url,
                 image_url=image_url,
@@ -140,7 +154,7 @@ def manga_example(
             ),
             format=format,
             synopsis=synopsis,
-            translated_synopsis=translated_synopsis,
+            synopsis_translated=synopsis_translated,
             number_sections=number_sections,
             score=score,
             rank=rank,
@@ -169,11 +183,14 @@ def manga_model_example(
     def make_manga_model(
         mal_id: int = 0,
         title: str = "A Manga",
+        title_english: str | None = "An Anime",
+        title_french: str | None = "Un Animé",
         small_image_url: str | None = "https:///images/manga/mal_id/small.webp",
         image_url: str | None = "https:///images/manga/mal_id/medium.webp",
         large_image_url: str | None = "https:///images/manga/mal_id/large.webp",
         format: str | None = "TV",
         synopsis: str | None = "A synopsis.",
+        synopsis_translated: str | None = "Un synopsis.",
         score: float | None = 5.5,
         rank: int | None = 100,
         themes: list[dict] | None = None,
@@ -188,15 +205,19 @@ def manga_model_example(
         user_current_section: int | None = 0,
         **kwargs
     ) -> MangaModel:
+
         manga_model = MangaModel.objects.create(
             mal_id=mal_id,
-            small_image_url=small_image_url,
-            image_url=image_url,
-            large_image_url=large_image_url,
-            format=format,
+            small_image_url=small_image_url or "",
+            image_url=image_url or "",
+            large_image_url=large_image_url or "",
+            format=format or "",
             title=title,
+            title_english=title_english or "",
+            title_french=title_french or "",
             score=score,
-            synopsis=synopsis,
+            synopsis=synopsis or "",
+            synopsis_translated=synopsis_translated or "",
             number_sections=number_sections,
             rank=rank,
             status=status,

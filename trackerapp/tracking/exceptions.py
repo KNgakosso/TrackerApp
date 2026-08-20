@@ -32,3 +32,7 @@ class InvalidScoreError(MediaError):
 
 class ExternalApiError(TrackingError):
     pass
+
+
+class ArgosError(TrackingError):
+    pass

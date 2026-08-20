@@ -1,4 +1,6 @@
-from ..domain.media import Media, MediaCompletion
+from django.utils.translation import get_language
+
+from ..domain.media import Media
 from ..domain.watchlist import Watchlist
 from ..enums import MediaType
 from ..forms import ScoreForm, SectionNumberForm, WatchlistForm
@@ -38,25 +40,11 @@ def delete_watchlist(watchlist_name: str) -> list[Watchlist]:
     return storage_services.get_watchlists()
 
 
-def update_completion(current_section: int, max_section: int):
-    if current_section > max_section:
-        raise ValueError
-    elif current_section == max_section:
-        return MediaCompletion.COMPLETED
-    elif current_section == 0:
-        return MediaCompletion.NOT_STARTED
-    else:
-        return MediaCompletion.IN_PROGRESS
-
-
 def complete_media_next_section(mal_id: int, media_type: MediaType) -> Media:
     media = basis.get_or_import_media(mal_id, media_type)
     media.complete_next()
     storage_services.save_media(media)
     return media
-
-
-#
 
 
 def set_media_current_user_section(
@@ -100,7 +88,8 @@ def rename_watchlist(name: str, watchlist_form: WatchlistForm) -> Watchlist:
 
 def translate_synopsis(mal_id: int, media_type: MediaType):
     media = basis.get_or_fetch_media(mal_id, media_type)
-    media.translate_synopsis()
+    current_language = get_language()
+    media.translate_synopsis(current_language)
     storage_services.save_if_stored_media(media)
     return media
 
