@@ -2,7 +2,6 @@ from dataclasses import dataclass
 
 from argostranslate import translate
 from django.conf import settings
-from django.utils.translation import gettext_lazy as _
 
 from ..enums import MediaCompletion, MediaStatus
 from ..exceptions import ArgosError
@@ -44,10 +43,6 @@ class Genre:
     def from_model(cls, genre_model: GenreModel):
         return Genre(name=genre_model.name)
 
-    @property
-    def translated_name(self):
-        return _(self.name)
-
 
 @dataclass
 class Theme:
@@ -60,10 +55,6 @@ class Theme:
     @classmethod
     def from_model(cls, theme_model: ThemeModel):
         return Theme(name=theme_model.name)
-
-    @property
-    def translated_name(self):
-        return _(self.name)
 
 
 @dataclass
