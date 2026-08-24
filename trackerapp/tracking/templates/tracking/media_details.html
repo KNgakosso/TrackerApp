@@ -10,7 +10,7 @@
     <div class="row g-4 mb-5">
         <!-- Affiche -->
         <div class="col-lg-4 text-center">
-            <img src="{{ media.images_urls.image_url }}"
+            <img src="{{ media.images_urls.large_image_url }}"
                  alt="{{ media.title }}"
                  class="img-fluid rounded shadow">
             <div class="mt-3">
@@ -76,6 +76,20 @@
                                     —
                                 {% endif %}
                             </h4>
+                            <button class="btn btn-primary"
+                                    type="button"
+                                    data-bs-toggle="collapse"
+                                    data-bs-target="#mon-formulaire"
+                                    aria-expanded="false"
+                                    aria-controls="mon-formulaire">Modifier</button>
+                            <form class="collapse"
+                                  action="{% url 'tracking:set_media_user_score' media.media_type media.mal_id %}"
+                                  method="post"
+                                  id="mon-formulaire">
+                                {% csrf_token %}
+                                {{ score_form }}
+                                <button class="btn btn-outline-primary" type="submit">{% trans "Register the score" %}</button>
+                            </form>
                         </div>
                     </div>
                 </div>
@@ -174,20 +188,33 @@
                         <strong>{{ media.number_sections }}</strong>.
                     </p>
                     <div class="d-grid gap-2 mb-4">
-                        <a href="{% url 'tracking:complete_next' media.media_type media.mal_id %}"
-                           class="btn btn-success">+1 {% trans "section" %}</a>
-                        <a href="{% url 'tracking:finish_media' media.media_type media.mal_id %}"
-                           class="btn btn-outline-success">{% trans "Mark as finished" %}</a>
-                    </div>
-                    {% if section_number_form %}
-                        <hr>
-                        <form action="{% url 'tracking:set_current_section' media.media_type media.mal_id %}"
-                              method="post">
+                        <form method="post"
+                              action="{% url 'tracking:complete_next' media.media_type.value media.mal_id %}">
                             {% csrf_token %}
-                            {{ section_number_form }}
-                            <button class="btn btn-primary mt-3" type="submit">{% trans "Define completion" %}</button>
+                            <input type="hidden" name="next" value="{{ request.get_full_path }}">
+                            <button class="btn btn-success" type="submit">Section suivante</button>
                         </form>
-                    {% endif %}
+                        <form method="post"
+                              action="{% url 'tracking:finish_media' media.media_type.value media.mal_id %}">
+                            {% csrf_token %}
+                            <input type="hidden" name="next" value="{{ request.get_full_path }}">
+                            <button class="btn btn-success" type="submit">{% trans "Mark as finished" %}</button>
+                        </form>
+                    </div>
+                    <button class="btn btn-primary"
+                            type="button"
+                            data-bs-toggle="collapse"
+                            data-bs-target="#user-completion"
+                            aria-expanded="false"
+                            aria-controls="user-completion">{% trans "Define completion" %}</button>
+                    <form class="collapse"
+                          action="{% url 'tracking:set_current_section' media.media_type media.mal_id %}"
+                          method="post"
+                          id="user-completion">
+                        {% csrf_token %}
+                        {{ section_number_form }}
+                        <button class="btn btn-primary mt-3" type="submit">{% trans "Define completion" %}</button>
+                    </form>
                 </div>
             </div>
         </div>
@@ -195,20 +222,9 @@
             <div class="card h-100">
                 <div class="card-body">
                     <h5 class="card-title">{% trans "Watchlists" %}</h5>
-                    <form action="{% url 'tracking:add_to_watchlist' media.media_type media.mal_id %}"
-                          method="post">
-                        {% csrf_token %}
-                        {{ watchlist_selection_form }}
-                        <button class="btn btn-primary mt-3" type="submit">{% trans "Add to a watchlist" %}</button>
-                    </form>
+                    <a href="{% url 'tracking:add_to_watchlist' media.media_type media.mal_id %}"
+                       class="btn btn-success">{% trans "Add to a watchlist" %}</a>
                     <hr>
-                    <h5>{% trans "My score" %}</h5>
-                    <form action="{% url 'tracking:set_media_user_score' media.media_type media.mal_id %}"
-                          method="post">
-                        {% csrf_token %}
-                        {{ score_form }}
-                        <button class="btn btn-outline-primary" type="submit">{% trans "Register the score" %}</button>
-                    </form>
                 </div>
             </div>
         </div>

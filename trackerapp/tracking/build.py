@@ -30,7 +30,7 @@ def insert(table_name, category_name, category_ids):
 for media_type in ["anime", "manga"]:
     for field_params in [DEMOGRAPHICS_PARAMS, GENRES_PARAMS, THEMES_PARAMS]:
         response = requests.get(
-            url=f"https://api.tenrai.org/v4=1/genres/{media_type}?filter={field_params['filter']}"
+            url=f"https://api.tenrai.org/v1/genres/{media_type}?filter={field_params['filter']}"
         ).json()
         time.sleep(0.35)
         for value in response["data"]:

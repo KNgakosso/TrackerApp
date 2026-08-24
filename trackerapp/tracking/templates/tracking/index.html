@@ -4,27 +4,13 @@
   Accueil | TrackAPP
 {% endblock title %}
 {% block content %}
-  <h1 class="mb-4">TrackAPP</h1>
-  <div class="card mb-5">
-    <div class="card-body">
-      <h2 class="card-title">{% trans "Research for an anime or a manga" %}</h2>
-      {% include "tracking/components/forms/_search_form.html" with form=search_form mode="advanced" %}
-    </div>
-  </div>
-  <form action="{% url 'set_language' %}" method="post">
-    {% csrf_token %}
-    <input type="hidden" name="next" value="{{ request.path }}">
-    <select name="language">
-      <option value="fr">Français</option>
-      <option value="en">English</option>
-    </select>
-    <button type="submit">{% trans "Change" %}</button>
-  </form>
   <h2 class="mb-4">{% trans "My ongoing medias" %}</h2>
   {% if medias %}
     <div class="row g-4">
       {% for media in medias %}
-        <div class="col-sm-6 col-md-4 col-lg-3 col-xl-2">{% include "tracking/components/_media_card.html" %}</div>
+        <div class="col-sm-6 col-md-4 col-lg-3 col-xl-2">
+          {% include "tracking/components/_media_card.html" with show_progress=True show_next=True %}
+        </div>
       {% endfor %}
     </div>
   {% else %}

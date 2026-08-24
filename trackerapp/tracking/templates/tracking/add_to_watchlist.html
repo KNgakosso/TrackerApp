@@ -4,16 +4,20 @@
     {% trans "Add to a watchlist" %} | TrackAPP
 {% endblock title %}
 {% block content %}
-    <a href="{% url 'tracking:media_details' media.media_type media.mal_id %}"
-       class="btn btn-outline-secondary mb-4">← {% trans "Back to home" %}</a>
+    <a href="javascript:history.back()"
+       class="btn btn-outline-secondary mb-4">← {% trans "Back" %}</a>
     <div class="row g-4">
         <!-- Média -->
-        <div class="col-lg-4">{% include "tracking/components/_media_card.html" %}</div>
+        <div class="col-lg-4">
+            <img src="{{ media.images_urls.large_image_url }}"
+                 alt="{{ media.title }}"
+                 class="img-fluid rounded shadow">
+        </div>
         <!-- Formulaire -->
         <div class="col-lg-8">
+            <h1 class="card-title mb-3">{% trans "Add to a watchlist" %}</h1>
             <div class="card">
                 <div class="card-body">
-                    <h1 class="card-title mb-3">{% trans "Add to a watchlist" %}</h1>
                     <p class="text-secondary">
                         {% trans "Select an existing watchlist" %}
                         <strong>{{ media.title }}</strong>.

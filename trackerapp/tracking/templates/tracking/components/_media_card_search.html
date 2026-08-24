@@ -1,0 +1,30 @@
+{% extends "tracking/components/_base_media_card.html" %}
+{% load i18n %}
+{% block cardbody %}
+    {% if media.studios %}
+        <p class="mb-1">
+            <strong>{% trans "Studios" %}</strong>
+        </p>
+        {% for studio in media.studios %}
+            <span class="badge bg-dark border border-secondary me-1 mb-1">{{ studio.name }}</span>
+        {% endfor %}
+    {% endif %}
+    {% if media.authors %}
+        <p>
+            <strong>{% trans "Authors" %}</strong>
+        </p>
+        {% for author in media.authors %}
+            <span class="badge bg-dark border border-secondary me-1 mb-1">{{ author.name }}</span>
+        {% endfor %}
+    {% endif %}
+    <p>{{ media.number_sections }}</p>
+    {% for genre in media.genres %}
+        <span class="badge bg-primary me-1 mb-1">{% trans genre.name %}</span>
+    {% endfor %}
+    {% for theme in media.themes %}
+        <span class="badge bg-info text-dark me-1 mb-1">{% trans theme.name %}</span>
+    {% endfor %}
+    {% for demographic in media.demographics %}
+        <span class="badge bg-success me-1 mb-1">{% trans demographic.name %}</span>
+    {% endfor %}
+{% endblock cardbody %}

@@ -18,33 +18,7 @@
   {% if watchlists %}
     <div class="row g-4">
       {% for watchlist in watchlists %}
-        <div class="col-md-6 col-lg-4">
-          <div class="card bg-dark border-secondary text-light h-100">
-            <div class="card-body d-flex flex-column">
-              <h2 class="h4 card-title">{{ watchlist.name }}</h2>
-              <p class="text-muted">
-                {{ watchlist.medias|length }}
-                {% trans "media" %}{{ watchlist.medias|length|pluralize }}
-              </p>
-              {% if watchlist.medias %}
-                <div class="small text-secondary mb-3">
-                  {% for media in watchlist.medias|slice:":3" %}
-                    <div>{{ media.title }}</div>
-                  {% endfor %}
-                  {% if watchlist.medias|length > 3 %}
-                    <div class="mt-1">+ {{ watchlist.medias|length|add:"-3" }} autre{{ watchlist.medias|length|add:"-3"|pluralize }}</div>
-                  {% endif %}
-                </div>
-              {% else %}
-                <p class="small text-secondary mb-3">{% trans "This watchlist is empty" %}.</p>
-              {% endif %}
-              <div class="mt-auto">
-                <a href="{% url 'tracking:watchlist_details' watchlist.name %}"
-                   class="btn btn-outline-primary w-100">{% trans "See the watchlist" %}</a>
-              </div>
-            </div>
-          </div>
-        </div>
+        {% include "tracking/components/_watchlist_card.html" %}
       {% endfor %}
     </div>
   {% else %}

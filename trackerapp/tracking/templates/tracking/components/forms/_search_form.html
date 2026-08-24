@@ -19,14 +19,41 @@
                     <h5 class="mb-3">🔞 {% trans "Ranking" %}</h5>
                     {% include "tracking/components/forms/_field.html" with field=form.rating %}
                     <hr class="border-secondary">
-                    <h5 class="mb-3">🎭 {% trans "Genres" %}</h5>
-                    {% include "tracking/components/forms/_checkbox_group.html" with field=form.genres %}
+                    <h5 class="mb-3">
+                        <button class="btn btn-outline-light w-100 text-start"
+                                type="button"
+                                data-bs-toggle="collapse"
+                                data-bs-target="#genresOptions"
+                                aria-expanded="false"
+                                aria-controls="genresOptions">🎭 {% trans "Genres" %}</button>
+                    </h5>
+                    <div class="collapse mb-3" id="genresOptions">
+                        {% include "tracking/components/forms/_checkbox_group.html" with field=form.genres %}
+                    </div>
                     <hr class="border-secondary">
-                    <h5 class="mb-3">✨ {% trans "Themes" %}</h5>
-                    {% include "tracking/components/forms/_checkbox_group.html" with field=form.themes %}
+                    <h5 class="mb-3">
+                        <button class="btn btn-outline-light w-100 text-start"
+                                type="button"
+                                data-bs-toggle="collapse"
+                                data-bs-target="#themesOptions"
+                                aria-expanded="false"
+                                aria-controls="themesOptions">✨ {% trans "Themes" %}</button>
+                    </h5>
+                    <div class="collapse mb-3" id="themesOptions">
+                        {% include "tracking/components/forms/_checkbox_group.html" with field=form.themes %}
+                    </div>
                     <hr class="border-secondary">
-                    <h5 class="mb-3">👥 {% trans "Public" %}</h5>
-                    {% include "tracking/components/forms/_checkbox_group.html" with field=form.demographics %}
+                    <h5 class="mb-3">
+                        <button class="btn btn-outline-light w-100 text-start"
+                                type="button"
+                                data-bs-toggle="collapse"
+                                data-bs-target="#demographicsOptions"
+                                aria-expanded="false"
+                                aria-controls="demographicsOptions">👥 {% trans "Public" %}</button>
+                    </h5>
+                    <div class="collapse mb-3" id="demographicsOptions">
+                        {% include "tracking/components/forms/_checkbox_group.html" with field=form.demographics %}
+                    </div>
                     <hr class="border-secondary">
                     {% include "tracking/components/forms/_field.html" with field=form.sfw %}
                 </div>

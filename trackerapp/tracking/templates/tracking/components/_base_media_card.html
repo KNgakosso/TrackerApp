@@ -1,0 +1,49 @@
+{% load i18n %}
+{% load mytags %}
+<div class="card">
+    <a href="{% url 'tracking:media_details' media.media_type media.mal_id %}"
+       style="text-decoration: none">
+        <img src="{{ media.images_urls.large_image_url }}"
+             class="card-img-top object-fit-cover"
+             width="225"
+             height="320"
+             alt="{{ media.title }}">
+        <div class="card-body d-flex flex-column">
+            <h5 class="card-title mb-3">{% title_translated media %}</h5>
+            <div class="mb-3">
+                <span class="badge bg-secondary">{{ media.media_type|title }}</span>
+                {% if media.score %}
+                    <span class="badge bg-warning text-dark">⭐ {{ media.score }}</span>
+                {% endif %}
+            </div>
+            {% block cardbody %}
+            {% endblock cardbody %}
+        </div>
+    </a>
+    <!-- Bouton options -->
+    <div class="dropdown position-absolute top-0 end-0 m-2">
+        <button class="btn btn-dark btn-sm rounded-circle"
+                type="button"
+                data-bs-toggle="dropdown"
+                aria-expanded="false">⋮</button>
+        <ul class="dropdown-menu dropdown-menu-end">
+            <li>
+                <a class="dropdown-item" href="#">Définir la progression</a>
+            </li>
+            <li>
+                <a class="dropdown-item"
+                   href="{% url 'tracking:add_to_watchlist' media.media_type media.mal_id %}">Ajouter à une liste</a>
+            </li>
+            <li>
+                <a class="dropdown-item"
+                   href=" {% url 'tracking:media_details' media.media_type media.mal_id %}  ">En voir plus</a>
+            </li>
+            <li>
+                <hr class="dropdown-divider">
+            </li>
+            <li>
+                <a class="dropdown-item text-danger" href="#">Supprimer</a>
+            </li>
+        </ul>
+    </div>
+</div>

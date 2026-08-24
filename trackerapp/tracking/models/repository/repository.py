@@ -98,6 +98,9 @@ def _prepare_data(media: Media) -> dict[str, Any]:
     data["large_image_url"] = (
         media.images_urls.large_image_url if media.images_urls else ""
     )
+    data["title_english"] = media.title_english or ""
+    data["title_french"] = media.title_french or ""
+    data["format"] = media.format or ""
     data["synopsis"] = media.synopsis or ""
     data["synopsis_translated"] = media.synopsis_translated or ""
     return data

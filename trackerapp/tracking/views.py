@@ -65,7 +65,9 @@ def research(request):
             )
     else:
         search_form = SearchForm()
-    return render(request, "tracking/index.html", context={"search_form": search_form})
+    return render(
+        request, "tracking/research.html", context={"search_form": search_form}
+    )
 
 
 @handle_api_errors
@@ -167,16 +169,7 @@ def delete_watchlist(request, name: str):
 
 def complete_media_next_section(request, mal_id: int, media_type: str):
     media = use_cases.complete_media_next_section(mal_id, MediaType(media_type))
-    return render(
-        request,
-        "tracking/media_details.html",
-        context={
-            "media": media,
-            "watchlist_selection_form": WatchlistSelectionForm(),
-            "section_number_form": basis.get_section_number_form(media),
-            "score_form": ScoreForm(),
-        },
-    )
+    return redirect(request.POST.get("next", "tracking:media_details"))
 
 
 def complete_media_section(request, mal_id: int, media_type: str):
@@ -245,15 +238,7 @@ def set_section_user_score(request, media_mal_id : int, media_type : str, sectio
 
 def finish_media(request, mal_id: int, media_type: str):
     media = use_cases.finish_media(mal_id, MediaType(media_type))
-    return render(
-        request,
-        "tracking/index.html",
-        context={
-            "watchlists": storage_services.get_watchlists(),
-            "search_form": SearchForm(),
-            "medias": basis.get_ongoing_medias(),
-        },
-    )
+    return redirect(request.POST.get("next", "tracking:media_details"))
 
 
 def rename_watchlist(request, name: str):
