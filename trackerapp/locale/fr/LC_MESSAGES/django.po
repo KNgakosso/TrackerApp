@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-08-19 19:15+0200\n"
+"POT-Creation-Date: 2026-08-25 16:09+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -43,6 +43,7 @@ msgid "Hentai"
 msgstr "Hentai"
 
 #: .\tracking\enums.py:72
+#: .\tracking\templates\tracking\components\_media_card.html:24
 msgid "Finished"
 msgstr "Terminé"
 
@@ -87,35 +88,35 @@ msgstr "En cours"
 msgid "Completed"
 msgstr "Terminé"
 
-#: .\tracking\forms.py:20
-msgid "Section number"
-msgstr "Numéro de section"
-
-#: .\tracking\forms.py:32
+#: .\tracking\forms.py:13 .\tracking\forms.py:33
 msgid "Name"
 msgstr "Nom"
 
-#: .\tracking\forms.py:34
+#: .\tracking\forms.py:21
+msgid "Section number"
+msgstr "Numéro de section"
+
+#: .\tracking\forms.py:35
 msgid "-- Choose a list --"
 msgstr "-- Choisir une liste --"
 
-#: .\tracking\forms.py:39
+#: .\tracking\forms.py:40
 msgid "Title"
 msgstr "Titre"
 
-#: .\tracking\forms.py:42 .\tracking\templates\tracking\media_details.html:34
+#: .\tracking\forms.py:43 .\tracking\templates\tracking\media_details.html:35
 msgid "Rating"
 msgstr "Classification"
 
-#: .\tracking\forms.py:50
+#: .\tracking\forms.py:51
 msgid "Min score"
 msgstr "Score min"
 
-#: .\tracking\forms.py:53
+#: .\tracking\forms.py:54
 msgid "Max score"
 msgstr "Score max"
 
-#: .\tracking\forms.py:55
+#: .\tracking\forms.py:56
 msgid "SFW"
 msgstr "SFW"
 
@@ -132,7 +133,6 @@ msgid "The link may be incorrect or the page has been moved"
 msgstr "Le lien peut être incorrect ou la page peut avoir été déplacée"
 
 #: .\tracking\templates\404.html:12 .\tracking\templates\500.html:12
-#: .\tracking\templates\tracking\add_to_watchlist.html:8
 msgid "Back to home"
 msgstr "Retour à l'accueil"
 
@@ -149,16 +149,23 @@ msgid "Please try again in few minutes"
 msgstr "Veuillez réessayer dans quelques minutes"
 
 #: .\tracking\templates\tracking\add_to_watchlist.html:4
-#: .\tracking\templates\tracking\add_to_watchlist.html:16
-#: .\tracking\templates\tracking\media_details.html:201
+#: .\tracking\templates\tracking\add_to_watchlist.html:18
+#: .\tracking\templates\tracking\components\_base_media_card.html:36
+#: .\tracking\templates\tracking\media_details.html:226
 msgid "Add to a watchlist"
 msgstr "Ajouter à une watchlist"
 
-#: .\tracking\templates\tracking\add_to_watchlist.html:18
+#: .\tracking\templates\tracking\add_to_watchlist.html:8
+#: .\tracking\templates\tracking\media_details.html:9
+#: .\tracking\templates\tracking\watchlist_details.html:8
+msgid "Back"
+msgstr "Retour"
+
+#: .\tracking\templates\tracking\add_to_watchlist.html:22
 msgid "Select an existing watchlist"
 msgstr "Sélectionner une watchlist existante"
 
-#: .\tracking\templates\tracking\add_to_watchlist.html:25
+#: .\tracking\templates\tracking\add_to_watchlist.html:29
 msgid "Add to the watchlist"
 msgstr "Ajouter à la watchlist"
 
@@ -170,14 +177,32 @@ msgstr "Service indisponible"
 msgid "Project protfolio Django"
 msgstr "Projet portfolio Django"
 
-#: .\tracking\templates\tracking\components\_media_card.html:17
-#: .\tracking\templates\tracking\media_details.html:106
-msgid "Completion"
-msgstr "Progression"
+#: .\tracking\templates\tracking\components\_base_media_card.html:40
+msgid "More details"
+msgstr "Plus de détails"
 
-#: .\tracking\templates\tracking\components\_media_card.html:21
-msgid "See details"
-msgstr "Voir les détails"
+#: .\tracking\templates\tracking\components\_media_card.html:9
+msgid "Next"
+msgstr "Prochain"
+
+#: .\tracking\templates\tracking\components\_media_card.html:17
+#: .\tracking\templates\tracking\media_details.html:195
+msgid "Next section"
+msgstr "Prochaine section"
+
+#: .\tracking\templates\tracking\components\_media_card_search.html:7
+#: .\tracking\templates\tracking\media_details.html:42
+msgid "Studios"
+msgstr "Studios"
+
+#: .\tracking\templates\tracking\components\_media_card_search.html:15
+#: .\tracking\templates\tracking\media_details.html:55
+msgid "Authors"
+msgstr "Auteurs"
+
+#: .\tracking\templates\tracking\components\_media_card_watchlist.html:10
+msgid "Delete"
+msgstr "Supprimer"
 
 #: .\tracking\templates\tracking\components\_navbar.html:18
 msgid "Home"
@@ -188,7 +213,7 @@ msgid "New search"
 msgstr "Nouvelle recherche"
 
 #: .\tracking\templates\tracking\components\_navbar.html:20
-#: .\tracking\templates\tracking\media_details.html:196
+#: .\tracking\templates\tracking\media_details.html:224
 #: .\tracking\templates\tracking\watchlists.html:4
 msgid "Watchlists"
 msgstr "Watchlists"
@@ -201,9 +226,19 @@ msgstr "Voir la traduction auto"
 msgid "See original text"
 msgstr "Voir le texte original"
 
-#: .\tracking\templates\tracking\components\_synopsis_display.html:13
+#: .\tracking\templates\tracking\components\_synopsis_display.html:16
 msgid "No synopsis available"
 msgstr "Aucun synopsis disponible"
+
+#: .\tracking\templates\tracking\components\_watchlist_card.html:11
+#: .\tracking\templates\tracking\watchlist_details.html:15
+msgid "media"
+msgstr "média"
+
+#: .\tracking\templates\tracking\components\_watchlist_card.html:23
+#: .\tracking\templates\tracking\watchlist_details.html:33
+msgid "This watchlist is empty"
+msgstr "Cette watchlist est vide"
 
 #: .\tracking\templates\tracking\components\forms\_language_form.html:4
 msgid "Languages"
@@ -222,25 +257,25 @@ msgid "Score"
 msgstr "Note"
 
 #: .\tracking\templates\tracking\components\forms\_search_form.html:19
-#: .\tracking\templates\tracking\media_details.html:84
+#: .\tracking\templates\tracking\media_details.html:99
 msgid "Ranking"
 msgstr "Classement"
 
-#: .\tracking\templates\tracking\components\forms\_search_form.html:22
-#: .\tracking\templates\tracking\media_details.html:124
+#: .\tracking\templates\tracking\components\forms\_search_form.html:28
+#: .\tracking\templates\tracking\media_details.html:139
 msgid "Genres"
 msgstr "Genres"
 
-#: .\tracking\templates\tracking\components\forms\_search_form.html:25
-#: .\tracking\templates\tracking\media_details.html:138
+#: .\tracking\templates\tracking\components\forms\_search_form.html:40
+#: .\tracking\templates\tracking\media_details.html:153
 msgid "Themes"
 msgstr "Thèmes"
 
-#: .\tracking\templates\tracking\components\forms\_search_form.html:28
+#: .\tracking\templates\tracking\components\forms\_search_form.html:52
 msgid "Public"
 msgstr "Public"
 
-#: .\tracking\templates\tracking\components\forms\_search_form.html:36
+#: .\tracking\templates\tracking\components\forms\_search_form.html:63
 #: .\tracking\templates\tracking\research.html:4
 msgid "Search"
 msgstr "Recherche"
@@ -249,103 +284,84 @@ msgstr "Recherche"
 msgid "Completed medias"
 msgstr "Médias terminés"
 
-#: .\tracking\templates\tracking\index.html:10
-msgid "Research for an anime or a manga"
-msgstr "Rechercher un anime ou un manga"
-
-#: .\tracking\templates\tracking\index.html:21
-msgid "Change"
-msgstr "Changer"
-
-#: .\tracking\templates\tracking\index.html:23
+#: .\tracking\templates\tracking\index.html:7
 msgid "My ongoing medias"
 msgstr "Mes médias en cours"
 
-#: .\tracking\templates\tracking\index.html:31
+#: .\tracking\templates\tracking\index.html:17
 msgid "No ongoing medias"
 msgstr "Aucun média en cours"
 
-#: .\tracking\templates\tracking\index.html:34
+#: .\tracking\templates\tracking\index.html:20
 msgid "My watchlists"
 msgstr "Mes watchlists"
 
-#: .\tracking\templates\tracking\index.html:46
+#: .\tracking\templates\tracking\index.html:32
 msgid "No created watchlist"
 msgstr "Aucune watchlist créee"
 
-#: .\tracking\templates\tracking\media_details.html:8
-msgid "Back"
-msgstr "Retour"
-
-#: .\tracking\templates\tracking\media_details.html:24
+#: .\tracking\templates\tracking\media_details.html:25
 msgid "Informations"
 msgstr "Informations"
 
-#: .\tracking\templates\tracking\media_details.html:27
+#: .\tracking\templates\tracking\media_details.html:28
 msgid "Duration"
 msgstr "Durée"
 
-#: .\tracking\templates\tracking\media_details.html:41
-msgid "Studios"
-msgstr "Studios"
-
-#: .\tracking\templates\tracking\media_details.html:54
-msgid "Authors"
-msgstr "Auteurs"
-
-#: .\tracking\templates\tracking\media_details.html:70
+#: .\tracking\templates\tracking\media_details.html:71
 msgid "Your note"
 msgstr "Votre note"
 
-#: .\tracking\templates\tracking\media_details.html:98
+#: .\tracking\templates\tracking\media_details.html:84
+msgid "Modify"
+msgstr "Modifier"
+
+#: .\tracking\templates\tracking\media_details.html:91
+msgid "Register the score"
+msgstr "Enregistrer la note"
+
+#: .\tracking\templates\tracking\media_details.html:113
 msgid "Status"
 msgstr "Statut"
 
-#: .\tracking\templates\tracking\media_details.html:114
+#: .\tracking\templates\tracking\media_details.html:121
+msgid "Completion"
+msgstr "Progression"
+
+#: .\tracking\templates\tracking\media_details.html:129
 msgid "Synopsis"
 msgstr "Synopsis"
 
-#: .\tracking\templates\tracking\media_details.html:130
-#: .\tracking\templates\tracking\media_details.html:144
-#: .\tracking\templates\tracking\media_details.html:158
+#: .\tracking\templates\tracking\media_details.html:145
+#: .\tracking\templates\tracking\media_details.html:159
+#: .\tracking\templates\tracking\media_details.html:173
 msgid "None"
 msgstr "Aucun"
 
-#: .\tracking\templates\tracking\media_details.html:152
+#: .\tracking\templates\tracking\media_details.html:167
 msgid "Demographic"
 msgstr "Démographie"
 
-#: .\tracking\templates\tracking\media_details.html:168
+#: .\tracking\templates\tracking\media_details.html:183
 msgid "My completion"
 msgstr "Ma progression"
 
-#: .\tracking\templates\tracking\media_details.html:170
+#: .\tracking\templates\tracking\media_details.html:185
 msgid "You are currently at section"
 msgstr "Vous êtes actuellement à la section"
 
-#: .\tracking\templates\tracking\media_details.html:172
+#: .\tracking\templates\tracking\media_details.html:187
 msgid "over"
 msgstr "sur"
 
-#: .\tracking\templates\tracking\media_details.html:177
-msgid "section"
-msgstr "section"
-
-#: .\tracking\templates\tracking\media_details.html:179
+#: .\tracking\templates\tracking\media_details.html:201
 msgid "Mark as finished"
 msgstr "Marquer comme terminé"
 
-#: .\tracking\templates\tracking\media_details.html:187
+#: .\tracking\templates\tracking\media_details.html:209
+#: .\tracking\templates\tracking\media_details.html:216
 msgid "Define completion"
 msgstr "Définir la progression"
-
-#: .\tracking\templates\tracking\media_details.html:204
-msgid "My score"
-msgstr "Ma note"
-
-#: .\tracking\templates\tracking\media_details.html:209
-msgid "Register the score"
-msgstr "Enregistrer la note"
 
 #: .\tracking\templates\tracking\research.html:15
 msgid "Results"
@@ -361,7 +377,6 @@ msgid "Create a watchlist"
 msgstr "Créer une watchlist"
 
 #: .\tracking\templates\tracking\watchlist_create.html:8
-#: .\tracking\templates\tracking\watchlist_details.html:8
 msgid "Back to watchlists"
 msgstr "Retour aux watchlists"
 
@@ -379,11 +394,6 @@ msgstr ""
 msgid "Create watchlist"
 msgstr "Créer une watchlist"
 
-#: .\tracking\templates\tracking\watchlist_details.html:15
-#: .\tracking\templates\tracking\watchlists.html:27
-msgid "media"
-msgstr "média"
-
 #: .\tracking\templates\tracking\watchlist_details.html:17
 msgid "medias"
 msgstr "médias"
@@ -396,18 +406,17 @@ msgstr "Trouvez ici tous les médias enregistrés dans cette watchlist"
 msgid "Delete watchlist"
 msgstr "Supprimer la watchlist"
 
-#: .\tracking\templates\tracking\watchlist_details.html:33
-#: .\tracking\templates\tracking\watchlists.html:39
-msgid "This watchlist is empty"
-msgstr "Cette watchlist est vide"
-
 #: .\tracking\templates\tracking\watchlists.html:14
 msgid "Create the watchlist"
 msgstr "Créer la watchlist"
 
-#: .\tracking\templates\tracking\watchlists.html:43
-msgid "See the watchlist"
-msgstr "Voir la watchlist"
+#: .\tracking\templatetags\mytags.py:23
+msgid "Episode"
+msgstr "Épisode"
+
+#: .\tracking\templatetags\mytags.py:25
+msgid "Volume"
+msgstr "Tome"
 
 # TRADUCTION DES GENRES
 #: .\tracking\trans.py:5

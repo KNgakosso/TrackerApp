@@ -1,0 +1,12 @@
+{% extends "tracking/components/_media_card.html" %}
+{% load i18n %}
+{% load mytags %}
+{% block bonus %}
+    <p>{{ media.user_completion.display }}</p>
+{% endblock bonus %}
+{% block option_items %}
+    <li>
+        <a class="dropdown-item text-danger"
+           href="{% url 'tracking:remove_from_watchlist' watchlist.name media.media_type.value media.mal_id %}">{% trans "Delete" %}</a>
+    </li>
+{% endblock option_items %}

@@ -26,9 +26,9 @@ urlpatterns = [
     path("watchlist/create", views.create_watchlist, name="watchlist_create"),
     path("watchlist/<str:name>", views.watchlist_details, name="watchlist_details"),
     path(
-        "watchlist/<str:name>/remove/<str:media_type>/<int:media_mal_id>",
+        "watchlist/<str:watchlist_name>/remove/<str:media_type>/<int:media_mal_id>",
         views.remove_media_from_watchlist,
-        name="remove_to_watchlist",
+        name="remove_from_watchlist",
     ),
     path(
         "watchlist/<str:name>/delete", views.delete_watchlist, name="watchlist_delete"

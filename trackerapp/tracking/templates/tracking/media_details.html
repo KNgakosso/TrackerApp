@@ -81,7 +81,7 @@
                                     data-bs-toggle="collapse"
                                     data-bs-target="#mon-formulaire"
                                     aria-expanded="false"
-                                    aria-controls="mon-formulaire">Modifier</button>
+                                    aria-controls="mon-formulaire">{% trans "Modify" %}</button>
                             <form class="collapse"
                                   action="{% url 'tracking:set_media_user_score' media.media_type media.mal_id %}"
                                   method="post"
@@ -192,7 +192,7 @@
                               action="{% url 'tracking:complete_next' media.media_type.value media.mal_id %}">
                             {% csrf_token %}
                             <input type="hidden" name="next" value="{{ request.get_full_path }}">
-                            <button class="btn btn-success" type="submit">Section suivante</button>
+                            <button class="btn btn-success" type="submit">{% trans "Next section" %}</button>
                         </form>
                         <form method="post"
                               action="{% url 'tracking:finish_media' media.media_type.value media.mal_id %}">

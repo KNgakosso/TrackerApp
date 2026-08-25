@@ -1,13 +1,27 @@
 {% extends "tracking/components/_base_media_card.html" %}
 {% load i18n %}
+{% load mytags %}
 {% block cardbody %}
-    <div class="mt-auto">
-        <p class="small text-muted mb-3">{% trans "Next section" %} : {{ media.user_current_section }}</p>
-    </div>
-    <form method="post"
-          action="{% url 'tracking:complete_next' media.media_type.value media.mal_id %}">
-        {% csrf_token %}
-        <input type="hidden" name="next" value="{{ request.get_full_path }}">
-        <button class="btn btn-success" type="submit">Section suivante</button>
-    </form>
+    {% if media.user_completion != "Completed" %}
+        {% if media.number_sections != None %}
+            <div class="mt-auto">
+                <p class="small text-muted mb-3">
+                    {% trans "Next" %} : {% section_type media.media_type %}
+                    {{ media.user_current_section|add:1 }}
+                </p>
+            </div>
+            <form method="post"
+                  action="{% url 'tracking:complete_next' media.media_type.value media.mal_id %}">
+                {% csrf_token %}
+                <input type="hidden" name="next" value="{{ request.get_full_path }}">
+                <button class="btn btn-success" type="submit">{% trans "Next section" %}</button>
+            </form>
+        {% endif %}
+        <form method="post"
+              action="{% url 'tracking:finish_media' media.media_type.value media.mal_id %}">
+            {% csrf_token %}
+            <input type="hidden" name="next" value="{{ request.get_full_path }}">
+            <button class="btn btn-success" type="submit">{% trans "Finished" %}</button>
+        </form>
+    {% endif %}
 {% endblock cardbody %}

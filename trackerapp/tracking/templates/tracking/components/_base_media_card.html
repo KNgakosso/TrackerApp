@@ -16,6 +16,8 @@
                     <span class="badge bg-warning text-dark">⭐ {{ media.score }}</span>
                 {% endif %}
             </div>
+            {% block bonus %}
+            {% endblock bonus %}
             {% block cardbody %}
             {% endblock cardbody %}
         </div>
@@ -27,22 +29,18 @@
                 data-bs-toggle="dropdown"
                 aria-expanded="false">⋮</button>
         <ul class="dropdown-menu dropdown-menu-end">
+            {% block option_items %}
+            {% endblock option_items %}
             <li>
-                <a class="dropdown-item" href="#">Définir la progression</a>
+                <a class="dropdown-item"
+                   href="{% url 'tracking:add_to_watchlist' media.media_type media.mal_id %}">{% trans "Add to a watchlist" %}</a>
             </li>
             <li>
                 <a class="dropdown-item"
-                   href="{% url 'tracking:add_to_watchlist' media.media_type media.mal_id %}">Ajouter à une liste</a>
-            </li>
-            <li>
-                <a class="dropdown-item"
-                   href=" {% url 'tracking:media_details' media.media_type media.mal_id %}  ">En voir plus</a>
+                   href=" {% url 'tracking:media_details' media.media_type media.mal_id %}  ">{% trans "More details" %}</a>
             </li>
             <li>
                 <hr class="dropdown-divider">
-            </li>
-            <li>
-                <a class="dropdown-item text-danger" href="#">Supprimer</a>
             </li>
         </ul>
     </div>
