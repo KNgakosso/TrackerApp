@@ -1,4 +1,4 @@
-from pydantic import BaseModel
+from pydantic import BaseModel, field_validator
 
 from ...enums import AnimeRating
 from .media_schemas import MediaFullSchema, MediaSchema
@@ -13,6 +13,14 @@ class AnimeSchema(MediaSchema):
     studios: list[StudioSchema]
     duration: str | None
     rating: AnimeRating | None
+
+    @field_validator("rating", mode="before")
+    @classmethod
+    def handle_none_rating(cls, value):
+        try:
+            return AnimeRating(value)
+        except ValueError:
+            return None
 
 
 class AnimeFullSchema(MediaFullSchema, AnimeSchema):
