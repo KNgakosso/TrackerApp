@@ -1,4 +1,5 @@
 from django import forms
+from django.conf import settings
 from django.utils.translation import gettext_lazy as _
 
 from .enums import AnimeRating
@@ -53,14 +54,25 @@ class SearchForm(forms.Form):
     max_score = forms.FloatField(
         label=_("Max score"), min_value=0, max_value=10, required=False
     )
-    sfw = forms.BooleanField(initial=True, label=_("SFW"), required=False)
+    if settings.SFW:
+        sfw = forms.BooleanField(
+            initial=True,
+            label=_("SFW"),
+            required=False,
+            disabled=True,
+            widget=forms.HiddenInput(),
+        )
+    else:
+        sfw = forms.BooleanField(initial=True, label=_("SFW"), required=False)
+
     genres = forms.ModelMultipleChoiceField(
         queryset=GenreModel.objects.all(),
         widget=forms.CheckboxSelectMultiple,
         required=False,
     )
+    excluded_themes = ["Erotica", "Hentai"] if settings.SFW else []
     themes = forms.ModelMultipleChoiceField(
-        queryset=ThemeModel.objects.all(),
+        queryset=ThemeModel.objects.exclude(name__in=excluded_themes),
         widget=forms.CheckboxSelectMultiple,
         required=False,
     )
