@@ -54,8 +54,12 @@
                     <div class="collapse mb-3" id="demographicsOptions">
                         {% include "tracking/components/forms/_checkbox_group.html" with field=form.demographics %}
                     </div>
-                    <hr class="border-secondary">
-                    {% include "tracking/components/forms/_field.html" with field=form.sfw %}
+                    <p>ICI {{ settings_SFW }}</p>
+                    {% if settings_SFW == False %}
+                        <hr class="border-secondary">
+                        {% include "tracking/components/forms/_field.html" with field=form.sfw %}
+                    {% else %}
+                    {% endif %}
                 </div>
             </div>
         </div>

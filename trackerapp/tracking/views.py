@@ -1,5 +1,6 @@
 from functools import wraps
 
+from django.conf import settings
 from django.shortcuts import redirect, render
 
 from .enums import MediaType
@@ -61,12 +62,21 @@ def research(request):
             return render(
                 request,
                 "tracking/research.html",
-                context={"search_results": search_results, "search_form": search_form},
+                context={
+                    "search_results": search_results,
+                    "search_form": search_form,
+                    "settings_SFW": settings.SFW,
+                },
             )
     else:
         search_form = SearchForm()
     return render(
-        request, "tracking/research.html", context={"search_form": search_form}
+        request,
+        "tracking/research.html",
+        context={
+            "search_form": search_form,
+            "settings_SFW": settings.SFW,
+        },
     )
 
 
