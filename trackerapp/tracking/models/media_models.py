@@ -1,11 +1,7 @@
-from typing import ClassVar
-
-from django.core.validators import MaxValueValidator, MinValueValidator
 from django.db import models
-from django.db.models import Q
 from polymorphic.models import PolymorphicModel
 
-from ..enums import MediaCompletion, MediaStatus, MediaType
+from ..enums import MediaStatus, MediaType
 
 
 class GenreModel(models.Model):
@@ -55,33 +51,10 @@ class MediaModel(PolymorphicModel):
     themes = models.ManyToManyField(ThemeModel)
     genres = models.ManyToManyField(GenreModel)
     demographics = models.ManyToManyField(DemographicModel)
-    user_score = models.IntegerField(
-        null=True,
-        blank=True,
-        validators=[
-            MinValueValidator(0),
-            MaxValueValidator(10),
-        ],
-    )
-    user_completion = models.CharField(
-        default=MediaCompletion.NOT_STARTED,
-        choices=[
-            (completion.value, completion.display) for completion in MediaCompletion
-        ],
-    )
-    user_current_section = models.IntegerField(null=True, blank=True)
 
     @property
     def media_type(self) -> MediaType:
         raise NotImplementedError
-
-    class Meta:
-        constraints: ClassVar[list] = [
-            models.CheckConstraint(
-                condition=Q(user_score__gte=0) & Q(user_score__lte=10),
-                name="user_score_between_0_and_10",
-            ),
-        ]
 
 
 class SectionCompletion(models.TextChoices):

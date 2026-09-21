@@ -27,6 +27,10 @@ urlpatterns += i18n_patterns(
     path("tracking/", include("tracking.urls")),
 )
 
+urlpatterns += i18n_patterns(
+    path("accounts/", include("accounts.urls")),
+)
+
 urlpatterns += [
     path("i18n/", include("django.conf.urls.i18n")),
 ]
