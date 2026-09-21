@@ -91,6 +91,21 @@ class Relations():
 
 
 @dataclass
+class MediaUserInfos:
+    score: int | None
+    completion: MediaCompletion
+    current_section: int | None
+
+    @classmethod
+    def from_model(cls, media_user_model: MediaUserInfosModel):
+        return MediaUserInfos(
+            score=media_user_model.score,
+            completion=MediaCompletion(MediaUserInfos.completion),
+            current_section=MediaUserInfos.current_section,
+        )
+
+
+@dataclass
 class Media:
     mal_id: int
     title: str
@@ -111,6 +126,7 @@ class Media:
     user_score: int | None
     user_completion: MediaCompletion
     user_current_section: int | None
+    user_infos: MediaUserInfos | None
 
     @property
     def media_type(self):

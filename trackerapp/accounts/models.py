@@ -11,7 +11,7 @@ from ..tracking.models.media_models import MediaModel
 # Create your models here.
 
 
-class MediaUserInfo(models.Model):
+class MediaUserInfosModel(models.Model):
     user = models.ForeignKey(
         settings.AUTH_USER_MODEL,
         on_delete=models.CASCADE,

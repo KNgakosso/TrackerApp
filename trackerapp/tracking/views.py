@@ -1,6 +1,7 @@
 from functools import wraps
 
 from django.conf import settings
+from django.contrib.auth.decorators import login_required
 from django.shortcuts import redirect, render
 
 from .enums import MediaType
@@ -41,7 +42,7 @@ def index(request):
         request,
         "tracking/index.html",
         context={
-            "watchlists": storage_services.get_watchlists(),
+            "watchlists": storage_services.get_watchlists(user=request.user),
             "search_form": SearchForm(),
             "medias": basis.get_ongoing_medias(),
         },
@@ -112,11 +113,14 @@ def translate_synopsis(request, mal_id: int, media_type: str):
     )
 
 
+@login_required
 def create_watchlist(request):
     if request.method == "POST":
         watchlist_form = WatchlistForm(request.POST)
         if watchlist_form.is_valid():
-            watchlist = use_cases.create_watchlist(watchlist_form)
+            watchlist = use_cases.create_watchlist(
+                watchlist_form=watchlist_form, user=request.user
+            )
             return render(
                 request,
                 "tracking/watchlist_details.html",
@@ -124,7 +128,7 @@ def create_watchlist(request):
             )
     else:
         watchlist_form = WatchlistForm()
-    watchlists = storage_services.get_watchlists()
+    watchlists = storage_services.get_watchlists(user=request.user)
     return render(
         request,
         "tracking/watchlists.html",
@@ -132,26 +136,33 @@ def create_watchlist(request):
     )
 
 
+@login_required
 def watchlist_details(request, name: str):
-    watchlist = storage_services.get_watchlist(name=name)
+    watchlist = storage_services.get_watchlist(user=request.user, name=name)
     return render(
         request, "tracking/watchlist_details.html", context={"watchlist": watchlist}
     )
 
 
+@login_required
 def add_media_to_watchlist(request, mal_id: int, media_type: str):
     if request.method == "POST":
-        watchlist_selection_form = WatchlistSelectionForm(request.POST)
+        watchlist_selection_form = WatchlistSelectionForm(
+            request.POST, user=request.user
+        )
         if watchlist_selection_form.is_valid():
             watchlist_name = watchlist_selection_form.cleaned_data["name"]
             watchlist = use_cases.add_media_to_watchlist(
-                watchlist_name, mal_id, MediaType(media_type)
+                user=request.user,
+                watchlist_name=watchlist_name,
+                media_mal_id=mal_id,
+                media_type=MediaType(media_type),
             )
             return redirect(
                 "tracking:media_details", mal_id=mal_id, media_type=media_type
             )
     else:
-        watchlist_selection_form = WatchlistSelectionForm()
+        watchlist_selection_form = WatchlistSelectionForm(user=request.user)
     media = basis.get_or_fetch_media(mal_id, MediaType(media_type))
     return render(
         request,
@@ -160,20 +171,25 @@ def add_media_to_watchlist(request, mal_id: int, media_type: str):
     )
 
 
+@login_required
 def remove_media_from_watchlist(
     request, watchlist_name: str, media_mal_id: int, media_type: str
 ):
     watchlist = use_cases.remove_media_from_watchlist(
-        watchlist_name, media_mal_id, MediaType(media_type)
+        user=request.user,
+        watchlist_name=watchlist_name,
+        media_mal_id=media_mal_id,
+        media_type=MediaType(media_type),
     )
     return render(
         request, "tracking/watchlist_details.html", context={"watchlist": watchlist}
     )
 
 
+@login_required
 def delete_watchlist(request, name: str):
-    storage_services.delete_watchlist(name)
-    watchlists = storage_services.get_watchlists()
+    storage_services.delete_watchlist(user=request.user, name=name)
+    watchlists = storage_services.get_watchlists(user=request.user)
     return redirect("tracking:watchlists")
 
 
@@ -184,7 +200,7 @@ def complete_media_next_section(request, mal_id: int, media_type: str):
 
 def complete_media_section(request, mal_id: int, media_type: str):
     if request.method == "POST":
-        section_number_form = SectionNumberForm(request.POST, max_value=100)
+        section_number_form = SectionNumberForm(request.POST)
         if section_number_form.is_valid():
             media = use_cases.set_media_current_user_section(
                 mal_id, MediaType(media_type), section_number_form
@@ -194,7 +210,9 @@ def complete_media_section(request, mal_id: int, media_type: str):
                 "tracking/media_details.html",
                 context={
                     "media": media,
-                    "watchlist_selection_form": WatchlistSelectionForm(),
+                    "watchlist_selection_form": WatchlistSelectionForm(
+                        user=request.user
+                    ),
                     "section_number_form": basis.get_section_number_form(media),
                     "score_form": ScoreForm(),
                 },
@@ -203,6 +221,7 @@ def complete_media_section(request, mal_id: int, media_type: str):
     return redirect("tracking:media_details", mal_id=mal_id, media_type=media_type)
 
 
+@login_required
 def set_media_user_score(request, mal_id: int, media_type: str):
     if request.method == "POST":
         score_form = ScoreForm(request.POST)
@@ -215,7 +234,9 @@ def set_media_user_score(request, mal_id: int, media_type: str):
                 "tracking/media_details.html",
                 context={
                     "media": media,
-                    "watchlist_selection_form": WatchlistSelectionForm(),
+                    "watchlist_selection_form": WatchlistSelectionForm(
+                        user=request.user
+                    ),
                     "section_number_form": basis.get_section_number_form(media),
                     "score_form": ScoreForm(),
                 },
@@ -226,7 +247,7 @@ def set_media_user_score(request, mal_id: int, media_type: str):
         request,
         "tracking/index.html",
         context={
-            "watchlists": storage_services.get_watchlists(),
+            "watchlists": storage_services.get_watchlists(user=request.user),
             "search_form": SearchForm(),
             "medias": basis.get_ongoing_medias(),
         },
@@ -255,7 +276,9 @@ def rename_watchlist(request, name: str):
     if request.method == "POST":
         watchlist_form = WatchlistForm(request.POST)
         if watchlist_form.is_valid():
-            watchlist = use_cases.rename_watchlist(name, watchlist_form)
+            watchlist = use_cases.rename_watchlist(
+                user=request.user, name=name, watchlist_form=watchlist_form
+            )
             return render(
                 request,
                 "tracking/watchlist_details.html",
@@ -267,19 +290,20 @@ def rename_watchlist(request, name: str):
         request,
         "tracking/index.html",
         context={
-            "watchlists": storage_services.get_watchlists(),
+            "watchlists": storage_services.get_watchlists(user=request.user),
             "search_form": SearchForm(),
             "medias": basis.get_ongoing_medias(),
         },
     )
 
 
+@login_required
 def watchlists(request):
     return render(
         request,
         "tracking/watchlists.html",
         context={
             "watchlist_form": WatchlistForm(),
-            "watchlists": storage_services.get_watchlists(),
+            "watchlists": storage_services.get_watchlists(user=request.user),
         },
     )

@@ -8,36 +8,36 @@ from ..services.storage import storage_services
 from . import basis
 
 
-def create_watchlist(watchlist_form: WatchlistForm) -> Watchlist:
+def create_watchlist(user, watchlist_form: WatchlistForm) -> Watchlist:
     name = watchlist_form.cleaned_data["name"]
     watchlist = Watchlist(name=name, medias=[])
-    storage_services.save_watchlist(watchlist=watchlist)
+    storage_services.save_watchlist(user=user, watchlist=watchlist)
     return watchlist
 
 
 def add_media_to_watchlist(
-    watchlist_name: str, media_mal_id: int, media_type: MediaType
+    user, watchlist_name: str, media_mal_id: int, media_type: MediaType
 ) -> Watchlist:
-    watchlist = storage_services.get_watchlist(name=watchlist_name)
+    watchlist = storage_services.get_watchlist(user, name=watchlist_name)
     media = basis.get_or_import_media(media_mal_id, media_type)
     watchlist.medias.append(media)
-    storage_services.save_watchlist(watchlist)
-    return storage_services.get_watchlist(watchlist_name)
+    storage_services.save_watchlist(user, watchlist)
+    return storage_services.get_watchlist(user, watchlist_name)
 
 
 def remove_media_from_watchlist(
-    watchlist_name: str, media_mal_id: int, media_type: MediaType
+    user, watchlist_name: str, media_mal_id: int, media_type: MediaType
 ) -> Watchlist:
-    watchlist = storage_services.get_watchlist(name=watchlist_name)
+    watchlist = storage_services.get_watchlist(user, name=watchlist_name)
     media = basis.get_or_import_media(media_mal_id, media_type)
     watchlist.medias.remove(media)
-    storage_services.save_watchlist(watchlist)
-    return storage_services.get_watchlist(watchlist_name)
+    storage_services.save_watchlist(user, watchlist)
+    return storage_services.get_watchlist(user, watchlist_name)
 
 
-def delete_watchlist(watchlist_name: str) -> list[Watchlist]:
-    storage_services.delete_watchlist(name=watchlist_name)
-    return storage_services.get_watchlists()
+def delete_watchlist(user, watchlist_name: str) -> list[Watchlist]:
+    storage_services.delete_watchlist(user, name=watchlist_name)
+    return storage_services.get_watchlists(user)
 
 
 def complete_media_next_section(mal_id: int, media_type: MediaType) -> Media:
@@ -80,10 +80,10 @@ def set_media_user_score(
     return storage_services.get_media(mal_id=mal_id, media_type=media_type)
 
 
-def rename_watchlist(name: str, watchlist_form: WatchlistForm) -> Watchlist:
+def rename_watchlist(user, name: str, watchlist_form: WatchlistForm) -> Watchlist:
     new_name = watchlist_form.cleaned_data["name"]
-    storage_services.rename_watchlist(prev_name=name, new_name=new_name)
-    return storage_services.get_watchlist(new_name)
+    storage_services.rename_watchlist(user, prev_name=name, new_name=new_name)
+    return storage_services.get_watchlist(user, new_name)
 
 
 def translate_synopsis(mal_id: int, media_type: MediaType):

@@ -321,27 +321,30 @@ def _set_manga_model_authors(manga_model: MangaModel, authors: list[AuthorModel]
 #########################################
 
 
-def get_watchlist_model(name: str) -> WatchlistModel:
+def get_watchlist_model(user, name: str) -> WatchlistModel:
     try:
-        return WatchlistModel.objects.get(name=name)
+        return WatchlistModel.objects.get(user=user, name=name)
     except WatchlistModel.DoesNotExist as exc:
-        raise WatchlistNotFoundError(f"No watchlist named {name} found.") from exc
+        raise WatchlistNotFoundError(
+            f"User {user} has no watchlist named {name} found."
+        ) from exc
 
 
-def get_watchlists_models(**kwargs) -> list[WatchlistModel]:
+def get_watchlists_models(user, **kwargs) -> list[WatchlistModel]:
     try:
-        return list(WatchlistModel.objects.filter(**kwargs))
+        return list(WatchlistModel.objects.filter(user=user, **kwargs))
     except FieldError as exc:
         raise WatchlistError(f"Invalid filters : {exc}") from exc
 
 
-def create_watchlist_model(watchlist: Watchlist) -> WatchlistModel:
+def create_watchlist_model(user, watchlist: Watchlist) -> WatchlistModel:
     try:
         data = {
             field: value
             for field, value in watchlist.__dict__.items()
             if field != "medias"
         }
+        data["user"] = user
         watchlist_model = WatchlistModel.objects.create(**data)
         set_watchlist_model_medias(
             watchlist_model,
@@ -350,7 +353,7 @@ def create_watchlist_model(watchlist: Watchlist) -> WatchlistModel:
                 for media in watchlist.medias
             ],
         )
-        return get_watchlist_model(watchlist.name)
+        return get_watchlist_model(user, watchlist.name)
     except IntegrityError as exc:
         raise StorageError(
             f"Error during the creation of watchlist {watchlist.name}."

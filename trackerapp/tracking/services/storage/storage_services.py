@@ -132,31 +132,31 @@ def get_mangas(**kwargs) -> list[Manga]:
 ##############################################################
 
 
-def get_watchlist(name: str) -> Watchlist:
-    return Watchlist.from_model(repository.get_watchlist_model(name=name))
+def get_watchlist(user, name: str) -> Watchlist:
+    return Watchlist.from_model(repository.get_watchlist_model(user=user, name=name))
 
 
-def get_watchlists() -> list[Watchlist]:
+def get_watchlists(user) -> list[Watchlist]:
     return [
         Watchlist.from_model(watchlist_model)
-        for watchlist_model in repository.get_watchlists_models()
+        for watchlist_model in repository.get_watchlists_models(user=user)
     ]
 
 
-def rename_watchlist(prev_name: str, new_name: str):
-    watchlist_model = repository.get_watchlist_model(prev_name)
+def rename_watchlist(user, prev_name: str, new_name: str):
+    watchlist_model = repository.get_watchlist_model(user, prev_name)
     repository.set_watchlist_model_name(watchlist_model, new_name)
 
 
-def save_watchlist(watchlist: Watchlist):
+def save_watchlist(user, watchlist: Watchlist):
     try:
-        watchlist_model = repository.get_watchlist_model(watchlist.name)
+        watchlist_model = repository.get_watchlist_model(user, watchlist.name)
         repository.set_watchlist_model_medias(
             watchlist_model,
             [repository.get_or_create_media_model(media) for media in watchlist.medias],
         )
     except WatchlistNotFoundError:
-        watchlist_model = repository.create_watchlist_model(watchlist)
+        watchlist_model = repository.create_watchlist_model(user, watchlist)
 
 
 """
@@ -175,6 +175,6 @@ def remove_media_from_watchlist(watchlist: Watchlist, media: Media) -> Watchlist
 """
 
 
-def delete_watchlist(name: str):
-    watchlist_model = repository.get_watchlist_model(name)
+def delete_watchlist(user, name: str):
+    watchlist_model = repository.get_watchlist_model(user, name)
     repository.delete_watchlist_model(watchlist_model)

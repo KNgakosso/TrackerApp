@@ -32,9 +32,13 @@ class SectionNumberForm(forms.Form):
 class WatchlistSelectionForm(forms.Form):
     name = forms.ModelChoiceField(
         label=_("Name"),
-        queryset=WatchlistModel.objects.all(),
+        queryset=WatchlistModel.objects.none(),
         empty_label=_("-- Choose a list --"),
     )
+
+    def __init__(self, *args, user, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields["name"].queryset = WatchlistModel.objects.filter(user=user)
 
 
 class SearchForm(forms.Form):
