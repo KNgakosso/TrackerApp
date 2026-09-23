@@ -2,8 +2,7 @@ from typing import ClassVar
 
 from django.conf import settings
 from django.db import models
-
-from .media_models import MediaModel
+from medias.models.media_models import MediaModel
 
 
 class WatchlistModel(models.Model):

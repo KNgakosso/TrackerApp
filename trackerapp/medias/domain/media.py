@@ -2,8 +2,10 @@ from dataclasses import dataclass
 
 from argostranslate import translate
 from django.conf import settings
+from tracking.domain.media_user_infos import MediaUserInfos
+from tracking.enums import MediaCompletion
 
-from ..enums import MediaCompletion, MediaStatus
+from ..enums import MediaStatus
 from ..exceptions import ArgosError
 from ..external.schemas.media_schemas import (
     DemographicSchema,
@@ -91,21 +93,6 @@ class Relations():
 
 
 @dataclass
-class MediaUserInfos:
-    score: int | None
-    completion: MediaCompletion
-    current_section: int | None
-
-    @classmethod
-    def from_model(cls, media_user_model: MediaUserInfosModel):
-        return MediaUserInfos(
-            score=media_user_model.score,
-            completion=MediaCompletion(MediaUserInfos.completion),
-            current_section=MediaUserInfos.current_section,
-        )
-
-
-@dataclass
 class Media:
     mal_id: int
     title: str
@@ -123,9 +110,6 @@ class Media:
     number_sections: int | None
     # relations : list[Relations] | None
     status: MediaStatus | None
-    user_score: int | None
-    user_completion: MediaCompletion
-    user_current_section: int | None
     user_infos: MediaUserInfos | None
 
     @property

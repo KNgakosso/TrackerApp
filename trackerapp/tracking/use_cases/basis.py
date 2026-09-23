@@ -50,8 +50,10 @@ def get_or_import_media(mal_id: int, media_type: MediaType) -> Media:
 """
 
 
-def get_ongoing_medias() -> list[Media]:
-    return storage_services.get_medias(user_completion=MediaCompletion.IN_PROGRESS)
+def get_ongoing_medias(user) -> list[Media]:
+    return storage_services.get_medias(
+        user, user_completion=MediaCompletion.IN_PROGRESS
+    )
 
 
 def get_finished_medias() -> list[Media]:

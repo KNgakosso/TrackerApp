@@ -4,26 +4,15 @@ from typing import Any
 from django.core.exceptions import FieldError
 from django.db import IntegrityError
 
-from ....accounts.models import MediaUserInfosModel
-from ...domain.anime import Studio
-from ...domain.manga import Author
-from ...domain.media import Media
-from ...domain.watchlist import Watchlist
-from ...enums import MediaCompletion, MediaType
-from ...exceptions import (
-    InvalidScoreError,
-    MediaError,
-    MediaNotFoundError,
-    NotFoundError,
-    StorageError,
-    WatchlistError,
-    WatchlistNotFoundError,
-)
 from ...utils import TYPE_TO_MODEL
-from ..anime_models import AnimeModel, EpisodeModel, StudioModel
-from ..manga_models import AuthorModel, MangaModel
-from ..media_models import DemographicModel, GenreModel, MediaModel, ThemeModel
-from ..watchlist_model import WatchlistModel
+from .domain.anime import Studio
+from .domain.manga import Author
+from .domain.media import Media
+from .enums import MediaType
+from .exceptions import MediaError, MediaNotFoundError, NotFoundError, StorageError
+from .models.anime_models import AnimeModel, EpisodeModel, StudioModel
+from .models.manga_models import AuthorModel, MangaModel
+from .models.media_models import DemographicModel, GenreModel, MediaModel, ThemeModel
 
 # GENRE MODEL
 #########################################
@@ -160,13 +149,6 @@ def get_media_model(mal_id: int, media_type: MediaType) -> MediaModel:
         raise MediaNotFoundError(f"No {media_type} found with id : {mal_id}.") from exc
 
 
-def get_media_user_infos_model(user, media_model: MediaModel) -> MediaUserInfosModel:
-    try:
-        return MediaUserInfosModel.objects.get(user=user, media=media_model)
-    except MediaUserInfosModel.DoesNotExist as exc:
-        raise MediaNotFoundError(f"No {media_type} found with id : {mal_id}.") from exc
-
-
 def get_or_create_media_model(media: Media) -> MediaModel:
     try:
         return get_media_model(media.mal_id, media.media_type)
@@ -181,35 +163,6 @@ def get_medias_models(**kwargs) -> list[MediaModel]:
         return list(chain(anime_queryset, manga_queryset))
     except FieldError as exc:
         raise MediaError(f"Invalid filters : {exc}.") from exc
-
-
-def set_media_model_user_completion(
-    media_model: MediaModel, new_completion: MediaCompletion
-) -> MediaCompletion:
-    media_model.user_completion = new_completion
-    media_model.save()
-    return media_model.user_completion
-
-
-def set_media_model_user_current_section(
-    media_model: MediaModel, new_current_section: int | None
-) -> int | None:
-    media_model.user_current_section = new_current_section
-    media_model.save()
-    return media_model.user_current_section
-
-
-def set_media_model_user_score(
-    media_model: MediaModel, new_score: int | None
-) -> int | None:
-    try:
-        media_model.user_score = new_score
-        media_model.save()
-        return media_model.user_score
-    except IntegrityError as exc:
-        raise InvalidScoreError(
-            "Score must be an integer between 0 and 10, or None."
-        ) from exc
 
 
 def set_media_model_synopsis_tanslated(
@@ -323,81 +276,3 @@ def get_or_create_author_model(author: Author) -> AuthorModel:
 def _set_manga_model_authors(manga_model: MangaModel, authors: list[AuthorModel]):
     manga_model.authors.set(authors)
     manga_model.save()
-
-
-# WATCHLIST MODEL
-#########################################
-
-
-def get_watchlist_model(user, name: str) -> WatchlistModel:
-    try:
-        return WatchlistModel.objects.get(user=user, name=name)
-    except WatchlistModel.DoesNotExist as exc:
-        raise WatchlistNotFoundError(
-            f"User {user} has no watchlist named {name} found."
-        ) from exc
-
-
-def get_watchlists_models(user, **kwargs) -> list[WatchlistModel]:
-    try:
-        return list(WatchlistModel.objects.filter(user=user, **kwargs))
-    except FieldError as exc:
-        raise WatchlistError(f"Invalid filters : {exc}") from exc
-
-
-def create_watchlist_model(user, watchlist: Watchlist) -> WatchlistModel:
-    try:
-        data = {
-            field: value
-            for field, value in watchlist.__dict__.items()
-            if field != "medias"
-        }
-        data["user"] = user
-        watchlist_model = WatchlistModel.objects.create(**data)
-        set_watchlist_model_medias(
-            watchlist_model,
-            [
-                get_media_model(media.mal_id, media.media_type)
-                for media in watchlist.medias
-            ],
-        )
-        return get_watchlist_model(user, watchlist.name)
-    except IntegrityError as exc:
-        raise StorageError(
-            f"Error during the creation of watchlist {watchlist.name}."
-        ) from exc
-
-
-def set_watchlist_model_medias(
-    watchlist_model: WatchlistModel, medias: list[MediaModel]
-):
-    watchlist_model.medias.set(medias)
-    watchlist_model.save()
-
-
-def set_watchlist_model_name(watchlist_model: WatchlistModel, new_name: str):
-    try:
-        watchlist_model.name = new_name
-        watchlist_model.save()
-    except IntegrityError as exc:
-        raise StorageError(
-            f"Impossible to rename the watchlist into {new_name}."
-        ) from exc
-
-
-def add_media_model_to_watchlist_model(
-    watchlist_model: WatchlistModel, media_model: MediaModel
-):
-    watchlist_model.medias.add(media_model)
-    watchlist_model.save()
-
-
-def remove_media_model_from_watchlist_model(
-    watchlist_model: WatchlistModel, media_model: MediaModel
-):
-    watchlist_model.medias.remove(media_model)
-    watchlist_model.save()
-
-
-def delete_watchlist_model(watchlist_model: WatchlistModel):
-    watchlist_model.delete()

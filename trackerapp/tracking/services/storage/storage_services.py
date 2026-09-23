@@ -42,12 +42,40 @@ def get_media(mal_id: int, media_type: MediaType) -> Media:
     )
 
 
+def get_media_user(user, mal_id: int, media_type: MediaType) -> Media:
+    media_model = repository.get_media_model(mal_id=mal_id, media_type=media_type)
+
+    media_user_infos_model = repository.get_media_user_infos_model(
+        user=user, media_model=media_model
+    )
+    media_class = TYPE_TO_DOMAIN[media_type]
+    return media_class.from_model(
+        media_model=media_model, media_user_infos_model=media_user_infos_model
+    )
+
+
 def get_medias(**kwargs) -> list[Media]:
     medias_models = repository.get_medias_models(**kwargs)
     medias = []
     for media_model in medias_models:
         media_class = TYPE_TO_DOMAIN[media_model.media_type]
         medias.append(media_class.from_model(media_model))
+    return medias
+
+
+def get_medias_user(user, **kwargs) -> list[Media]:
+    medias_models = repository.get_medias_models(**kwargs)
+    medias = []
+    for media_model in medias_models:
+        media_user_infos_model = repository.get_media_user_infos_model(
+            user=user, media_model=media_model
+        )
+        media_class = TYPE_TO_DOMAIN[media_model.media_type]
+        medias.append(
+            media_class.from_model(
+                media_model=media_model, media_user_infos_model=media_user_infos_model
+            )
+        )
     return medias
 
 
@@ -67,14 +95,19 @@ def update_media(media: Media):
 """
 
 
-def save_media(media: Media):
+def save_media(user, media: Media):
     try:
         media_model = repository.get_media_model(media.mal_id, media.media_type)
-        repository.set_media_model_user_completion(media_model, media.user_completion)
-        repository.set_media_model_user_current_section(
-            media_model, media.user_current_section
+        media_user_infos_model = repository.get_media_user_infos_model(
+            user=user, media_model=media_model
         )
-        repository.set_media_model_user_score(media_model, media.user_score)
+        repository.set_media_model_user_completion(
+            media_user_infos_model, media.user_completion
+        )
+        repository.set_media_model_user_current_section(
+            media_user_infos_model, media.user_current_section
+        )
+        repository.set_media_model_user_score(media_user_infos_model, media.user_score)
     except MediaNotFoundError:
         repository.create_media_model(media)
 
@@ -117,6 +150,21 @@ def get_animes(**kwargs) -> list[Anime]:
     ]
 
 
+def get_animes_user(user, **kwargs) -> list[Anime]:
+    anime_models = repository.get_animes_models(**kwargs)
+    animes = []
+    for anime_model in anime_models:
+        media_user_infos_model = repository.get_media_user_infos_model(
+            user=user, media_model=anime_model
+        )
+        animes.append(
+            Anime.from_model(
+                anime_model=anime_model, media_user_infos_model=media_user_infos_model
+            )
+        )
+    return animes
+
+
 # MANGA STORAGE SERVICES
 ##############################################################
 
@@ -126,6 +174,21 @@ def get_mangas(**kwargs) -> list[Manga]:
         Manga.from_model(manga_model)
         for manga_model in repository.get_mangas_models(**kwargs)
     ]
+
+
+def get_mangas_user(user, **kwargs) -> list[Anime]:
+    manga_models = repository.get_mangas_models(**kwargs)
+    mangas = []
+    for manga_model in manga_models:
+        media_user_infos_model = repository.get_media_user_infos_model(
+            user=user, media_model=manga_model
+        )
+        mangas.append(
+            Manga.from_model(
+                manga_model=manga_model, media_user_infos_model=media_user_infos_model
+            )
+        )
+    return mangas
 
 
 # WATCHLIST STORAGE SERVICES

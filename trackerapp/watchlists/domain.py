@@ -2,8 +2,8 @@ from dataclasses import dataclass
 
 from medias.domain.media import Media
 
-from ..models.watchlist_model import WatchlistModel
 from ..utils import MODEL_TO_DOMAIN
+from .models import WatchlistModel
 
 
 @dataclass

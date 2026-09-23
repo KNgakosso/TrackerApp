@@ -21,16 +21,18 @@ from django.urls import include, path
 
 urlpatterns = [
     path("admin/", admin.site.urls),
-]
-
-urlpatterns += i18n_patterns(
-    path("tracking/", include("tracking.urls")),
-)
-
-urlpatterns += i18n_patterns(
-    path("accounts/", include("accounts.urls")),
-)
-
-urlpatterns += [
+    *i18n_patterns(
+        path("accounts/", include("accounts.urls")),
+    ),
+    *i18n_patterns(
+        path("medias/", include("medias.urls")),
+    ),
+    *i18n_patterns(
+        path("research/", include("research.urls")),
+    ),
+    *i18n_patterns(
+        path("tracking/", include("tracking.urls")),
+    ),
+    *i18n_patterns(path("watchlists/", include("watchlists.urls"))),
     path("i18n/", include("django.conf.urls.i18n")),
 ]

@@ -40,8 +40,11 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-    "tracking",
     "accounts",
+    "medias",
+    "research",
+    "tracking",
+    "watchlists",
     "polymorphic",
 ]
 
@@ -57,7 +60,7 @@ MIDDLEWARE = [
     "django.middleware.locale.LocaleMiddleware",
 ]
 
-ROOT_URLCONF = "trackerapp.urls"
+ROOT_URLCONF = "config.urls"
 
 TEMPLATES = [
     {
@@ -74,7 +77,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = "trackerapp.wsgi.application"
+WSGI_APPLICATION = "config.wsgi.application"
 
 
 # Database
